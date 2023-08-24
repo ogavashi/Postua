@@ -12,7 +12,7 @@ import createEmotionServer from '@emotion/server/create-instance';
 
 import { MyAppProps } from './_app';
 
-import theme, { roboto } from '@/theme';
+import { darkTheme, roboto } from '@/common';
 import { createEmotionCache } from '@/lib';
 
 interface MyDocumentProps extends DocumentProps {
@@ -24,7 +24,7 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
     <Html lang='en' className={roboto.className}>
       <Head>
         {/* PWA primary color */}
-        <meta name='theme-color' content={theme.palette.primary.main} />
+        <meta name='theme-color' content={darkTheme.palette.primary.main} />
         <link rel='shortcut icon' href='/favicon.ico' />
         <meta name='emotion-insertion-point' content='' />
         {emotionStyleTags}

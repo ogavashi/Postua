@@ -10,7 +10,8 @@ export default function Home() {
     <>
       <main className={`${styles.main} ${inter.className}`}>
         <Button variant='contained'>Натисни</Button>
-        <Button variant='contained'>Press</Button>
+        <Button variant='outlined'>Press</Button>
+
         <Slider
           defaultValue={30}
           css={css`

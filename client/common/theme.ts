@@ -27,7 +27,27 @@ const colors = {
   black: '#1A1A1A',
 };
 
-const theme = createTheme({
+const baseTheme = createTheme({
+  typography: {
+    fontFamily: roboto.style.fontFamily,
+  },
+});
+
+export const lightTheme = createTheme({
+  ...baseTheme,
+  status: {
+    danger: orange[500],
+  },
+  palette: {
+    mode: 'light',
+    background: {
+      default: colors.black,
+    },
+  },
+});
+
+export const darkTheme = createTheme({
+  ...baseTheme,
   status: {
     danger: orange[500],
   },
@@ -37,9 +57,4 @@ const theme = createTheme({
       default: colors.black,
     },
   },
-  typography: {
-    fontFamily: roboto.style.fontFamily,
-  },
 });
-
-export default theme;
