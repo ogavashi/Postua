@@ -2,6 +2,6 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-color: #1a1a1a !important;
+  /* background-color: #1a202c !important; */
   font-family: Roboto, 'Helvetica Neue', Helvetica, sans-serif;
 }

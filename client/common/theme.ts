@@ -24,7 +24,12 @@ export const roboto = Roboto({
 });
 
 const colors = {
-  black: '#1A1A1A',
+  grey: '#1A202C',
+  lightGrey: '#2c313d',
+  lightGreen: '#81E6D9',
+  darkGreen: '#319795',
+  white: '#FFFFFF',
+  darkWhite: '#edf2f7',
 };
 
 const baseTheme = createTheme({
@@ -41,8 +46,12 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: colors.black,
+      default: colors.white,
     },
+    primary: {
+      main: colors.darkGreen,
+    },
+    secondary: { main: colors.darkWhite },
   },
 });
 
@@ -54,7 +63,11 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     background: {
-      default: colors.black,
+      default: colors.grey,
     },
+    primary: {
+      main: colors.lightGreen,
+    },
+    secondary: { main: colors.lightGrey },
   },
 });
