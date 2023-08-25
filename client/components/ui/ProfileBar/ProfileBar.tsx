@@ -44,8 +44,9 @@ export const ProfileBar: React.FC<ProfileBarProps> = () => {
           <AccountCircle color='secondary' />
         </IconButton>
       </Box>
+
       <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-        <IconButton size='large' edge='end' onClick={handleMobileMenuOpen} color='inherit'>
+        <IconButton size='large' onClick={handleMobileMenuOpen} color='inherit'>
           <AccountCircle color='secondary' />
         </IconButton>
         <Menu

@@ -26,23 +26,21 @@ export const Header = () => {
 
   return (
     <ElevationScroll>
-      <>
-        <AppBar enableColorOnDark color='primary' component='nav'>
-          <Toolbar>
-            <Box display='flex' justifyContent='space-between' width='100%'>
-              <Logo sx={{ display: { xs: 'none', md: 'flex' } }} />
-              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                <IconButton size='large' onClick={handleDrawerToggle} color='inherit'>
-                  <MenuIcon />
-                </IconButton>
-              </Box>
-              <Logo sx={{ display: { xs: 'flex', md: 'none', alignItems: 'center' } }} />
-              <ProfileBar />
+      <AppBar enableColorOnDark color='primary' component='nav'>
+        <Toolbar>
+          <Box display='flex' justifyContent='space-between' width='100%'>
+            <Logo sx={{ display: { xs: 'none', md: 'flex' } }} />
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+              <IconButton size='large' onClick={handleDrawerToggle} color='inherit'>
+                <MenuIcon />
+              </IconButton>
             </Box>
-          </Toolbar>
-        </AppBar>
+            <Logo sx={{ display: { xs: 'flex', md: 'none', alignItems: 'center' } }} />
+            <ProfileBar />
+          </Box>
+        </Toolbar>
         <Drawer isOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
-      </>
+      </AppBar>
     </ElevationScroll>
   );
 };
