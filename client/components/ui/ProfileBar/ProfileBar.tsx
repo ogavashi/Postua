@@ -76,11 +76,11 @@ export const ProfileBar = () => {
         </Menu>
         <Menu anchorEl={anchorEl} keepMounted open={!!anchorEl} onClose={handleMenuClose}>
           <MenuItem onClick={handleMenuClose}>
-            <Person2Icon />
+            <Person2Icon color='primary' />
             Profile
           </MenuItem>
           <MenuItem onClick={handleMenuClose}>
-            <HomeIcon />
+            <HomeIcon color='primary'/>
             My account
           </MenuItem>
           <MenuItem onClick={handleMenuClose}>

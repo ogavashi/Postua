@@ -11,7 +11,7 @@ export const ThemeWrapper: React.FC<React.PropsWithChildren> = ({ children }) =>
   const prefersLightMode = useMediaQuery('(prefers-color-scheme: light)');
 
   const preferedTheme = useMemo(
-    () => (prefersLightMode ? lightTheme : darkTheme),
+    () => (!prefersLightMode ? lightTheme : darkTheme),
     [prefersLightMode]
   );
 
