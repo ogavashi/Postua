@@ -1,17 +1,20 @@
 import { useState, useCallback } from 'react';
 
-import { Badge, Box, IconButton, MenuItem } from '@mui/material';
+import { Badge, Box, IconButton } from '@mui/material';
 
 import { AccountCircle } from '@mui/icons-material';
 
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import HomeIcon from '@mui/icons-material/Home';
+import Person2Icon from '@mui/icons-material/Person2';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import { Menu } from './Menu.styled';
+import { MenuItem } from './MenuItem.styled';
 
-interface ProfileBarProps {
-  isMobile?: boolean;
-}
-
-export const ProfileBar: React.FC<ProfileBarProps> = () => {
+export const ProfileBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -45,9 +48,10 @@ export const ProfileBar: React.FC<ProfileBarProps> = () => {
         </IconButton>
       </Box>
 
+      {/* Mobile */}
       <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-        <IconButton size='large' onClick={handleMobileMenuOpen} color='inherit'>
-          <AccountCircle color='secondary' />
+        <IconButton onClick={handleMobileMenuOpen} color='inherit'>
+          <MoreVertIcon color='secondary' />
         </IconButton>
         <Menu
           anchorEl={mobileMoreAnchorEl}
@@ -56,23 +60,33 @@ export const ProfileBar: React.FC<ProfileBarProps> = () => {
           onClose={handleMobileMenuClose}
         >
           <MenuItem>
-            <IconButton size='large' color='inherit'>
-              <Badge badgeContent={17} color='error'>
-                <NotificationsIcon color='primary' />
-              </Badge>
-            </IconButton>
-            <p>Notifications</p>
+            <EditNoteIcon color='primary' />
+            Post
+          </MenuItem>
+          <MenuItem>
+            <Badge badgeContent={17} color='error'>
+              <NotificationsIcon color='primary' />
+            </Badge>
+            Notifications
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
-            <IconButton size='large' color='inherit'>
-              <AccountCircle color='primary' />
-            </IconButton>
-            <p>Profile</p>
+            <AccountCircle color='primary' />
+            Profile
           </MenuItem>
         </Menu>
         <Menu anchorEl={anchorEl} keepMounted open={!!anchorEl} onClose={handleMenuClose}>
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <Person2Icon />
+            Profile
+          </MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <HomeIcon />
+            My account
+          </MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <ExitToAppIcon color='error' />
+            Logout
+          </MenuItem>
         </Menu>
       </Box>
     </>

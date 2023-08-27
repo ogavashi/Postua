@@ -36,6 +36,9 @@ const baseTheme = createTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
+  shape: {
+    borderRadius: 9,
+  },
 });
 
 export const lightTheme = createTheme({

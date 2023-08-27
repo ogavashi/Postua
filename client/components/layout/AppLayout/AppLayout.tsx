@@ -10,7 +10,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
-    <Container maxWidth='xl'>
+    <Container maxWidth='md'>
       <Header />
       <Toolbar id='back-to-top-anchor' />
       <Container>

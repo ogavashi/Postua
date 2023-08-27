@@ -14,6 +14,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { constants } from '@/common';
+import { SearchBar } from '@/components';
 
 interface DrawerProps {
   isOpen: boolean;
@@ -41,20 +42,21 @@ export const Drawer: React.FC<DrawerProps> = ({ isOpen, handleDrawerToggle }) =>
         }}
       >
         <Box sx={{ textAlign: 'center' }}>
-          <Box display='flex' alignItems='center' my={2} mx={3}>
+          <Box display='flex' alignItems='center' gap={2} sx={{ padding: '8px 16px' }}>
             <IconButton onClick={handleDrawerToggle}>
               <CloseIcon color='primary' />
             </IconButton>
-            <>SearchBar</>
+            <SearchBar sx={{ width: '100%' }} />
           </Box>
           <Divider />
           <List>
             {constants.MOCK.CATEGORIES.map((item) => (
               <ListItem key={item}>
                 <ListItemButton
+                  selected
                   sx={{
                     textAlign: 'center',
-                    borderRadius: theme.shape.borderRadius,
+                    borderRadius: `${theme.shape.borderRadius}px`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',

@@ -5,3 +5,4 @@ export { ScrollTop } from './ScrollTop';
 export { Logo } from './Logo';
 export { Drawer } from './Drawer';
 export { ProfileBar } from './ProfileBar';
+export { SearchBar } from './SearchBar';
