@@ -50,7 +50,7 @@ export const ProfileBar = () => {
 
       {/* Mobile */}
       <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-        <IconButton onClick={handleMobileMenuOpen} color='inherit'>
+        <IconButton onClick={handleMobileMenuOpen} color='inherit' sx={{ padding: '12px' }}>
           <MoreVertIcon color='secondary' />
         </IconButton>
         <Menu
@@ -80,7 +80,7 @@ export const ProfileBar = () => {
             Profile
           </MenuItem>
           <MenuItem onClick={handleMenuClose}>
-            <HomeIcon color='primary'/>
+            <HomeIcon color='primary' />
             My account
           </MenuItem>
           <MenuItem onClick={handleMenuClose}>

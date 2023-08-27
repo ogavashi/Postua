@@ -1,10 +1,13 @@
 import { css } from '@emotion/react';
 
 export const styles = {
+  root: css({
+    color: 'inherit',
+    textDecoration: 'none',
+  }),
   logo: css({
     mr: 2,
     fontWeight: 'bold',
-    color: 'inherit',
     textDecoration: 'none',
   }),
   icon: css({

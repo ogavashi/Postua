@@ -24,7 +24,7 @@ export const Header = () => {
             <Logo sx={{ display: { xs: 'none', md: 'flex' } }} />
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton size='large' onClick={handleDrawerToggle} color='inherit'>
-                <MenuIcon />
+                <MenuIcon color='secondary' />
               </IconButton>
             </Box>
             <SearchBar sx={{ display: { xs: 'none', md: 'flex' }, maxWidth: '25rem' }} />

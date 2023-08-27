@@ -1,3 +1,5 @@
+import { useTheme } from '@emotion/react';
+
 import { SxProps, Theme } from '@mui/material/styles';
 
 import Typography from '@mui/material/Typography';
@@ -12,10 +14,12 @@ interface LogoProps {
 }
 
 export const Logo: React.FC<LogoProps> = ({ sx = [] }) => {
+  const theme = useTheme();
+
   return (
-    <Box sx={{ alignItems: 'center', ...sx }}>
-      <BookIcon css={styles.icon} sx={{ mr: 1 }} />
-      <Typography variant='h4' component='a' href='/' noWrap css={styles.logo} sx={{ flexGrow: 1 }}>
+    <Box css={styles.root} component='a' href='/' sx={{ alignItems: 'center', ...sx }}>
+      <BookIcon css={styles.icon} color='secondary' sx={{ mr: 1 }} />
+      <Typography variant='h4' noWrap css={styles.logo} color='secondary' sx={{ flexGrow: 1 }}>
         Postua
       </Typography>
     </Box>
