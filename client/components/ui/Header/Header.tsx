@@ -6,11 +6,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
 import { Drawer, ElevationScroll, Logo, ProfileBar, SearchBar } from '@/components';
+import { AuthModal } from '@/features/auth';
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
-  const isAuthorized = true;
+  const handleOpenModal = useCallback(() => setShowModal(true), []);
+
+  const handleCloseModal = useCallback(() => setShowModal(false), []);
+
+  const isAuthorized = false;
 
   const handleDrawerToggle = useCallback(() => {
     setMobileOpen((prevState) => !prevState);
@@ -42,13 +48,14 @@ export const Header = () => {
                 <ProfileBar />
               </Box>
             ) : (
-              <Button variant='contained' color='secondary'>
+              <Button variant='contained' color='secondary' onClick={handleOpenModal}>
                 Login
               </Button>
             )}
           </Box>
         </Toolbar>
         <Drawer isOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
+        <AuthModal isOpen={showModal} handleClose={handleCloseModal} />
       </AppBar>
     </ElevationScroll>
   );

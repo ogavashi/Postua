@@ -1,5 +1,3 @@
-import { useTheme } from '@emotion/react';
-
 import { SxProps, Theme } from '@mui/material/styles';
 
 import Typography from '@mui/material/Typography';
@@ -14,8 +12,6 @@ interface LogoProps {
 }
 
 export const Logo: React.FC<LogoProps> = ({ sx = [] }) => {
-  const theme = useTheme();
-
   return (
     <Box css={styles.root} component='a' href='/' sx={{ alignItems: 'center', ...sx }}>
       <BookIcon css={styles.icon} color='secondary' sx={{ mr: 1 }} />
