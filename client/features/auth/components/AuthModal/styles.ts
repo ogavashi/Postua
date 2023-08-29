@@ -8,4 +8,10 @@ export const styles = {
   icon: css({
     fontSize: 32,
   }),
+  closeBtn: css({
+    margin: 2,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  }),
 };

@@ -30,6 +30,7 @@ const colors = {
   darkGreen: '#319795',
   white: '#FFFFFF',
   darkWhite: '#edf2f7',
+  red: '#e52e3a',
 };
 
 const baseTheme = createTheme({
@@ -55,6 +56,9 @@ export const lightTheme = createTheme({
       main: colors.darkGreen,
     },
     secondary: { main: colors.darkWhite },
+    error: {
+      main: colors.red,
+    },
   },
 });
 
@@ -70,6 +74,9 @@ export const darkTheme = createTheme({
     },
     primary: {
       main: colors.lightGreen,
+    },
+    error: {
+      main: colors.red,
     },
     secondary: { main: colors.lightGrey },
   },

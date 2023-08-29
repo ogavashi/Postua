@@ -1,11 +1,20 @@
 import { useCallback, useState } from 'react';
 
 import { Box } from './Box.styled';
+import { styles } from './styles';
 
-import { Backdrop, Box as MuiBox, Fade, Modal, Typography, Divider } from '@mui/material';
+import {
+  Backdrop,
+  Box as MuiBox,
+  Fade,
+  Modal,
+  Typography,
+  Divider,
+  IconButton,
+} from '@mui/material';
 
 import BookIcon from '@mui/icons-material/Book';
-import { styles } from './styles';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { LoginTab, RegisterTab } from '@/features/auth';
 
@@ -52,6 +61,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, handleClose }) => 
     >
       <Fade in={isOpen}>
         <Box>
+          <IconButton css={styles.closeBtn} color='primary' size='small' onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
           <MuiBox display='flex' alignItems='center' mb='auto' width='100%'>
             <MuiBox display='flex' alignItems='center' width='100%' gap={1}>
               <BookIcon css={styles.icon} />
