@@ -10,7 +10,7 @@ import { AuthModal } from '@/features/auth';
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = useCallback(() => setShowModal(true), []);
 
