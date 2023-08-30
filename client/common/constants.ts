@@ -3,9 +3,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ListIcon from '@mui/icons-material/List';
 
 export const constants = {
-  MOCK: {
-    CATEGORIES: ['👾 Games', '🎸 Music', '🖥️ Tech', '🍙 Amime', '🎥 Cinema'],
-  },
   CATEGORIES: [
     {
       icon: '👾',
