@@ -4,8 +4,9 @@ export const ListItemButton = styled(MuiListItemButton)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   display: 'flex',
   alignItems: 'center',
-  // TODO: Change later
-  width: 204,
+  width: 200,
+  height: 45,
   paddingTop: theme.spacing(0.5),
   paddingBottom: theme.spacing(0.5),
+  paddingInline: theme.spacing(1.5),
 }));

@@ -1,20 +1,9 @@
-import {
-  Box,
-  Divider,
-  Drawer as MuiDrawer,
-  List,
-  ListItem,
-  ListItemButton,
-  Typography,
-  useTheme,
-  IconButton,
-} from '@mui/material';
+import { Box, Divider, Drawer as MuiDrawer, useTheme, IconButton } from '@mui/material';
 
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { constants } from '@/common';
 import { SearchBar } from '@/components';
+import { SideMenu } from '@/features/sideMenu';
 
 interface DrawerProps {
   isOpen: boolean;
@@ -49,25 +38,7 @@ export const Drawer: React.FC<DrawerProps> = ({ isOpen, handleDrawerToggle }) =>
             <SearchBar sx={{ width: '100%' }} />
           </Box>
           <Divider />
-          <List>
-            {constants.MOCK.CATEGORIES.map((item) => (
-              <ListItem key={item}>
-                <ListItemButton
-                  selected
-                  sx={{
-                    textAlign: 'center',
-                    borderRadius: `${theme.shape.borderRadius}px`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <Typography variant='h6'>{item}</Typography>
-                  <ArrowForwardIosIcon color='primary' />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+          <SideMenu />
         </Box>
       </MuiDrawer>
     </nav>

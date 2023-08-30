@@ -3,16 +3,19 @@ import { useState, useCallback, useMemo } from 'react';
 import { constants } from '@/common';
 
 import { Button, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { ListItemButton } from './ListItemButton.styled';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
+import { ListItemButton } from '@/features/sideMenu';
+
 export const CategoriesList = () => {
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(constants.DEFAULT_AMOUNT);
 
   const toggleLimit = useCallback(() => {
-    setLimit((prev) => (prev === 5 ? 8 : 5));
+    setLimit((prev) =>
+      prev === constants.DEFAULT_AMOUNT ? constants.CATEGORIES.length : constants.DEFAULT_AMOUNT
+    );
   }, []);
 
   const MoreButton = () => {
@@ -21,7 +24,7 @@ export const CategoriesList = () => {
       onClick: toggleLimit,
     };
 
-    return limit === 5 ? (
+    return limit === constants.DEFAULT_AMOUNT ? (
       <Button {...commonProps} startIcon={<KeyboardArrowDownIcon />}>
         Show more ({constants.CATEGORIES.length - limit})
       </Button>
@@ -37,7 +40,7 @@ export const CategoriesList = () => {
       {constants.CATEGORIES.slice(0, limit).map(({ name, icon }, index) => (
         <ListItem key={name} sx={{ py: 0.5, px: 1.5 }}>
           <ListItemButton selected={index === 0}>
-            <ListItemIcon sx={{ fontSize: 24, minWidth: 32, mr: '8px' }}>{icon}</ListItemIcon>
+            <ListItemIcon sx={{ fontSize: 24, minWidth: 32, mr: 1.15 }}>{icon}</ListItemIcon>
             <ListItemText primary={name} />
           </ListItemButton>
         </ListItem>
