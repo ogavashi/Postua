@@ -1,0 +1,17 @@
+{
+  "layout": {
+    "menu": {
+      "popular": "Popular",
+      "fresh": "Fresh",
+      "subscriptions": "Subscriptions"
+    },
+    "categories": {
+      "games": "Games",
+      "music": "Music",
+      "tech": "Tech",
+      "anime": "Anime",
+      "cinema": "Cinema",
+      "software": "Software"
+    }
+  }
+}

@@ -13,6 +13,8 @@ import { createEmotionCache } from '@/lib';
 import { ThemeWrapper } from '@/components';
 import { NextPage } from 'next';
 
+import { appWithTranslation } from 'next-i18next';
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -25,7 +27,7 @@ export interface AppPropsWithLayout extends AppProps {
   Component: NextPageWithLayout;
 }
 
-export default function MyApp(props: AppPropsWithLayout) {
+function MyApp(props: AppPropsWithLayout) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -44,3 +46,5 @@ export default function MyApp(props: AppPropsWithLayout) {
     </CacheProvider>
   );
 }
+
+export default appWithTranslation(MyApp);

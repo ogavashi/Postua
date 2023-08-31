@@ -6,46 +6,42 @@ export const constants = {
   CATEGORIES: [
     {
       icon: '👾',
-      name: 'Games',
+      key: 'games',
     },
     {
       icon: '🎸',
-      name: 'Music',
+      key: 'music',
     },
     {
       icon: '🖥️',
-      name: 'Tech',
+      key: 'tech',
     },
     {
       icon: '🍙',
-      name: 'Amime',
+      key: 'anime',
     },
     {
       icon: '🎞',
-      name: 'Cinema',
-    },
-    {
-      icon: '⌨️',
-      name: 'Hardware',
+      key: 'cinema',
     },
     {
       icon: '🧑‍💻',
-      name: 'Software',
+      key: 'software',
     },
   ],
   DEFAULT_AMOUNT: 5,
   MENU_ITEMS: [
     {
       icon: WhatshotIcon,
-      name: 'Popular',
+      key: 'popular',
     },
     {
       icon: AccessTimeIcon,
-      name: 'Fresh',
+      key: 'fresh',
     },
     {
       icon: ListIcon,
-      name: 'Subscriptions',
+      key: 'subscriptions',
     },
   ],
 };

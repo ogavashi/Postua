@@ -1,16 +1,15 @@
-import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
-import { Button, ButtonGroup, Slider } from '@mui/material';
 import { css } from '@emotion/react';
+import { Button, ButtonGroup, Slider } from '@mui/material';
 import { NextPageWithLayout } from './_app';
 import { AppLayout } from '@/components';
 
-const inter = Inter({ subsets: ['latin', 'cyrillic'] });
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Home: NextPageWithLayout = () => {
   return (
     <>
-      <main className={`${styles.main} ${inter.className}`}>
+      <main className={`${styles.main}`}>
         <Button variant='contained'>Натисни</Button>
         <Button variant='contained' color='secondary'>
           Натисни
@@ -24,16 +23,7 @@ const Home: NextPageWithLayout = () => {
           <Button>Two</Button>
           <Button>Three</Button>
         </ButtonGroup>
-        <Slider
-          defaultValue={30}
-          css={css`
-            color: #20b2aa;
-
-            :hover {
-              color: #2e8b57;
-            }
-          `}
-        />
+        <Slider defaultValue={30} />
       </main>
     </>
   );
@@ -42,5 +32,13 @@ const Home: NextPageWithLayout = () => {
 Home.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
+
+export async function getServerSideProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}
 
 export default Home;

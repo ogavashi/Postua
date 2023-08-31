@@ -12,7 +12,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { Menu } from './Menu.styled';
-import { MenuItem } from './MenuItem.styled';
+import { MenuItem } from '@/components';
 
 export const ProfileBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

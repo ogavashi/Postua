@@ -6,3 +6,7 @@ export { Logo } from './Logo';
 export { Drawer } from './Drawer';
 export { ProfileBar } from './ProfileBar';
 export { SearchBar } from './SearchBar';
+export { LanguageSelect } from './LanguageSelect';
+export { MenuItem } from './MenuItem';
+export { Settings } from './Settings';
+export { ColorToggle } from './ColorToggle';

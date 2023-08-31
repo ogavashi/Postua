@@ -1,4 +1,6 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
+
+import { useTranslation } from 'next-i18next';
 
 import { constants } from '@/common';
 
@@ -10,6 +12,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ListItemButton } from '@/features/sideMenu';
 
 export const CategoriesList = () => {
+  const { t } = useTranslation();
+
   const [limit, setLimit] = useState(constants.DEFAULT_AMOUNT);
 
   const toggleLimit = useCallback(() => {
@@ -37,11 +41,11 @@ export const CategoriesList = () => {
 
   return (
     <List sx={{ display: 'flex', flexDirection: 'column' }}>
-      {constants.CATEGORIES.slice(0, limit).map(({ name, icon }, index) => (
-        <ListItem key={name} sx={{ py: 0.5, px: 1.5 }}>
+      {constants.CATEGORIES.slice(0, limit).map(({ key, icon }, index) => (
+        <ListItem key={key} sx={{ py: 0.5, px: 1.5 }}>
           <ListItemButton selected={index === 0}>
             <ListItemIcon sx={{ fontSize: 24, minWidth: 32, mr: 1.15 }}>{icon}</ListItemIcon>
-            <ListItemText primary={name} />
+            <ListItemText primary={t(`layout.categories.${key}`)} />
           </ListItemButton>
         </ListItem>
       ))}

@@ -1,0 +1,17 @@
+{
+  "layout": {
+    "menu": {
+      "popular": "Популярне",
+      "fresh": "Нове",
+      "subscriptions": "Підписки"
+    },
+    "categories": {
+      "games": "Ігри",
+      "music": "Музика",
+      "tech": "Технології",
+      "anime": "Аніме",
+      "cinema": "Кінематограф",
+      "software": "Софт"
+    }
+  }
+}
