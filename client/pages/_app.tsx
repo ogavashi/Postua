@@ -1,5 +1,7 @@
 import '../styles/globals.css';
 
+import NextNProgress from 'nextjs-progressbar';
+
 import type { ReactElement, ReactNode } from 'react';
 
 import Head from 'next/head';
@@ -41,6 +43,7 @@ function MyApp(props: AppPropsWithLayout) {
       <ThemeWrapper>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
+        <NextNProgress />
         {getLayout(<Component {...pageProps} />)}
       </ThemeWrapper>
     </CacheProvider>

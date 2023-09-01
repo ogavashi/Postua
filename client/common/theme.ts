@@ -50,6 +50,7 @@ export const lightTheme = createTheme({
     mode: 'light',
     background: {
       default: colors.white,
+      paper: colors.darkWhite,
     },
     primary: {
       main: colors.darkGreen,
@@ -70,6 +71,7 @@ export const darkTheme = createTheme({
     mode: 'dark',
     background: {
       default: colors.grey,
+      paper: colors.grey,
     },
     primary: {
       main: colors.lightGreen,

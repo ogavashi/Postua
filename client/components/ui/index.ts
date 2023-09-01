@@ -10,3 +10,4 @@ export { LanguageSelect } from './LanguageSelect';
 export { MenuItem } from './MenuItem';
 export { Settings } from './Settings';
 export { ColorToggle } from './ColorToggle';
+export { NextLinkComposed } from './Link';

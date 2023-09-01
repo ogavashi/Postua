@@ -1,26 +1,22 @@
 import styles from '@/styles/Home.module.css';
 import { css } from '@emotion/react';
-import { Box, Button, ButtonGroup, Paper, Slider } from '@mui/material';
+import { Button, ButtonGroup, Slider } from '@mui/material';
 import { NextPageWithLayout } from './_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 
-const Home: NextPageWithLayout = () => {
+const Test: NextPageWithLayout = () => {
   const router = useRouter();
 
   return (
     <>
       <main className={`${styles.main}`}>
-        <Paper>
-          <Box display='flex' flexDirection='column' m={6} gap={2}>
-            <Button variant='contained'>Натисни</Button>
-            <Button variant='contained' color='secondary' onClick={() => router.push('/test')}>
-              Test
-            </Button>
-          </Box>
-        </Paper>
+        <Button variant='contained'>Натисни</Button>
+        <Button variant='contained' color='secondary' onClick={() => router.push('/')}>
+          Home
+        </Button>
         <Button variant='outlined'>Press</Button>
         <Button variant='outlined' color='secondary'>
           Press
@@ -36,11 +32,17 @@ const Home: NextPageWithLayout = () => {
   );
 };
 
-Home.getLayout = (page: React.ReactNode) => {
+Test.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
 export async function getServerSideProps({ locale }: { locale: string }) {
+  const loadingDelay = 2000;
+
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  await delay(loadingDelay);
+
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common'])),
@@ -48,4 +50,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   };
 }
 
-export default Home;
+export default Test;

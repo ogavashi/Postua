@@ -11,5 +11,6 @@ export {
   MenuItem,
   Settings,
   ColorToggle,
+  NextLinkComposed,
 } from './ui';
 export { AppLayout } from './layout';

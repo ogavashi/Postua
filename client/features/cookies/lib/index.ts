@@ -1,0 +1,1 @@
+export { localeCookie } from './localeCookie';

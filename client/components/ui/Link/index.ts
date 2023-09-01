@@ -1,0 +1,1 @@
+export { NextLinkComposed } from './Link';
