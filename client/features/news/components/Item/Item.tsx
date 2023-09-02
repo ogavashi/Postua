@@ -1,37 +1,20 @@
-import { useCallback, useState } from 'react';
-
-import Link from 'next/link';
-
-import { Box, IconButton, Typography, useTheme } from '@mui/material';
+import { Box, IconButton, Typography as MuiTypography, useTheme } from '@mui/material';
 
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import { NextLinkComposed } from '@/components';
+import { Typography } from './Typoghraphy.styled';
 
 export const Item = () => {
-  const [isHover, setIsHover] = useState(false);
-
-  const toggleHover = useCallback(() => {
-    setIsHover((prev) => !prev);
-  }, []);
-
   const theme = useTheme();
 
   return (
     <Box mb={2} width='100%'>
-      <Typography textAlign='justify'>
-        <Link
-          href={'news/123'}
-          style={{
-            color: isHover ? theme.palette.primary.main : 'inherit',
-            textDecoration: 'none',
-            transition: '0.3s',
-          }}
-          onMouseEnter={toggleHover}
-          onMouseLeave={toggleHover}
-        >
+      <MuiTypography textAlign='justify'>
+        <Typography component={NextLinkComposed} to={{ pathname: 'news/123' }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies maximus risus vel
           mattis. Nunc mi augue, rutrum ac erat eu, imperdiet tristique lorem. Sed vitae aliquam
           purus
-        </Link>
+        </Typography>
         <IconButton
           size='small'
           color='primary'
@@ -43,9 +26,9 @@ export const Item = () => {
           }}
         >
           <InsertCommentIcon sx={{ fontSize: 16, position: 'relative', mr: 0.5 }} />
-          <Typography>15</Typography>
+          <MuiTypography>15</MuiTypography>
         </IconButton>
-      </Typography>
+      </MuiTypography>
     </Box>
   );
 };
