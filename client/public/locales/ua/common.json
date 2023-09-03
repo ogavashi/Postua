@@ -22,7 +22,14 @@
       "language": "Мова",
       "mode": "Режим",
       "login": "Логін",
-      "pageNotFound": "Сторінку не знайдено"
+      "pageNotFound": "Сторінку не знайдено",
+      "email": "Пошта",
+      "password": "Пароль",
+      "noAccount": "Немає акаунту?",
+      "haveAccount": "Вже зареєстрований?",
+      "register": "Реєстрація",
+      "fullName": "Повне ім'я",
+      "confirmPassword": "Підтвердити пароль"
     }
   }
 }

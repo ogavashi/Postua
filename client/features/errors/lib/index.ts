@@ -1,1 +1,1 @@
-export { errorTexts } from './errorTexts';
+export { errorTexts, getErrorText } from './errorTexts';

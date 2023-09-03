@@ -44,7 +44,7 @@ NotFound.getLayout = (page: React.ReactNode) => {
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
+      ...(await serverSideTranslations(locale, ['common', 'errors'])),
     },
   };
 }

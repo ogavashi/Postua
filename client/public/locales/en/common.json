@@ -22,7 +22,14 @@
       "language": "Language",
       "mode": "Mode",
       "login": "Login",
-      "pageNotFound": "Page not found"
+      "pageNotFound": "Page not found",
+      "email": "Email",
+      "password": "Password",
+      "noAccount": "Don't have an account?",
+      "haveAccount": "Already have an account?",
+      "register": "Register",
+      "fullName": "Full name",
+      "confirmPassword": "Confirm password"
     }
   }
 }

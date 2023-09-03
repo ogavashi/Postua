@@ -1,8 +1,11 @@
 import * as yup from 'yup';
 
-import { errorTexts } from '@/features/errors';
+import { errorTexts, getErrorText } from '@/features/errors';
 
 export const loginSchema = yup.object().shape({
-  email: yup.string().email(errorTexts.email()).required(errorTexts.required()),
-  password: yup.string().required(errorTexts.required()),
+  email: yup
+    .string()
+    .email(getErrorText(errorTexts.email))
+    .required(getErrorText(errorTexts.required)),
+  password: yup.string().required(getErrorText(errorTexts.required)),
 });

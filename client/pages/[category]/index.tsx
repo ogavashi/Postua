@@ -35,7 +35,7 @@ Category.getLayout = (page: React.ReactNode) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale || 'en', ['common'])),
+      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'errors'])),
     },
   };
 };

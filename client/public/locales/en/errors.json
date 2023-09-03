@@ -1,0 +1,21 @@
+{
+  "validation": {
+    "isDefined": "Field cannot be empty",
+    "isPositive": "Field cannot be empty",
+    "maxLength": "Field value cannot be longer than",
+    "isLength": "Field value cannot be longer than",
+    "minLength": "Field value cannot be shorter than",
+    "isEmail": "Not valid email format",
+    "isPhone": "Not valid phone format",
+    "isUrl": "Not valid url format",
+    "isInt": "Field cannot be empty",
+    "isNotEmpty": "Field cannot be empty",
+    "isObject": "Field cannot be empty",
+    "isRequired": "Field is required",
+    "isUnique": "Field must be unique",
+    "isNumber": "Field must be number",
+    "notEquals": "Field is required",
+    "DBError": "Field is not valid",
+    "noMatch": "Passwords do not match"
+  }
+}

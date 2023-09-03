@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
 
+import { useTranslation } from 'next-i18next';
+
 import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,6 +9,7 @@ import { useForm } from 'react-hook-form';
 
 import { LoginDto, loginSchema } from '@/features/auth';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useFormatError } from '@/hooks';
 
 interface LoginTabProps {
   onToggle: () => void;
@@ -21,6 +24,9 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle }) => {
     mode: 'onSubmit',
     resolver: yupResolver(loginSchema),
   });
+  const formatErrorMessage = useFormatError();
+
+  const { t } = useTranslation();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -41,21 +47,21 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle }) => {
       width='100%'
     >
       <Typography gutterBottom variant='h5' fontWeight={500}>
-        Login
+        {t('layout.ui.login')}
       </Typography>
       <TextField
         id='email'
-        label='Email'
+        label={t('layout.ui.email')}
         variant='outlined'
         type='email'
         size='small'
-        helperText={errors?.email?.message || ' '}
+        helperText={formatErrorMessage(errors?.email?.message) || ' '}
         error={!!errors?.email}
         {...register('email')}
       />
       <TextField
         id='password'
-        label='Password'
+        label={t('layout.ui.password')}
         variant='outlined'
         autoComplete='true'
         InputProps={{
@@ -69,18 +75,18 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle }) => {
         }}
         type={showPassword ? 'text' : 'password'}
         size='small'
-        helperText={errors?.password?.message || ' '}
+        helperText={formatErrorMessage(errors?.password?.message) || ' '}
         error={!!errors?.password}
         {...register('password')}
       />
       <Box gap={1}>
         <Button type='submit' variant='outlined' fullWidth sx={{ mb: 3 }}>
-          Login
+          {t('layout.ui.login')}
         </Button>
         <Box display='flex' alignItems='center' gap={1}>
-          <Typography>Don't have an account?</Typography>
+          <Typography> {t('layout.ui.noAccount')}</Typography>
           <Button onClick={onToggle} variant='text'>
-            Register
+            {t('layout.ui.register')}
           </Button>
         </Box>
       </Box>

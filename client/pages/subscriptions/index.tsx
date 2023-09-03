@@ -34,7 +34,7 @@ Subscriptions.getLayout = (page: React.ReactNode) => {
 export async function getServerSideProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
+      ...(await serverSideTranslations(locale, ['common', 'errors'])),
     },
   };
 }
