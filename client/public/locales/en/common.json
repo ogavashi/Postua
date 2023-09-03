@@ -12,6 +12,17 @@
       "anime": "Anime",
       "cinema": "Cinema",
       "software": "Software"
+    },
+    "ui": {
+      "post": "Post",
+      "search": "Search",
+      "showMore": "Show More",
+      "showLess": "Show Less",
+      "settings": "Settings",
+      "language": "Language",
+      "mode": "Mode",
+      "login": "Login",
+      "pageNotFound": "Page not found"
     }
   }
 }

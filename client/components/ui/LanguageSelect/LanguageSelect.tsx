@@ -11,14 +11,28 @@ export const LanguageSelect = () => {
 
   const [selectedLanguage, setSelectedLanguage] = useState(router.locale);
 
-  const handleChange = useCallback((event: SelectChangeEvent<unknown>) => {
-    const value = event.target.value as string;
-    const path = router.asPath;
+  const handleChange = useCallback(
+    (event: SelectChangeEvent<unknown>) => {
+      const value = event.target.value as string;
+      const { pathname, asPath, query } = router;
 
-    setSelectedLanguage(value);
-    localeCookie.set(value);
+      setSelectedLanguage(value);
+      localeCookie.set(value);
 
-    router.push(path, path, { locale: value });
+      router.push({ pathname, query }, asPath, { locale: value });
+    },
+    [router]
+  );
+
+  // Temporarily fix
+  useEffect(() => {
+    const preferedLocale = localeCookie.get();
+
+    if (preferedLocale && preferedLocale !== selectedLanguage) {
+      const { pathname, asPath, query } = router;
+      setSelectedLanguage(preferedLocale);
+      router.push({ pathname, query }, asPath, { locale: preferedLocale });
+    }
   }, []);
 
   return (

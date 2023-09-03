@@ -1,3 +1,5 @@
+import { useTranslation } from 'next-i18next';
+
 import { Search } from './Search.styled';
 import { StyledInputBase } from './InputBase.styled';
 
@@ -8,9 +10,11 @@ interface SearchBarProps {
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({ sx = [] }) => {
+  const { t } = useTranslation();
+
   return (
     <Search sx={{ ...sx }}>
-      <StyledInputBase placeholder='Search…' />
+      <StyledInputBase placeholder={t('layout.ui.search')} />
     </Search>
   );
 };

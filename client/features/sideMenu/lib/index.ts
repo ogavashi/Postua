@@ -1,0 +1,1 @@
+export { getPathKey } from './getPathKey';

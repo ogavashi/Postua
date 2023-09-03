@@ -4,9 +4,13 @@ import { NextPageWithLayout } from './_app';
 import { AppLayout } from '@/components';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
+import { useTranslation } from 'next-i18next';
+
 import ErrorIcon from '@mui/icons-material/Error';
 
 const NotFound: NextPageWithLayout = () => {
+  const { t } = useTranslation();
+
   return (
     <Box
       display='flex'
@@ -25,7 +29,9 @@ const NotFound: NextPageWithLayout = () => {
         gap={2}
       >
         <Typography variant='h1'>404</Typography>
-        <Typography variant='h3'>Page not found</Typography>
+        <Typography variant='h3' textAlign='center'>
+          {t('layout.ui.pageNotFound')}
+        </Typography>
       </Box>
     </Box>
   );

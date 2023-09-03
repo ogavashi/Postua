@@ -12,6 +12,17 @@
       "anime": "Аніме",
       "cinema": "Кінематограф",
       "software": "Софт"
+    },
+    "ui": {
+      "post": "Пост",
+      "search": "Пошук",
+      "showMore": "Більше",
+      "showLess": "Менше",
+      "settings": "Налаштування",
+      "language": "Мова",
+      "mode": "Режим",
+      "login": "Логін",
+      "pageNotFound": "Сторінку не знайдено"
     }
   }
 }

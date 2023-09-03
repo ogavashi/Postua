@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 
-import { AppBar, Box, Button, Divider, IconButton, Toolbar, colors } from '@mui/material';
+import { useTranslation } from 'next-i18next';
+
+import { AppBar, Box, Button, IconButton, Toolbar } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -13,6 +15,8 @@ export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+
+  const { t } = useTranslation();
 
   const handleOpenModal = useCallback(() => setShowModal(true), []);
 
@@ -35,7 +39,12 @@ export const Header = () => {
           <Box display='flex' justifyContent='space-between' alignItems='center' width='100%'>
             <Logo sx={{ display: { xs: 'none', md: 'flex' } }} />
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton size='large' onClick={handleDrawerToggle} color='inherit'>
+              <IconButton
+                size='large'
+                onClick={handleDrawerToggle}
+                color='inherit'
+                sx={{ p: 0, pr: 1 }}
+              >
                 <MenuIcon color='secondary' />
               </IconButton>
               <Logo sx={{ display: { xs: 'flex', md: 'none', alignItems: 'center' } }} />
@@ -52,16 +61,16 @@ export const Header = () => {
                       color='secondary'
                       startIcon={<EditNoteIcon />}
                     >
-                      Post
+                      {t('layout.ui.post')}
                     </Button>
                     <ProfileBar />
                   </>
                 ) : (
                   <Button variant='contained' color='secondary' onClick={handleOpenModal}>
-                    Login
+                    {t('layout.ui.login')}
                   </Button>
                 )}
-                <IconButton color='secondary' onClick={handleSettingsToggle}>
+                <IconButton color='secondary' onClick={handleSettingsToggle} sx={{ p: 0 }}>
                   <SettingsIcon />
                 </IconButton>
               </Box>

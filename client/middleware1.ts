@@ -12,10 +12,10 @@ export function middleware(request: NextRequest) {
     return;
   }
 
-  const defaultLocale = request.nextUrl.defaultLocale;
   const preferedLocale = request.cookies.get('NEXT_LOCALE')?.value;
+  const requestedLocale = request.nextUrl.locale;
 
-  const locale = preferedLocale || defaultLocale;
+  const locale = preferedLocale || requestedLocale;
 
   if (request.nextUrl.locale !== locale) {
     return NextResponse.redirect(

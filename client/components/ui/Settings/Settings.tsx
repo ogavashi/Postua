@@ -1,3 +1,5 @@
+import { useTranslation } from 'next-i18next';
+
 import { Box, Divider, IconButton, Typography } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,6 +14,8 @@ interface SettingsProps {
 }
 
 export const Settings: React.FC<SettingsProps> = ({ isOpen, handleSettingsToggle }) => {
+  const { t } = useTranslation();
+
   return (
     <Drawer
       anchor='right'
@@ -30,16 +34,16 @@ export const Settings: React.FC<SettingsProps> = ({ isOpen, handleSettingsToggle
             width='100%'
             mb={1}
           >
-            <Typography variant='h4'>Settings</Typography>
+            <Typography variant='h4'>{t('layout.ui.settings')}</Typography>
             <IconButton color='primary' size='small' onClick={handleSettingsToggle}>
               <CloseIcon />
             </IconButton>
           </Box>
           <Divider />
         </Box>
-        <Typography>Language</Typography>
+        <Typography>{t('layout.ui.language')}</Typography>
         <LanguageSelect />
-        <Typography>Mode</Typography>
+        <Typography>{t('layout.ui.mode')}</Typography>
         <ColorToggle />
       </Box>
     </Drawer>
