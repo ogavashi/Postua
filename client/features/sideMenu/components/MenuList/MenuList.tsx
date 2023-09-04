@@ -20,7 +20,7 @@ export const MenuList = () => {
     [router]
   );
 
-  const categoryKey = getPathKey(router.pathname);
+  const categoryKey = getPathKey(router.pathname) || constants.MENU_ITEMS[0].key;
 
   return (
     <List sx={{ display: 'flex', flexDirection: 'column' }}>

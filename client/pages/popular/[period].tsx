@@ -15,7 +15,6 @@ const Popular: NextPageWithLayout = () => {
     <>
       <Box my='12px'>
         <SelectFilter options={constants.FILTERS_TIME} />
-        <NewsCard />
         <Button
           variant='contained'
           color='secondary'
