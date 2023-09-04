@@ -1,1 +1,1 @@
-export { useFormatError } from './useFormatError';
+export { useTranslatedErrors } from './useTranslatedErrors';

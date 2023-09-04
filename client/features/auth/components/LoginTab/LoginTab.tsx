@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 
 import { LoginDto, loginSchema } from '@/features/auth';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useFormatError } from '@/hooks';
+import { useTranslatedErrors } from '@/hooks';
 
 interface LoginTabProps {
   onToggle: () => void;
@@ -24,7 +24,8 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle }) => {
     mode: 'onSubmit',
     resolver: yupResolver(loginSchema),
   });
-  const formatErrorMessage = useFormatError();
+
+  const translatedErrors = useTranslatedErrors(errors);
 
   const { t } = useTranslation();
 
@@ -55,7 +56,7 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle }) => {
         variant='outlined'
         type='email'
         size='small'
-        helperText={formatErrorMessage(errors?.email?.message) || ' '}
+        helperText={translatedErrors?.email || ' '}
         error={!!errors?.email}
         {...register('email')}
       />
@@ -75,7 +76,7 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle }) => {
         }}
         type={showPassword ? 'text' : 'password'}
         size='small'
-        helperText={formatErrorMessage(errors?.password?.message) || ' '}
+        helperText={translatedErrors?.password || ' '}
         error={!!errors?.password}
         {...register('password')}
       />

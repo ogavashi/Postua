@@ -3,14 +3,14 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { RegisterDto, registerSchema } from '@/features/auth';
-import { useFormatError } from '@/hooks';
+import { useTranslatedErrors } from '@/hooks';
 
 interface RegisterTabProps {
   onToggle: () => void;
@@ -30,7 +30,7 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle }) => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const formatErrorMessage = useFormatError();
+  const translatedErrors = useTranslatedErrors(errors);
 
   const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
 
@@ -57,7 +57,7 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle }) => {
         variant='outlined'
         type='email'
         size='small'
-        helperText={formatErrorMessage(errors?.fullName?.message) || ' '}
+        helperText={translatedErrors?.fullName || ' '}
         error={!!errors?.fullName}
         {...register('fullName')}
       />
@@ -66,7 +66,7 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle }) => {
         label={t('layout.ui.email')}
         variant='outlined'
         size='small'
-        helperText={formatErrorMessage(errors?.email?.message) || ' '}
+        helperText={translatedErrors?.email || ' '}
         error={!!errors?.email}
         {...register('email')}
       />
@@ -86,7 +86,7 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle }) => {
         type={showPassword ? 'text' : 'password'}
         size='small'
         autoComplete='true'
-        helperText={formatErrorMessage(errors?.password?.message) || ' '}
+        helperText={translatedErrors?.password || ' '}
         error={!!errors?.password}
         {...register('password')}
       />
@@ -97,7 +97,7 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle }) => {
         type={showPassword ? 'text' : 'password'}
         size='small'
         autoComplete='true'
-        helperText={formatErrorMessage(errors?.confirmPassword?.message) || ' '}
+        helperText={translatedErrors?.confirmPassword || ' '}
         error={!!errors?.confirmPassword}
         {...register('confirmPassword')}
       />
