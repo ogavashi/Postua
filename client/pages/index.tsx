@@ -4,8 +4,11 @@ import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
+
 import { Card as NewsCard } from '@/features/news';
 import { SelectFilter } from '@/features/filters';
+import { PostList } from '@/features/post';
+
 import { constants } from '@/common';
 
 const Popular: NextPageWithLayout = () => {
@@ -16,6 +19,8 @@ const Popular: NextPageWithLayout = () => {
       <Box my='12px'>
         <SelectFilter pageKey={'popular'} options={constants.FILTERS_TIME} />
         <NewsCard />
+
+        <PostList />
         <Button
           variant='contained'
           color='secondary'
