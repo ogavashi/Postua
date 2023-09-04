@@ -44,4 +44,21 @@ export const constants = {
       key: 'subscriptions',
     },
   ],
+  FILTERS_TIME: [
+    {
+      key: 'today',
+    },
+    {
+      key: 'week',
+    },
+    {
+      key: 'month',
+    },
+    {
+      key: 'year',
+    },
+    {
+      key: 'all',
+    },
+  ],
 };

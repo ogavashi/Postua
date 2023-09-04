@@ -30,6 +30,13 @@
       "register": "Register",
       "fullName": "Full name",
       "confirmPassword": "Confirm password"
+    },
+    "filters": {
+      "today": "Today",
+      "week": "Week",
+      "month": "Month",
+      "year": "Year",
+      "all": "All time"
     }
   }
 }
