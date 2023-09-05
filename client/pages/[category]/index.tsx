@@ -4,32 +4,38 @@ import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
-import { Card as NewsCard } from '@/features/news';
-import { GetServerSideProps } from 'next';
 
-const Category: NextPageWithLayout = () => {
+import { GetServerSideProps } from 'next';
+import { Category, SubscribersCard } from '@/features/category';
+import { PostList } from '@/features/post';
+import { constants } from '@/common';
+import { useEffect } from 'react';
+
+const CategoryPage: NextPageWithLayout = () => {
   const router = useRouter();
 
+  const { category: categoryKey } = router.query;
+
+  const category = constants.CATEGORIES.find(({ key }) => categoryKey === key);
+
+  if (!category) {
+    return null;
+  }
   return (
     <>
-      <Box my='12px'>
-        <Typography>Category</Typography>
-        <NewsCard />
-        <Button
-          variant='contained'
-          color='secondary'
-          onClick={() => router.push('/test')}
-          sx={{ marginTop: 1 }}
-        >
-          Test
-        </Button>
+      <Box>
+        <Category category={category} />
+        <Box display='flex' justifyContent='space-between' gap={2}>
+          <PostList sx={{ width: { xs: '100%', md: '100%', lg: 720 } }} />
+          <SubscribersCard />
+        </Box>
       </Box>
     </>
   );
 };
 
-Category.getLayout = (page: React.ReactNode) => {
-  return <AppLayout>{page}</AppLayout>;
+CategoryPage.getLayout = (page: React.ReactNode) => {
+  return <AppLayout maxWidth='lg'>{page}</AppLayout>;
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -40,4 +46,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default Category;
+export default CategoryPage;

@@ -1,10 +1,14 @@
-import { Box } from '@mui/material';
+import { Box, SxProps, Theme } from '@mui/material';
 
 import { PostCard } from '@/features/post';
 
-export const PostList = () => {
+interface PostListprops {
+  sx?: SxProps<Theme>;
+}
+
+export const PostList: React.FC<PostListprops> = ({ sx = [] }) => {
   return (
-    <Box>
+    <Box sx={{ width: { xs: '100%', md: 640 }, ...sx }}>
       <PostCard />
       <PostCard />
       <PostCard />

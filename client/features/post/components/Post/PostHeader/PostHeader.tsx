@@ -33,16 +33,10 @@ export const PostHeader = () => {
         </MuiTypography>
       </Box>
       <Box>
-        <Typography
-          textAlign='justify'
-          variant='h6'
-          component={NextLinkComposed}
-          fontWeight={800}
-          to={{ pathname: `/games/123` }}
-        >
+        <MuiTypography textAlign='justify' variant='h6' fontWeight={800}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua.
-        </Typography>
+        </MuiTypography>
       </Box>
     </Box>
   );
