@@ -1,5 +1,5 @@
 import { NextLinkComposed } from '@/components';
-import { Box, IconButton, useTheme } from '@mui/material';
+import { Box, IconButton, useTheme, Typography as MuiTypography } from '@mui/material';
 
 import { Typography } from '@/features/post';
 
@@ -37,7 +37,7 @@ export const PostFooter = () => {
             }}
           >
             <FavoriteBorderIcon sx={{ fontSize: 21, position: 'relative', mr: 0.5 }} />
-            <Typography>15</Typography>
+            <MuiTypography>15</MuiTypography>
           </IconButton>
           <IconButton
             size='small'
@@ -50,7 +50,7 @@ export const PostFooter = () => {
             }}
           >
             <InsertCommentIcon sx={{ fontSize: 21, position: 'relative', mr: 0.5 }} />
-            <Typography>152</Typography>
+            <MuiTypography>152</MuiTypography>
           </IconButton>
           <IconButton
             size='small'
