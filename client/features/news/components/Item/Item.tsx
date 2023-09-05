@@ -4,11 +4,15 @@ import InsertCommentIcon from '@mui/icons-material/InsertComment';
 import { NextLinkComposed } from '@/components';
 import { Typography } from './Typoghraphy.styled';
 
-export const Item = () => {
+interface ItemProps {
+  isLast?: boolean;
+}
+
+export const Item: React.FC<ItemProps> = ({ isLast }) => {
   const theme = useTheme();
 
   return (
-    <Box mb={2} width='100%'>
+    <Box mb={isLast ? 1 : 2} width='100%'>
       <MuiTypography textAlign='justify'>
         <Typography component={NextLinkComposed} to={{ pathname: 'news/123' }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies maximus risus vel

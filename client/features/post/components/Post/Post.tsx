@@ -1,17 +1,18 @@
 import { Box, Paper } from '@mui/material';
-
 import { PostHeader } from './PostHeader';
-import { PostTitle } from './PostTitle';
 import { PostImage } from './PostImage';
+import { PostStats } from './PostStats';
+import { PostText } from './PostText';
 import { PostFooter } from './PostFooter';
 
-export const PostCard = () => {
+export const Post = () => {
   return (
-    <Paper sx={{ width: { xs: '100%', md: 640 }, my: 3 }}>
-      <Box display='flex' flexDirection='column' gap={1}>
+    <Paper>
+      <Box>
         <PostHeader />
-        <PostTitle />
         <PostImage />
+        <PostStats />
+        <PostText />
         <PostFooter />
       </Box>
     </Paper>

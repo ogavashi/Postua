@@ -4,31 +4,23 @@ import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
-import { Card as NewsCard } from '@/features/news';
 
-const Post: NextPageWithLayout = () => {
+import { Post } from '@/features/post';
+
+const CategoryPost: NextPageWithLayout = () => {
   const router = useRouter();
 
   return (
     <>
       <Box my='12px'>
-        <Typography>Post by id</Typography>
-        <NewsCard />
-        <Button
-          variant='contained'
-          color='secondary'
-          onClick={() => router.push('/test')}
-          sx={{ marginTop: 1 }}
-        >
-          Test
-        </Button>
+        <Post />
       </Box>
     </>
   );
 };
 
-Post.getLayout = (page: React.ReactNode) => {
-  return <AppLayout>{page}</AppLayout>;
+CategoryPost.getLayout = (page: React.ReactNode) => {
+  return <AppLayout maxWidth='lg'>{page}</AppLayout>;
 };
 
 export async function getServerSideProps({ locale }: { locale: string }) {
@@ -39,4 +31,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   };
 }
 
-export default Post;
+export default CategoryPost;

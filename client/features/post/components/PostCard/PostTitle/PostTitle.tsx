@@ -8,7 +8,7 @@ export const PostTitle = () => {
       textAlign='justify'
       variant='h6'
       component={NextLinkComposed}
-      to={{ pathname: `/` }}
+      to={{ pathname: `/games/123` }}
     >
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
       labore et dolore magna aliqua.

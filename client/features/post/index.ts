@@ -1,9 +1,1 @@
-export {
-  PostCard,
-  PostList,
-  PostHeader,
-  PostFooter,
-  Typography,
-  PostImage,
-  PostTitle,
-} from './components';
+export { PostCard, PostList, Typography, Post } from './components';
