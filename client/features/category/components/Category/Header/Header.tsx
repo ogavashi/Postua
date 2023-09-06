@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({ category }) => {
     return tab > 0 ? tab : 0;
   }, [router]);
 
-  const [activeTab, setActiveTab] = useState(defaultTab);
+  const [activeTab] = useState(defaultTab);
 
   const handleChageTab = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {

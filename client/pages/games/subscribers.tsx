@@ -1,31 +1,23 @@
-import { Box, Button, ButtonGroup, Paper, Slider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useRouter } from 'next/router';
 
 import { GetServerSideProps } from 'next';
-import { Category, Rules, SubscribersCard } from '@/features/category';
-import { PostList } from '@/features/post';
+import { Category } from '@/features/category';
+import { SubscribersList } from '@/features/subscribers';
 import { constants } from '@/common';
 
 const SubscribersPage: NextPageWithLayout = () => {
-  const router = useRouter();
+  const category = constants.CATEGORIES[0];
 
-  const { category: categoryKey } = router.query;
-
-  const category = constants.CATEGORIES.find(({ key }) => categoryKey === key);
-
-  if (!category) {
-    return null;
-  }
   return (
     <>
       <Box>
         <Category category={category} />
-        <Box display='flex' justifyContent='space-between' gap={2}>
-          Subscribers
+        <Box mt={2.85}>
+          <SubscribersList />
         </Box>
       </Box>
     </>

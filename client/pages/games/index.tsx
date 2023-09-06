@@ -1,25 +1,20 @@
-import { Box, Button, ButtonGroup, Paper, Slider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { NextPageWithLayout } from '../_app';
+import { GetServerSideProps } from 'next';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 
-import { GetServerSideProps } from 'next';
-import { Category, Rules, SubscribersCard } from '@/features/category';
+import { Category } from '@/features/category';
+import { SubscribersCard } from '@/features/subscribers';
 import { PostList } from '@/features/post';
+import { RulesCard } from '@/features/rules';
 import { constants } from '@/common';
 
 const CategoryPage: NextPageWithLayout = () => {
-  const router = useRouter();
+  const category = constants.CATEGORIES[0];
 
-  const { category: categoryKey } = router.query;
-
-  const category = constants.CATEGORIES.find(({ key }) => categoryKey === key);
-
-  if (!category) {
-    return null;
-  }
   return (
     <>
       <Box>
@@ -39,7 +34,7 @@ const CategoryPage: NextPageWithLayout = () => {
             }}
           >
             <SubscribersCard categoryKey={category.key} />
-            <Rules categoryKey={category.key} />
+            <RulesCard categoryKey={category.key} />
           </Box>
         </Box>
       </Box>

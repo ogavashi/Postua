@@ -2,11 +2,11 @@ import { Box, Button, Paper, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 
-interface RulesProps {
+interface RulesCardProps {
   categoryKey: string;
 }
 
-export const Rules: React.FC<RulesProps> = ({ categoryKey }) => {
+export const RulesCard: React.FC<RulesCardProps> = ({ categoryKey }) => {
   const router = useRouter();
 
   const handleNavigate = useCallback(() => {

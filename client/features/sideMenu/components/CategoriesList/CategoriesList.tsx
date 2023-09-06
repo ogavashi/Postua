@@ -20,7 +20,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = ({ handleDrawerTogg
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { category } = router.query;
+  const category = router.pathname.split('/')[1];
 
   const [limit, setLimit] = useState(constants.DEFAULT_AMOUNT);
 
