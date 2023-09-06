@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -12,7 +12,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { constants } from '@/common';
 import { ListItemButton } from '@/features/sideMenu';
 
-export const CategoriesList = () => {
+interface CategoriesListProps {
+  handleDrawerToggle?: () => void;
+}
+
+export const CategoriesList: React.FC<CategoriesListProps> = ({ handleDrawerToggle }) => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -28,6 +32,7 @@ export const CategoriesList = () => {
 
   const handleSelect = useCallback(
     (key: string) => {
+      handleDrawerToggle && handleDrawerToggle();
       router.push(`/${key}`);
     },
     [router]

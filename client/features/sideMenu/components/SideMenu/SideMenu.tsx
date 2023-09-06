@@ -4,9 +4,10 @@ import { CategoriesList, MenuList } from '@/features/sideMenu';
 
 interface SideMenuProps {
   sx?: SxProps<Theme>;
+  handleDrawerToggle?: () => void;
 }
 
-export const SideMenu: React.FC<SideMenuProps> = ({ sx = [] }) => {
+export const SideMenu: React.FC<SideMenuProps> = ({ sx = [], handleDrawerToggle }) => {
   return (
     <Box
       flexDirection='column'
@@ -18,8 +19,8 @@ export const SideMenu: React.FC<SideMenuProps> = ({ sx = [] }) => {
       left={0}
       sx={{ ...sx }}
     >
-      <MenuList />
-      <CategoriesList />
+      <MenuList handleDrawerToggle={handleDrawerToggle} />
+      <CategoriesList handleDrawerToggle={handleDrawerToggle} />
     </Box>
   );
 };

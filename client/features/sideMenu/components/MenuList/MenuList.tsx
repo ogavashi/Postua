@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
@@ -9,13 +9,18 @@ import { List, ListItem, ListItemText } from '@mui/material';
 import { constants } from '@/common';
 import { ListItemButton, getPathKey } from '@/features/sideMenu';
 
-export const MenuList = () => {
+interface MenuListProps {
+  handleDrawerToggle?: () => void;
+}
+
+export const MenuList: React.FC<MenuListProps> = ({ handleDrawerToggle }) => {
   const { t } = useTranslation();
   const router = useRouter();
 
   const handleSelect = useCallback(
     (key: string) => {
       router.push(`/${key}`);
+      handleDrawerToggle && handleDrawerToggle();
     },
     [router]
   );

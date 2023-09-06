@@ -10,7 +10,7 @@ import { Category, Rules, SubscribersCard } from '@/features/category';
 import { PostList } from '@/features/post';
 import { constants } from '@/common';
 
-const CategoryPage: NextPageWithLayout = () => {
+const SubscribersPage: NextPageWithLayout = () => {
   const router = useRouter();
 
   const { category: categoryKey } = router.query;
@@ -25,29 +25,14 @@ const CategoryPage: NextPageWithLayout = () => {
       <Box>
         <Category category={category} />
         <Box display='flex' justifyContent='space-between' gap={2}>
-          <PostList sx={{ width: { xs: '100%', md: '100%', lg: 720 } }} />
-          <Box
-            sx={{
-              position: 'sticky',
-              top: 80,
-              height: 'fit-content',
-              display: { xs: 'none', lg: 'flex' },
-              flexDirection: 'column',
-              gap: 2,
-              mt: 2.85,
-              maxWidth: 410,
-            }}
-          >
-            <SubscribersCard categoryKey={category.key} />
-            <Rules categoryKey={category.key} />
-          </Box>
+          Subscribers
         </Box>
       </Box>
     </>
   );
 };
 
-CategoryPage.getLayout = (page: React.ReactNode) => {
+SubscribersPage.getLayout = (page: React.ReactNode) => {
   return <AppLayout maxWidth='lg'>{page}</AppLayout>;
 };
 
@@ -59,4 +44,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default CategoryPage;
+export default SubscribersPage;

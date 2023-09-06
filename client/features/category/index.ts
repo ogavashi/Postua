@@ -1,2 +1,2 @@
-export { Category, SubscribersCard } from './components';
+export { Category, SubscribersCard, Rules } from './components';
 export type { CategoryDto } from './dto';

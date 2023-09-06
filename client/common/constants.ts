@@ -70,4 +70,5 @@ export const constants = {
       key: 'all',
     },
   ],
+  CATEGORY_TABS: ['posts', 'rules', 'subscribers'],
 };

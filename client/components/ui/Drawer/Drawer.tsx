@@ -38,7 +38,7 @@ export const Drawer: React.FC<DrawerProps> = ({ isOpen, handleDrawerToggle }) =>
             <SearchBar sx={{ width: '100%' }} />
           </Box>
           <Divider />
-          <SideMenu />
+          <SideMenu handleDrawerToggle={handleDrawerToggle} />
         </Box>
       </MuiDrawer>
     </nav>

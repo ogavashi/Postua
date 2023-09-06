@@ -1,22 +1,30 @@
+import { useCallback } from 'react';
+
 import { useTranslation } from 'next-i18next';
+
+import { useRouter } from 'next/router';
 
 import { Box, Button, Paper, Typography } from '@mui/material';
 
 import { Subscriber } from './Subsciber';
 
-export const SubscribersCard = () => {
+interface SubscribersCardProps {
+  categoryKey: string;
+}
+
+export const SubscribersCard: React.FC<SubscribersCardProps> = ({ categoryKey }) => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
+  const handleNavigate = useCallback(() => {
+    router.push(`${categoryKey}/subscribers`);
+  }, [router]);
 
   return (
     <Paper
       sx={{
-        maxWidth: 410,
-        height: 'fit-content',
-        display: { xs: 'none', lg: 'flex' },
         p: 2,
-        mt: 2.85,
-        position: 'sticky',
-        top: 80,
       }}
     >
       <Box>
@@ -30,7 +38,7 @@ export const SubscribersCard = () => {
               <Subscriber key={i} />
             ))}
         </Box>
-        <Button>Show all</Button>
+        <Button onClick={handleNavigate}>Show all</Button>
       </Box>
     </Paper>
   );
