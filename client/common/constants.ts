@@ -67,6 +67,20 @@ export const constants = {
       key: 'year',
     },
     {
+      key: 'allTime',
+    },
+  ],
+  FILTERS_RARING: [
+    {
+      key: 'from-10',
+    },
+    {
+      key: 'from5',
+    },
+    {
+      key: 'from10',
+    },
+    {
       key: 'all',
     },
   ],

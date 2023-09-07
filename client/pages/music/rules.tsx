@@ -13,14 +13,12 @@ const RulesPage: NextPageWithLayout = () => {
   const category = constants.CATEGORIES[1];
 
   return (
-    <>
+    <Box display='flex' flexDirection='column' gap={2}>
+      <Category category={category} />
       <Box>
-        <Category category={category} />
-        <Box mt={2.85}>
-          <Rules />
-        </Box>
+        <Rules />
       </Box>
-    </>
+    </Box>
   );
 };
 

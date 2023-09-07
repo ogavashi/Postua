@@ -7,24 +7,14 @@ import { useRouter } from 'next/router';
 import { Card as NewsCard } from '@/features/news';
 import { SelectFilter } from '@/features/filters';
 import { constants } from '@/common';
+import { PostList } from '@/features/post';
 
 const Popular: NextPageWithLayout = () => {
-  const router = useRouter();
-
   return (
-    <>
-      <Box my='12px'>
-        <SelectFilter options={constants.FILTERS_TIME} />
-        <Button
-          variant='contained'
-          color='secondary'
-          onClick={() => router.push('/test')}
-          sx={{ marginTop: 1 }}
-        >
-          Test
-        </Button>
-      </Box>
-    </>
+    <Box my='12px' display='flex' flexDirection='column' gap={2}>
+      <SelectFilter options={constants.FILTERS_TIME} />
+      <PostList />
+    </Box>
   );
 };
 

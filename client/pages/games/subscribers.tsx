@@ -13,14 +13,12 @@ const SubscribersPage: NextPageWithLayout = () => {
   const category = constants.CATEGORIES[0];
 
   return (
-    <>
+    <Box display='flex' flexDirection='column' gap={2}>
+      <Category category={category} />
       <Box>
-        <Category category={category} />
-        <Box mt={2.85}>
-          <SubscribersList />
-        </Box>
+        <SubscribersList />
       </Box>
-    </>
+    </Box>
   );
 };
 

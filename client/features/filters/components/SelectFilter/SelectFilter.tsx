@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
@@ -9,12 +9,22 @@ import { MenuItem } from '@/components';
 interface SelectFilterProps {
   options: { key: string }[];
   pageKey?: string;
+  defaultValue?: { key: string };
 }
 
-export const SelectFilter: React.FC<SelectFilterProps> = ({ options, pageKey }) => {
+export const SelectFilter: React.FC<SelectFilterProps> = ({
+  options,
+  pageKey,
+  defaultValue = options[0],
+}) => {
   const router = useRouter();
 
-  const [active, setActive] = useState((router.query.period as string) || options[0].key);
+  const pathFilter = useMemo(
+    () => (Object.values(router.query)[0] as string) || defaultValue.key,
+    [router]
+  );
+
+  const [active, setActive] = useState(pathFilter || defaultValue.key);
 
   const { t } = useTranslation();
 
@@ -24,7 +34,7 @@ export const SelectFilter: React.FC<SelectFilterProps> = ({ options, pageKey }) 
 
     setActive(key);
 
-    if (key === options[0].key) {
+    if (key === defaultValue.key) {
       router.push(`/${page}`);
 
       return;
@@ -34,7 +44,7 @@ export const SelectFilter: React.FC<SelectFilterProps> = ({ options, pageKey }) 
   };
 
   return (
-    <Select value={active} onChange={handleChange} size='small' sx={{ width: 120, mb: 1 }}>
+    <Select value={active} onChange={handleChange} size='small' sx={{ width: 120 }}>
       {options.map(({ key }) => (
         <MenuItem value={key} key={key}>
           {t(`layout.filters.${key}`)}

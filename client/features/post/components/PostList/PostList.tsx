@@ -8,7 +8,12 @@ interface PostListprops {
 
 export const PostList: React.FC<PostListprops> = ({ sx = [] }) => {
   return (
-    <Box sx={{ width: { xs: '100%', md: 640 }, ...sx }}>
+    <Box
+      display='flex'
+      flexDirection='column'
+      gap={2}
+      sx={{ width: { xs: '100%', md: 640 }, ...sx }}
+    >
       <PostCard />
       <PostCard />
       <PostCard />

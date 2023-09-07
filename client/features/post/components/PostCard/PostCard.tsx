@@ -7,7 +7,7 @@ import { PostFooter } from './PostFooter';
 
 export const PostCard = () => {
   return (
-    <Paper sx={{ my: 3 }}>
+    <Paper>
       <Box display='flex' flexDirection='column' gap={1}>
         <PostHeader />
         <PostTitle />

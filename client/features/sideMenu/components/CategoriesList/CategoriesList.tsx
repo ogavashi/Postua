@@ -1,7 +1,5 @@
 import React, { useState, useCallback } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { useTranslation } from 'next-i18next';
 
 import { Button, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
@@ -11,6 +9,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import { constants } from '@/common';
 import { ListItemButton } from '@/features/sideMenu';
+import { useNavigation } from '@/hooks';
 
 interface CategoriesListProps {
   handleDrawerToggle?: () => void;
@@ -18,9 +17,8 @@ interface CategoriesListProps {
 
 export const CategoriesList: React.FC<CategoriesListProps> = ({ handleDrawerToggle }) => {
   const { t } = useTranslation();
-  const router = useRouter();
 
-  const category = router.pathname.split('/')[1];
+  const { category, navigateCategory } = useNavigation({ sideFunc: handleDrawerToggle });
 
   const [limit, setLimit] = useState(constants.DEFAULT_AMOUNT);
 
@@ -29,14 +27,6 @@ export const CategoriesList: React.FC<CategoriesListProps> = ({ handleDrawerTogg
       prev === constants.DEFAULT_AMOUNT ? constants.CATEGORIES.length : constants.DEFAULT_AMOUNT
     );
   }, []);
-
-  const handleSelect = useCallback(
-    (key: string) => {
-      handleDrawerToggle && handleDrawerToggle();
-      router.push(`/${key}`);
-    },
-    [router]
-  );
 
   const MoreButton = () => {
     const commonProps = {
@@ -59,7 +49,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = ({ handleDrawerTogg
     <List sx={{ display: 'flex', flexDirection: 'column' }}>
       {constants.CATEGORIES.slice(0, limit).map(({ key, icon }) => (
         <ListItem key={key} sx={{ py: 0.5, px: 1.5 }}>
-          <ListItemButton selected={category === key} onClick={() => handleSelect(key)}>
+          <ListItemButton selected={category === key} onClick={() => navigateCategory(key)}>
             <ListItemIcon sx={{ fontSize: 24, minWidth: 32, mr: 1.15 }}>{icon}</ListItemIcon>
             <ListItemText primary={t(`layout.categories.${key}`)} />
           </ListItemButton>

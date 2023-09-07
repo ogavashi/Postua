@@ -1,44 +1,26 @@
 import { Box } from '@mui/material';
 import { NextPageWithLayout } from '../_app';
 import { GetServerSideProps } from 'next';
-import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 
-import { Category } from '@/features/category';
-import { SubscribersCard } from '@/features/subscribers';
+import { AppLayout } from '@/components';
+import { Category, SideCards } from '@/features/category';
 import { PostList } from '@/features/post';
-import { RulesCard } from '@/features/rules';
 import { constants } from '@/common';
 
 const CategoryPage: NextPageWithLayout = () => {
   const category = constants.CATEGORIES[4];
 
   return (
-    <>
-      <Box>
-        <Category category={category} />
-        <Box display='flex' justifyContent='space-between' gap={2}>
-          <PostList sx={{ width: { xs: '100%', md: '100%', lg: 720 } }} />
-          <Box
-            sx={{
-              position: 'sticky',
-              top: 80,
-              height: 'fit-content',
-              display: { xs: 'none', lg: 'flex' },
-              flexDirection: 'column',
-              gap: 2,
-              mt: 2.85,
-              maxWidth: 410,
-            }}
-          >
-            <SubscribersCard categoryKey={category.key} />
-            <RulesCard categoryKey={category.key} />
-          </Box>
-        </Box>
+    <Box display='flex' flexDirection='column' gap={2}>
+      <Category category={category} />
+      <Box display='flex' justifyContent='space-between' gap={2}>
+        <PostList sx={{ width: { xs: '100%', md: '100%', lg: 720 } }} />
+        <SideCards category={category} />
       </Box>
-    </>
+    </Box>
   );
 };
 

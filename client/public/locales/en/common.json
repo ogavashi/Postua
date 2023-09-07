@@ -36,7 +36,11 @@
       "week": "Week",
       "month": "Month",
       "year": "Year",
-      "all": "All time"
+      "allTime": "All time",
+      "from-10": "From -10",
+      "from5": "From +5",
+      "from10": "From +10",
+      "all": "All"
     }
   }
 }

@@ -16,6 +16,7 @@ import { ThemeWrapper } from '@/components';
 import { NextPage } from 'next';
 
 import { appWithTranslation } from 'next-i18next';
+import { usePreserveScroll } from '@/hooks';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -33,6 +34,8 @@ function MyApp(props: AppPropsWithLayout) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   const getLayout = Component.getLayout ?? ((page) => page);
+
+  usePreserveScroll();
 
   return (
     <CacheProvider value={emotionCache}>

@@ -9,6 +9,7 @@ import { constants } from '@/common';
 import { Tab } from './Tab.styled';
 import { CategoryDto } from '@/features/category';
 import { useRouter } from 'next/router';
+import { useNavigation } from '@/hooks';
 
 interface HeaderProps {
   category: CategoryDto;
@@ -16,32 +17,10 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ category }) => {
   const { t } = useTranslation();
-  const router = useRouter();
 
-  const defaultTab = useMemo(() => {
-    const pathnameTab = router.pathname.split('/').at(-1);
-
-    const tab = constants.CATEGORY_TABS.findIndex((key: string) => key === pathnameTab);
-
-    return tab > 0 ? tab : 0;
-  }, [router]);
+  const { defaultTab, navigateTabs } = useNavigation({ pageCategory: category });
 
   const [activeTab] = useState(defaultTab);
-
-  const handleChageTab = useCallback(
-    (event: React.SyntheticEvent, newValue: number) => {
-      const key = constants.CATEGORY_TABS[newValue];
-
-      if (key === 'posts') {
-        router.push(`/${category.key}`);
-
-        return;
-      }
-
-      router.push(`/${category.key}/${key}`);
-    },
-    [router]
-  );
 
   return (
     <Box pt={1} px={2} display='flex' flexDirection='column' gap={2}>
@@ -59,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ category }) => {
           291 321 subscribers
         </Typography>
       </Box>
-      <Tabs value={activeTab} onChange={handleChageTab}>
+      <Tabs value={activeTab} onChange={navigateTabs}>
         <Tab label='Posts' key='posts' />
         <Tab label='Subscribers' key='subscribers' />
         <Tab label='Rules' key='rules' />
