@@ -1,5 +1,4 @@
-import { NextLinkComposed } from '@/components';
-import { Typography } from '@/features/post';
+import { NextLinkComposed, Typography } from '@/components';
 
 export const PostTitle = () => {
   return (

@@ -14,9 +14,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
-import { Typography } from '@/features/post';
 import { useCallback, useState } from 'react';
 import { Box } from './Box.styled';
+import { Typography } from '@/components';
 
 export const PostStats = () => {
   const [showStats, setShowStats] = useState(false);

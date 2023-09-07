@@ -1,10 +1,8 @@
-import { Box, Button, ButtonGroup, Paper, Slider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useRouter } from 'next/router';
-import { Card as NewsCard } from '@/features/news';
 import { SelectFilter } from '@/features/filters';
 import { constants } from '@/common';
 import { PostList } from '@/features/post';

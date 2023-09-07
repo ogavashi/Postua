@@ -3,9 +3,8 @@ import { useTranslation } from 'next-i18next';
 import { Box, IconButton, Typography as MuiTypography, useTheme } from '@mui/material';
 
 import { styles } from './style';
-import { NextLinkComposed } from '@/components';
+import { NextLinkComposed, Typography } from '@/components';
 import { constants } from '@/common';
-import { Typography } from '@/features/post';
 
 export const PostHeader = () => {
   const { t } = useTranslation();

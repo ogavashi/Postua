@@ -22,7 +22,7 @@ export const Header = () => {
 
   const handleCloseModal = useCallback(() => setShowModal(false), []);
 
-  const isAuthorized = false;
+  const isAuthorized = true;
 
   const handleDrawerToggle = useCallback(() => {
     setMobileOpen((prevState) => !prevState);

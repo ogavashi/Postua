@@ -1,29 +1,15 @@
-import { Box, Button, ButtonGroup, Paper, Slider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useRouter } from 'next/router';
-import { Card as NewsCard } from '@/features/news';
+import { SubscriptionsList } from '@/features/subscriptions';
 
 const Subscriptions: NextPageWithLayout = () => {
-  const router = useRouter();
-
   return (
-    <>
-      <Box my='12px'>
-        <Typography>Subscriptions</Typography>
-        <NewsCard />
-        <Button
-          variant='contained'
-          color='secondary'
-          onClick={() => router.push('/test')}
-          sx={{ marginTop: 1 }}
-        >
-          Test
-        </Button>
-      </Box>
-    </>
+    <Box display='flex' flexDirection='column' gap={2} my='12px'>
+      <SubscriptionsList />
+    </Box>
   );
 };
 

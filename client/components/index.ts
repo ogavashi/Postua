@@ -12,5 +12,6 @@ export {
   Settings,
   ColorToggle,
   NextLinkComposed,
+  Typography,
 } from './ui';
 export { AppLayout } from './layout';

@@ -5,8 +5,7 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import { Box, IconButton, Typography as MuiTypography, useTheme } from '@mui/material';
 
 import { constants } from '@/common';
-import { NextLinkComposed } from '@/components';
-import { Typography } from '@/features/post';
+import { NextLinkComposed, Typography } from '@/components';
 
 import { styles } from './style';
 

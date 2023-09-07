@@ -1,1 +1,1 @@
-export { PostCard, PostList, Typography, Post } from './components';
+export { PostCard, PostList, Post } from './components';

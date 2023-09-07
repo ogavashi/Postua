@@ -1,8 +1,7 @@
 import { Avatar, Box, IconButton } from '@mui/material';
 
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { Typography } from '@/features/post';
-import { NextLinkComposed } from '@/components';
+import { NextLinkComposed, Typography } from '@/components';
 
 export const Subscriber = () => {
   return (

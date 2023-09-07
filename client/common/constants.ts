@@ -38,7 +38,7 @@ export const constants = {
       backgroundUrl: 'https://i.pinimg.com/originals/77/ca/a3/77caa32884d735d439ade45ba37feaf2.gif',
     },
   ],
-  DEFAULT_AMOUNT: 5,
+  DEFAULT_AMOUNT: 4,
   MENU_ITEMS: [
     {
       icon: WhatshotIcon,

@@ -1,7 +1,5 @@
-import { NextLinkComposed } from '@/components';
+import { NextLinkComposed, Typography } from '@/components';
 import { Box, IconButton, useTheme, Typography as MuiTypography } from '@mui/material';
-
-import { Typography } from '@/features/post';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';

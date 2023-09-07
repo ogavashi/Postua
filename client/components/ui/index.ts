@@ -11,3 +11,4 @@ export { MenuItem } from './MenuItem';
 export { Settings } from './Settings';
 export { ColorToggle } from './ColorToggle';
 export { NextLinkComposed } from './Link';
+export { Typography } from './Typography';
