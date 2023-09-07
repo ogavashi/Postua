@@ -6,11 +6,12 @@ import { CategoryDto } from '@/features/category';
 
 interface Options {
   sideFunc?: () => void;
-  pageCategory?: CategoryDto;
+  basePath?: string;
+  tabs?: string[];
 }
 
 export const useNavigation = (options: Options) => {
-  const { sideFunc, pageCategory } = options;
+  const { sideFunc, basePath, tabs } = options;
 
   const router = useRouter();
 
@@ -19,7 +20,7 @@ export const useNavigation = (options: Options) => {
   const defaultTab = useMemo(() => {
     const pathnameTab = router.pathname.split('/').at(-1);
 
-    const tab = constants.CATEGORY_TABS.findIndex((key: string) => key === pathnameTab);
+    const tab = tabs?.findIndex((key: string) => key === pathnameTab) || 0;
 
     return tab > 0 ? tab : 0;
   }, [router]);
@@ -34,17 +35,17 @@ export const useNavigation = (options: Options) => {
 
   const navigateTabs = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
-      if (!pageCategory) return;
+      if (!basePath) return;
 
-      const key = constants.CATEGORY_TABS[newValue];
+      const key = tabs?.[newValue];
 
       if (key === 'posts') {
-        router.push(`/${pageCategory.key}`);
+        router.push(`/${basePath}`);
 
         return;
       }
 
-      router.push(`/${pageCategory.key}/${key}`);
+      router.push(`/${basePath}/${key}`);
     },
     [router]
   );

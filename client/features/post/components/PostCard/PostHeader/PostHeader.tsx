@@ -30,10 +30,10 @@ export const PostHeader = () => {
         </Box>
         <Typography
           component={NextLinkComposed}
-          to={{ pathname: `/` }}
+          to={{ pathname: `/user/1337` }}
           display={{ xs: 'none', md: 'flex' }}
         >
-          Author Name
+          Full Name
         </Typography>
         <MuiTypography fontWeight={200} sx={{ opacity: 0.5 }}>
           6 hours

@@ -18,7 +18,10 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ category }) => {
   const { t } = useTranslation();
 
-  const { defaultTab, navigateTabs } = useNavigation({ pageCategory: category });
+  const { defaultTab, navigateTabs } = useNavigation({
+    basePath: category.key,
+    tabs: constants.CATEGORY_TABS,
+  });
 
   const [activeTab] = useState(defaultTab);
 

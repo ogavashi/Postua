@@ -1,1 +1,1 @@
-export { Subscription, SubscriptionsList } from './components';
+export { Subscription, SubscriptionsList, SubscriptionsCard } from './components';

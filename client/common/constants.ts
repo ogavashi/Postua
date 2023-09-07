@@ -85,4 +85,5 @@ export const constants = {
     },
   ],
   CATEGORY_TABS: ['posts', 'subscribers', 'rules'],
+  USER_TABS: ['posts', 'subscribers', 'subscriptions'],
 };
