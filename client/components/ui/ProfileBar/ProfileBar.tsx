@@ -13,6 +13,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { Menu } from './Menu.styled';
 import { MenuItem } from '@/components';
+import { useNavigation } from '@/hooks';
 
 export const ProfileBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -34,6 +35,8 @@ export const ProfileBar = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   }, []);
+
+  const { navigateCategory } = useNavigation();
 
   return (
     <>
@@ -75,7 +78,7 @@ export const ProfileBar = () => {
           </MenuItem>
         </Menu>
         <Menu anchorEl={anchorEl} keepMounted open={!!anchorEl} onClose={handleMenuClose}>
-          <MenuItem onClick={handleMenuClose}>
+          <MenuItem onClick={() => navigateCategory('profile')}>
             <Person2Icon color='primary' />
             Profile
           </MenuItem>

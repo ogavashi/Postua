@@ -10,9 +10,7 @@ interface Options {
   tabs?: string[];
 }
 
-export const useNavigation = (options: Options) => {
-  const { sideFunc, basePath, tabs } = options;
-
+export const useNavigation = (options?: Options) => {
   const router = useRouter();
 
   const category = useMemo(() => router.pathname.split('/')[1], [router]);
@@ -20,14 +18,14 @@ export const useNavigation = (options: Options) => {
   const defaultTab = useMemo(() => {
     const pathnameTab = router.pathname.split('/').at(-1);
 
-    const tab = tabs?.findIndex((key: string) => key === pathnameTab) || 0;
+    const tab = options?.tabs?.findIndex((key: string) => key === pathnameTab) || 0;
 
     return tab > 0 ? tab : 0;
   }, [router]);
 
   const navigateCategory = useCallback(
     (key: string) => {
-      sideFunc && sideFunc();
+      options?.sideFunc && options?.sideFunc();
       router.push(`/${key}`);
     },
     [router]
@@ -35,17 +33,17 @@ export const useNavigation = (options: Options) => {
 
   const navigateTabs = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
-      if (!basePath) return;
+      if (!options?.basePath) return;
 
-      const key = tabs?.[newValue];
+      const key = options?.tabs?.[newValue];
 
       if (key === 'posts') {
-        router.push(`/${basePath}`);
+        router.push(`/${options.basePath}`);
 
         return;
       }
 
-      router.push(`/${basePath}/${key}`);
+      router.push(`/${options.basePath}/${key}`);
     },
     [router]
   );

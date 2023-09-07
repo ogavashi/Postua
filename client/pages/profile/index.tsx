@@ -10,18 +10,17 @@ import { SelectFilter } from '@/features/filters';
 import { PostList } from '@/features/post';
 
 import { constants } from '@/common';
+import { ProfileCard } from '@/features/profile';
 
-const Popular: NextPageWithLayout = () => {
+const Profile: NextPageWithLayout = () => {
   return (
-    <Box my='12px' display='flex' flexDirection='column' gap={2}>
-      <SelectFilter pageKey={'popular'} options={constants.FILTERS_TIME} />
-      <NewsCard />
-      <PostList />
+    <Box my='12px'>
+      <ProfileCard />
     </Box>
   );
 };
 
-Popular.getLayout = (page: React.ReactNode) => {
+Profile.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
@@ -33,4 +32,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   };
 }
 
-export default Popular;
+export default Profile;
