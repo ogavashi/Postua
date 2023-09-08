@@ -18,6 +18,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next-i18next.config.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "next-i18next.config.js",
+    "features/editor/lib/EditorTools.js"
+  ],
   "exclude": ["node_modules"]
 }
