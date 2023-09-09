@@ -1,0 +1,1 @@
+export { updateSchema } from './updateSchema';

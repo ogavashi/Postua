@@ -1,11 +1,14 @@
 import { useState, useCallback } from 'react';
 
+import { useTranslation } from 'next-i18next';
+
 import {
   Avatar,
   Box,
   Button,
   Divider,
   IconButton,
+  InputAdornment,
   Paper,
   TextField,
   Typography,
@@ -13,12 +16,15 @@ import {
 
 import EditIcon from '@mui/icons-material/Edit';
 
-import { UserDto } from '@/features/user';
+import { FormProvider, useForm } from 'react-hook-form';
+import { updateSchema } from '@/features/profile';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FormField } from '@/features/auth';
+import { useTranslatedErrors } from '@/hooks';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-const user: UserDto = {
-  email: 'user@email.com',
+const user: any = {
   fullName: 'Full Name',
-  id: '1337',
   backgroundUrl: 'https://media.tenor.com/6LyXLgF8ksUAAAAd/anime-gif.gif',
   avatarUrl: 'https://giffiles.alphacoders.com/350/35097.gif',
 };
@@ -27,9 +33,37 @@ export const ProfileCard = () => {
   const [userData, setUserData] = useState(user);
   const [disabled, setDisabled] = useState(true);
 
+  const { t } = useTranslation();
+
   const toggleEditable = useCallback(() => setDisabled((prev) => !prev), []);
 
+  const handleChange = useCallback((key: string, value: string) => {
+    setUserData((prev: any) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const methods = useForm({
+    mode: 'onSubmit',
+    defaultValues: userData,
+    resolver: yupResolver(updateSchema),
+  });
+
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+
+  const translatedErrors = useTranslatedErrors(errors);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
+
+  const onSubmit = useCallback((data: any) => {
+    console.log(data);
+  }, []);
+
   const handleCancel = useCallback(() => {
+    methods.reset();
     setDisabled(true);
   }, []);
 
@@ -45,63 +79,135 @@ export const ProfileCard = () => {
           )}
         </Box>
         <Divider />
-        <Box display='flex' flexDirection='column' gap={2} my={2}>
-          <Box
-            display='flex'
-            flexDirection='row'
-            justifyContent='space-between'
-            alignItems='center'
-            gap={0.5}
-          >
-            <Avatar src={userData?.avatarUrl} sx={{ height: 90, width: 90 }} />
+        <FormProvider {...methods}>
+          <Box component='form' onSubmit={handleSubmit(onSubmit)}>
+            <fieldset disabled={disabled} style={{ border: 0, padding: 0 }}>
+              <Box display='flex' flexDirection='column' gap={2} my={2}>
+                <Box
+                  display='flex'
+                  flexDirection='row'
+                  justifyContent='space-between'
+                  alignItems='center'
+                  gap={2}
+                >
+                  <Avatar
+                    src={userData?.avatarUrl}
+                    alt={userData?.fullName[0] || 'A'}
+                    sx={{ height: 90, width: 90 }}
+                  />
 
-            <TextField disabled={disabled} value={userData?.avatarUrl} label='Avatar url' />
+                  <TextField
+                    disabled={disabled}
+                    value={userData?.avatarUrl}
+                    onChange={(e) => handleChange('avatarUrl', e.target.value)}
+                    label='Avatar url'
+                    size='small'
+                    sx={{ width: { xs: '100%', lg: 250 } }}
+                  />
+                </Box>
+                <Box
+                  display='flex'
+                  flexDirection='row'
+                  justifyContent='space-between'
+                  alignItems='center'
+                  gap={2}
+                >
+                  <Box
+                    component='img'
+                    src={userData?.backgroundUrl}
+                    alt='Background image'
+                    sx={{ width: 90 }}
+                  />
+                  <TextField
+                    disabled={disabled}
+                    value={userData?.backgroundUrl}
+                    onChange={(e) => handleChange('backgroundUrl', e.target.value)}
+                    label='Background url'
+                    size='small'
+                    sx={{ width: { xs: '100%', lg: 250 } }}
+                  />
+                </Box>
+                <Divider />
+                <Box
+                  display='flex'
+                  flexDirection={{ xs: 'column', md: 'row' }}
+                  justifyContent='space-between'
+                  alignItems={{ xs: 'flex-start', md: 'center' }}
+                  gap={1}
+                >
+                  <Typography variant='h5' mb={{ xs: 0, lg: 5 }}>
+                    {t(`layout.ui.fullName`)}:
+                  </Typography>
+                  <FormField
+                    fieldKey='fullName'
+                    errors={errors}
+                    translatedErrors={translatedErrors}
+                    sx={{ width: { xs: '100%', lg: 250 }, height: { xs: 'auto', lg: 85 } }}
+                  />
+                </Box>
+                <Box
+                  display='flex'
+                  flexDirection={{ xs: 'column', md: 'row' }}
+                  justifyContent='space-between'
+                  alignItems={{ xs: 'flex-start', md: 'center' }}
+                  gap={1}
+                >
+                  <Typography variant='h5' mb={{ xs: 0, lg: 5 }}>
+                    {t(`layout.ui.password`)}:
+                  </Typography>
+                  <FormField
+                    fieldKey='password'
+                    errors={errors}
+                    translatedErrors={translatedErrors}
+                    type={showPassword ? 'text' : 'password'}
+                    sx={{ width: { xs: '100%', lg: 250 }, height: { xs: 'auto', lg: 85 } }}
+                    inputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <IconButton onClick={handleClickShowPassword} edge='end' color='primary'>
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Box>
+                <Box
+                  display='flex'
+                  flexDirection={{ xs: 'column', md: 'row' }}
+                  justifyContent='space-between'
+                  alignItems={{ xs: 'flex-start', md: 'center' }}
+                  gap={1}
+                >
+                  <Typography variant='h5' mb={{ xs: 0, lg: 2 }}>
+                    {t(`layout.ui.confirmPassword`)}:
+                  </Typography>
+                  <FormField
+                    fieldKey='confirmPassword'
+                    errors={errors}
+                    translatedErrors={translatedErrors}
+                    type={showPassword ? 'text' : 'password'}
+                    sx={{ width: { xs: '100%', lg: 250 } }}
+                  />
+                </Box>
+              </Box>
+              <Divider />
+              <Box display='flex' justifyContent='flex-end' mt={2} gap={2}>
+                <Button
+                  variant='contained'
+                  color='error'
+                  disabled={disabled}
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
+                <Button variant='contained' disabled={disabled} type='submit'>
+                  Save
+                </Button>
+              </Box>
+            </fieldset>
           </Box>
-          <Divider />
-          <Box
-            display='flex'
-            flexDirection={{ xs: 'column', md: 'row' }}
-            justifyContent='space-between'
-            alignItems={{ xs: 'flex-start', md: 'center' }}
-            gap={0.5}
-          >
-            <Typography variant='h5'>Full name:</Typography>
-            <TextField
-              disabled={disabled}
-              value={userData.fullName}
-              sx={{ width: { xs: '100%', md: 'auto' } }}
-            />
-          </Box>
-          <Box
-            display='flex'
-            flexDirection={{ xs: 'column', md: 'row' }}
-            justifyContent='space-between'
-            alignItems={{ xs: 'flex-start', md: 'center' }}
-            gap={0.5}
-          >
-            <Typography variant='h5'>Password:</Typography>
-            <TextField disabled={disabled} sx={{ width: { xs: '100%', md: 'auto' } }} />
-          </Box>
-          <Box
-            display='flex'
-            flexDirection={{ xs: 'column', md: 'row' }}
-            justifyContent='space-between'
-            alignItems={{ xs: 'flex-start', md: 'center' }}
-            gap={0.5}
-          >
-            <Typography variant='h5'>Confirm password:</Typography>
-            <TextField disabled={disabled} sx={{ width: { xs: '100%', md: 'auto' } }} />
-          </Box>
-        </Box>
-        <Divider />
-        <Box display='flex' justifyContent='flex-end' mt={2} gap={2}>
-          <Button variant='contained' color='error' disabled={disabled} onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button variant='contained' disabled={disabled}>
-            Save
-          </Button>
-        </Box>
+        </FormProvider>
       </Box>
     </Paper>
   );
