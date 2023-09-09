@@ -5,22 +5,22 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-
-type ColorMode = 'light' | 'dark' | 'system';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { appActions, appSelectors } from '@/features/app/store';
+import { Theme } from '@/types';
 
 export const ColorToggle = () => {
-  const [colorMode, setColorMode] = useState<ColorMode>('system');
+  const theme = useAppSelector(appSelectors.theme);
 
-  const handleSelectMode = useCallback(
-    (event: React.MouseEvent<HTMLElement>, newMode: ColorMode) => {
-      setColorMode(newMode);
-    },
-    []
-  );
+  const dispatch = useAppDispatch();
+
+  const handleSelectMode = useCallback((event: React.MouseEvent<HTMLElement>, newMode: Theme) => {
+    dispatch(appActions.setTheme(newMode));
+  }, []);
 
   return (
     <ToggleButtonGroup
-      value={colorMode}
+      value={theme}
       exclusive
       onChange={handleSelectMode}
       color='primary'
@@ -29,7 +29,7 @@ export const ColorToggle = () => {
       <ToggleButton value='light'>
         <LightModeIcon />
       </ToggleButton>
-      <ToggleButton value='system'>
+      <ToggleButton value='auto'>
         <SettingsSuggestIcon />
       </ToggleButton>
       <ToggleButton value='dark'>
