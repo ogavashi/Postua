@@ -23,7 +23,7 @@ import { appWithTranslation } from 'next-i18next';
 import { usePreserveScroll } from '@/hooks';
 import { wrapper } from '@/store';
 import { appActions } from '@/features/app/store';
-import { Language } from '@/types';
+import { Language, Theme } from '@/types';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -75,12 +75,14 @@ MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Comp
 
   const userData = user;
 
-  const theme = 'light';
-
-  const { NEXT_LOCALE: savedLocale } = nookies.get(ctx);
+  const { NEXT_LOCALE: savedLocale, POSTUA_THEME: savedTheme } = nookies.get(ctx);
 
   if (savedLocale) {
     store.dispatch(appActions.setLanguae(savedLocale as Language));
+  }
+
+  if (savedTheme) {
+    store.dispatch(appActions.setTheme(savedTheme as Theme));
   }
 
   return {

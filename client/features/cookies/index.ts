@@ -1,1 +1,1 @@
-export { localeCookie } from './lib';
+export { localeCookie, themeCookie } from './lib';

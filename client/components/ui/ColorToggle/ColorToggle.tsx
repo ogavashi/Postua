@@ -8,6 +8,7 @@ import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { appActions, appSelectors } from '@/features/app/store';
 import { Theme } from '@/types';
+import { themeCookie } from '@/features/cookies';
 
 export const ColorToggle = () => {
   const theme = useAppSelector(appSelectors.theme);
@@ -16,6 +17,7 @@ export const ColorToggle = () => {
 
   const handleSelectMode = useCallback((event: React.MouseEvent<HTMLElement>, newMode: Theme) => {
     dispatch(appActions.setTheme(newMode));
+    themeCookie.set(newMode);
   }, []);
 
   return (
