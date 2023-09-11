@@ -10,8 +10,12 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 import { Drawer, ElevationScroll, Logo, ProfileBar, SearchBar, Settings } from '@/components';
 import { AuthModal } from '@/features/auth';
+import { store, useAppSelector } from '@/store';
+import { userSelectors } from '@/features/user';
 
 export const Header = () => {
+  const user = useAppSelector(userSelectors.data);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -21,8 +25,6 @@ export const Header = () => {
   const handleOpenModal = useCallback(() => setShowModal(true), []);
 
   const handleCloseModal = useCallback(() => setShowModal(false), []);
-
-  const isAuthorized = true;
 
   const handleDrawerToggle = useCallback(() => {
     setMobileOpen((prevState) => !prevState);
@@ -53,7 +55,7 @@ export const Header = () => {
               <SearchBar sx={{ display: { xs: 'none', md: 'flex' }, maxWidth: '25rem' }} />
               <Settings isOpen={showSettings} handleSettingsToggle={handleSettingsToggle} />
               <Box display='flex' justifyContent='center' alignItems='center' gap={2}>
-                {isAuthorized ? (
+                {user ? (
                   <>
                     <Button
                       sx={{ display: { xs: 'none', md: 'flex' } }}
@@ -63,7 +65,7 @@ export const Header = () => {
                     >
                       {t('layout.ui.post')}
                     </Button>
-                    <ProfileBar />
+                    <ProfileBar user={user} />
                   </>
                 ) : (
                   <Button variant='contained' color='secondary' onClick={handleOpenModal}>

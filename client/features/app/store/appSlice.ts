@@ -4,6 +4,11 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { HYDRATE } from 'next-redux-wrapper';
 
+type HydrateAction = {
+  type: typeof HYDRATE;
+  payload: { app: AppState };
+};
+
 export interface AppState {
   theme: Theme;
   language: Language;
@@ -21,17 +26,17 @@ export const appSlice = createSlice({
     setTheme(state, action: PayloadAction<Theme>) {
       state.theme = action.payload;
     },
-    setLanguae(state, action: PayloadAction<Language>) {
+    setLanguage(state, action: PayloadAction<Language>) {
       state.language = action.payload;
     },
   },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(HYDRATE, (state, action: HydrateAction) => {
       return {
         ...state,
         ...action.payload.app,
       };
-    },
+    });
   },
 });
 

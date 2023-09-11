@@ -22,18 +22,18 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FormField } from '@/features/auth';
 import { useTranslatedErrors } from '@/hooks';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { UserResponse } from '@/types';
 
-const user: any = {
-  fullName: 'Full Name',
-  backgroundUrl: 'https://media.tenor.com/6LyXLgF8ksUAAAAd/anime-gif.gif',
-  avatarUrl: 'https://giffiles.alphacoders.com/350/35097.gif',
+type ProfileCard = {
+  user: UserResponse;
 };
 
-export const ProfileCard = () => {
-  const [userData, setUserData] = useState(user);
+export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
   const [disabled, setDisabled] = useState(true);
 
   const { t } = useTranslation();
+
+  const [userData, setUserData] = useState(user);
 
   const toggleEditable = useCallback(() => setDisabled((prev) => !prev), []);
 
@@ -43,7 +43,7 @@ export const ProfileCard = () => {
 
   const methods = useForm({
     mode: 'onSubmit',
-    defaultValues: userData,
+    defaultValues: userData as any,
     resolver: yupResolver(updateSchema),
   });
 

@@ -2,20 +2,22 @@ import { Box, Button, ButtonGroup, Paper, Slider, Typography } from '@mui/materi
 import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useRouter } from 'next/router';
+import { wrapper } from '@/store';
 
-import { Card as NewsCard } from '@/features/news';
-import { SelectFilter } from '@/features/filters';
-import { PostList } from '@/features/post';
-
-import { constants } from '@/common';
 import { ProfileCard } from '@/features/profile';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { UserResponse } from '@/types';
 
-const Profile: NextPageWithLayout = () => {
+interface ProfileProps {
+  pageProps: {
+    user: UserResponse;
+  };
+}
+
+const Profile: NextPageWithLayout<ProfileProps> = ({ pageProps }) => {
   return (
     <Box my='12px'>
-      <ProfileCard />
+      <ProfileCard user={pageProps.user} />
     </Box>
   );
 };
@@ -24,12 +26,24 @@ Profile.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
-export async function getServerSideProps({ locale }: { locale: string }) {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ locale }) => {
+  const userData = store.getState().user.data;
+
+  if (!userData) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'errors'])),
+      ...(await serverSideTranslations(locale as string, ['common', 'errors'])),
+      user: userData,
     },
   };
-}
+});
 
 export default Profile;

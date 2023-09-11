@@ -1,4 +1,5 @@
-import { appReducer } from '@/features/app/store';
+import { appReducer } from '@/features/app';
+import { userReducer } from '@/features/user';
 import { configureStore, ThunkAction, Action, Store } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 
@@ -6,6 +7,7 @@ export function makeStore() {
   return configureStore({
     reducer: {
       app: appReducer,
+      user: userReducer,
     },
   });
 }

@@ -20,7 +20,7 @@ export const LanguageSelect = () => {
     (event: SelectChangeEvent<unknown>) => {
       const value = event.target.value as string;
 
-      dispatch(appActions.setLanguae(value as Language));
+      dispatch(appActions.setLanguage(value as Language));
 
       localeCookie.set(value);
     },

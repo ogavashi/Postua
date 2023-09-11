@@ -9,14 +9,21 @@ import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
+import { setCookie } from 'nookies';
+
 import { FormField, RegisterDto, registerSchema } from '@/features/auth';
 import { useTranslatedErrors } from '@/hooks';
+import { RegisterRequest } from '@/types';
+import { ApiService } from '@/services';
+import { useAppDispatch } from '@/store';
+import { userActions } from '@/features/user';
 
 interface RegisterTabProps {
   onToggle: () => void;
+  handleClose: () => void;
 }
 
-export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle }) => {
+export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle, handleClose }) => {
   const methods = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(registerSchema),
@@ -29,16 +36,27 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle }) => {
 
   const { t } = useTranslation();
 
+  const dispatch = useAppDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const translatedErrors = useTranslatedErrors(errors);
 
   const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
 
-  const onSubmit = useCallback((data: RegisterDto) => {
-    console.log(data);
-  }, []);
+  const onSubmit = useCallback(async (dto: RegisterRequest) => {
+    try {
+      const data = await ApiService.user.register(dto);
 
+      dispatch(userActions.setUser(data));
+
+      setCookie(null, 'postUaToken', data.token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+      handleClose();
+    } catch (error) {}
+  }, []);
   return (
     <FormProvider {...methods}>
       <Box

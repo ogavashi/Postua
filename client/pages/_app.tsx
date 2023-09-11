@@ -24,6 +24,8 @@ import { usePreserveScroll } from '@/hooks';
 import { wrapper } from '@/store';
 import { appActions } from '@/features/app/store';
 import { Language, Theme } from '@/types';
+import { NextApiService } from '@/services';
+import { userActions } from '@/features/user';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -65,24 +67,28 @@ function MyApp(props: AppPropsWithLayout) {
 }
 
 MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Component }) => {
-  const user = {
-    email: 'user@email.com',
-    fullName: 'Full Name',
-    id: '1337',
-    backgroundUrl: 'https://media.tenor.com/6LyXLgF8ksUAAAAd/anime-gif.gif',
-    avatarUrl: 'https://giffiles.alphacoders.com/350/35097.gif',
-  };
-
-  const userData = user;
-
   const { NEXT_LOCALE: savedLocale, POSTUA_THEME: savedTheme } = nookies.get(ctx);
 
   if (savedLocale) {
-    store.dispatch(appActions.setLanguae(savedLocale as Language));
+    store.dispatch(appActions.setLanguage(savedLocale as Language));
   }
 
   if (savedTheme) {
     store.dispatch(appActions.setTheme(savedTheme as Theme));
+  }
+
+  try {
+    const userData = await NextApiService(ctx).user.getMe();
+
+    store.dispatch(userActions.setUser(userData));
+  } catch (error) {
+    if (ctx.asPath === '/write' && ctx.res) {
+      ctx.res.writeHead(302, {
+        Location: '/403',
+      });
+      ctx.res.end();
+    }
+    console.log(error);
   }
 
   return {

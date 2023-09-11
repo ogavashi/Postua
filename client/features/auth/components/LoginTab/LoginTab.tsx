@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, InputAdornment, Typography } from '@mui/material';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -10,12 +10,17 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { FormField, LoginDto, loginSchema } from '@/features/auth';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslatedErrors } from '@/hooks';
+import { ApiService } from '@/services';
+import { useAppDispatch } from '@/store';
+import { userActions } from '@/features/user';
+import { setCookie } from 'nookies';
 
 interface LoginTabProps {
   onToggle: () => void;
+  handleClose: () => void;
 }
 
-export const LoginTab: React.FC<LoginTabProps> = ({ onToggle }) => {
+export const LoginTab: React.FC<LoginTabProps> = ({ onToggle, handleClose }) => {
   const methods = useForm({
     mode: 'onSubmit',
     resolver: yupResolver(loginSchema),
@@ -30,12 +35,25 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle }) => {
 
   const { t } = useTranslation();
 
+  const dispatch = useAppDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
 
-  const onSubmit = useCallback((data: LoginDto) => {
-    console.log(data);
+  const onSubmit = useCallback(async (dto: LoginDto) => {
+    try {
+      const data = await ApiService.user.login(dto);
+
+      dispatch(userActions.setUser(data));
+
+      setCookie(null, 'postUaToken', data.token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+
+      handleClose();
+    } catch (error) {}
   }, []);
 
   return (

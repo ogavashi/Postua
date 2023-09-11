@@ -1,6 +1,8 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
-import { Badge, Box, IconButton } from '@mui/material';
+import { destroyCookie } from 'nookies';
+
+import { Avatar, Badge, Box, IconButton } from '@mui/material';
 
 import { AccountCircle } from '@mui/icons-material';
 
@@ -14,10 +16,19 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Menu } from './Menu.styled';
 import { MenuItem } from '@/components';
 import { useNavigation } from '@/hooks';
+import { UserResponse } from '@/types';
+import { useAppDispatch } from '@/store';
+import { userActions } from '@/features/user';
 
-export const ProfileBar = () => {
+interface ProfileBarProps {
+  user: UserResponse;
+}
+
+export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+
+  const dispatch = useAppDispatch();
 
   const handleProfileMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,7 +47,12 @@ export const ProfileBar = () => {
     handleMobileMenuClose();
   }, []);
 
-  const { navigateCategory } = useNavigation();
+  const { navigateCategory } = useNavigation({ sideFunc: handleMenuClose });
+
+  const handleLogout = useCallback(() => {
+    dispatch(userActions.unSetUser());
+    destroyCookie(null, 'postUaToken', { path: '/' });
+  }, []);
 
   return (
     <>
@@ -47,7 +63,7 @@ export const ProfileBar = () => {
           </Badge>
         </IconButton>
         <IconButton size='large' edge='end' onClick={handleProfileMenuOpen} color='inherit'>
-          <AccountCircle color='secondary' />
+          <Avatar src={user.avatarUrl} />
         </IconButton>
       </Box>
 
@@ -86,7 +102,7 @@ export const ProfileBar = () => {
             <HomeIcon color='primary' />
             My account
           </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
+          <MenuItem onClick={handleLogout}>
             <ExitToAppIcon color='error' />
             Logout
           </MenuItem>

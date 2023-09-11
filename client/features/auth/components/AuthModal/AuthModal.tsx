@@ -34,13 +34,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, handleClose }) => 
 
   const Tab = () => {
     let tab;
+
+    const commonProps = { handleClose, onToggle: toggleModalState };
+
     switch (modalState) {
       case 'login':
-        tab = <LoginTab onToggle={toggleModalState} />;
+        tab = <LoginTab {...commonProps} />;
         break;
 
       default:
-        tab = <RegisterTab onToggle={toggleModalState} />;
+        tab = <RegisterTab {...commonProps} />;
         break;
     }
 
