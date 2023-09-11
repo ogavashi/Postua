@@ -13,7 +13,7 @@ const tags: Tag[] = [
     key: 'games',
   },
   {
-    key: 'games',
+    key: 'news',
   },
 ];
 
@@ -22,7 +22,7 @@ const blocks = [
     id: 'K7aUIFhw72',
     type: 'paragraph',
     data: {
-      text: 'Lorem ipsum.',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus at urna condimentum mattis. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Hendrerit gravida rutrum quisque non tellus orci ac. Mauris a diam maecenas sed enim ut sem viverra. Eget aliquet nibh praesent tristique magna sit. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ipsum faucibus vitae aliquet nec ullamcorper. Pellentesque habitant morbi tristique senectus et netus et malesuada. Risus commodo viverra maecenas accumsan lacus. A diam maecenas sed enim ut. Tincidunt dui ut ornare lectus sit amet est placerat. Fames ac turpis egestas integer eget aliquet nibh praesent tristique. Ac feugiat sed lectus vestibulum mattis ullamcorper velit. Dictumst vestibulum rhoncus est pellentesque.',
     },
   },
   {
@@ -34,6 +34,13 @@ const blocks = [
       withBorder: false,
       withBackground: false,
       stretched: false,
+    },
+  },
+  {
+    id: 'K7aUIasdFhw72',
+    type: 'paragraph',
+    data: {
+      text: 'Urna molestie at elementum eu facilisis. Nunc vel risus commodo viverra. Tristique et egestas quis ipsum. Dui faucibus in ornare quam viverra orci. Nunc sed augue lacus viverra. Sit amet nisl purus in mollis nunc sed id. Fusce id velit ut tortor pretium. Adipiscing diam donec adipiscing tristique risus nec feugiat in. Cras ornare arcu dui vivamus arcu. Condimentum vitae sapien pellentesque habitant morbi tristique senectus et netus. Facilisi etiam dignissim diam quis enim. Velit laoreet id donec ultrices tincidunt arcu. Lectus mauris ultrices eros in cursus turpis massa tincidunt dui.',
     },
   },
 ];
@@ -61,6 +68,7 @@ const post: PostResponse = {
   user: user,
   stats: postStats,
   tags: tags,
+  image: 'https://gagadget.com/media/post_big/rhtjf.jpg',
 };
 
 const shortPosts: ShortPostResponse[] = [

@@ -5,7 +5,7 @@ import { ShortPostResponse } from '@/types';
 
 interface PostListprops {
   sx?: SxProps<Theme>;
-  posts: ShortPostResponse[] | null;
+  posts?: ShortPostResponse[] | null;
 }
 
 export const PostList: React.FC<PostListprops> = ({ sx = [], posts }) => {

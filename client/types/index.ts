@@ -62,6 +62,7 @@ export type PostResponse = {
   user: User;
   stats: PostStats;
   tags: Tag[] | null;
+  image?: string;
 };
 
 export type ShortPostResponse = {
@@ -73,3 +74,9 @@ export type ShortPostResponse = {
   user: User;
   category: Category;
 };
+
+export interface CategoryPostProps {
+  pageProps: {
+    post: PostResponse;
+  };
+}
