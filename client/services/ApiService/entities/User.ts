@@ -36,9 +36,13 @@ export class User extends Base {
   async getMe() {
     // const { data } = await this.apiClient.instance.get<UserResponse>(
     //   '/users/me');
-
     // return data;
 
+    // Until backend if implemented
+
+    if (this.apiClient.instance.defaults.headers.Authorization !== 'Bearer testtokenPostua') {
+      throw new Error('Unauthenticated');
+    }
     return mockUser;
   }
 }
