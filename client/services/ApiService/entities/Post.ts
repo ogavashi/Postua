@@ -1,12 +1,5 @@
 import { Base } from '.';
-import {
-  LoginRequest,
-  PostResponse,
-  RegisterRequest,
-  ShortPostResponse,
-  Tag,
-  UserResponse,
-} from '@/types';
+import { PostResponse, ShortPostResponse, Tag } from '@/types';
 
 const tags: Tag[] = [
   {
@@ -17,33 +10,37 @@ const tags: Tag[] = [
   },
 ];
 
-const blocks = [
-  {
-    id: 'K7aUIFhw72',
-    type: 'paragraph',
-    data: {
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus at urna condimentum mattis. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Hendrerit gravida rutrum quisque non tellus orci ac. Mauris a diam maecenas sed enim ut sem viverra. Eget aliquet nibh praesent tristique magna sit. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ipsum faucibus vitae aliquet nec ullamcorper. Pellentesque habitant morbi tristique senectus et netus et malesuada. Risus commodo viverra maecenas accumsan lacus. A diam maecenas sed enim ut. Tincidunt dui ut ornare lectus sit amet est placerat. Fames ac turpis egestas integer eget aliquet nibh praesent tristique. Ac feugiat sed lectus vestibulum mattis ullamcorper velit. Dictumst vestibulum rhoncus est pellentesque.',
+const body = {
+  time: 1550476186479,
+  blocks: [
+    {
+      id: 'K7aUIFhw72',
+      type: 'paragraph',
+      data: {
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus at urna condimentum mattis. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Hendrerit gravida rutrum quisque non tellus orci ac. Mauris a diam maecenas sed enim ut sem viverra. Eget aliquet nibh praesent tristique magna sit. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ipsum faucibus vitae aliquet nec ullamcorper. Pellentesque habitant morbi tristique senectus et netus et malesuada. Risus commodo viverra maecenas accumsan lacus. A diam maecenas sed enim ut. Tincidunt dui ut ornare lectus sit amet est placerat. Fames ac turpis egestas integer eget aliquet nibh praesent tristique. Ac feugiat sed lectus vestibulum mattis ullamcorper velit. Dictumst vestibulum rhoncus est pellentesque.',
+      },
     },
-  },
-  {
-    id: 'FhNjQ-FbDB',
-    type: 'image',
-    data: {
-      url: 'https://www.centralxbox.com.br/wp-content/uploads/2022/11/Starfield.jpeg',
-      caption: 'Nice!!!!',
-      withBorder: false,
-      withBackground: false,
-      stretched: false,
+    {
+      id: 'FhNjQ-FbDB',
+      type: 'image',
+      data: {
+        url: 'https://www.centralxbox.com.br/wp-content/uploads/2022/11/Starfield.jpeg',
+        caption: 'Nice!!!!',
+        withBorder: true,
+        withBackground: true,
+        stretched: false,
+      },
     },
-  },
-  {
-    id: 'K7aUIasdFhw72',
-    type: 'paragraph',
-    data: {
-      text: 'Urna molestie at elementum eu facilisis. Nunc vel risus commodo viverra. Tristique et egestas quis ipsum. Dui faucibus in ornare quam viverra orci. Nunc sed augue lacus viverra. Sit amet nisl purus in mollis nunc sed id. Fusce id velit ut tortor pretium. Adipiscing diam donec adipiscing tristique risus nec feugiat in. Cras ornare arcu dui vivamus arcu. Condimentum vitae sapien pellentesque habitant morbi tristique senectus et netus. Facilisi etiam dignissim diam quis enim. Velit laoreet id donec ultrices tincidunt arcu. Lectus mauris ultrices eros in cursus turpis massa tincidunt dui.',
+    {
+      id: 'K7aUIasdFhw72',
+      type: 'paragraph',
+      data: {
+        text: 'Urna molestie at elementum eu facilisis. Nunc vel risus commodo viverra. Tristique et egestas quis ipsum. Dui faucibus in ornare quam viverra orci. Nunc sed augue lacus viverra. Sit amet nisl purus in mollis nunc sed id. Fusce id velit ut tortor pretium. Adipiscing diam donec adipiscing tristique risus nec feugiat in. Cras ornare arcu dui vivamus arcu. Condimentum vitae sapien pellentesque habitant morbi tristique senectus et netus. Facilisi etiam dignissim diam quis enim. Velit laoreet id donec ultrices tincidunt arcu. Lectus mauris ultrices eros in cursus turpis massa tincidunt dui.',
+      },
     },
-  },
-];
+  ],
+  version: '2.8.1',
+};
 
 const user = {
   id: '123123',
@@ -57,18 +54,23 @@ const postStats = {
   likes: 123,
   dislikes: 2,
   comments: 12,
-  views: 123,
-  visitings: 32,
+  views: 213324,
+  visitings: 320000,
 };
 
 const post: PostResponse = {
   id: '123',
   title: 'Post title 1. This is post tile 1.',
-  body: blocks,
+  body: body,
   user: user,
   stats: postStats,
   tags: tags,
   image: 'https://gagadget.com/media/post_big/rhtjf.jpg',
+  category: {
+    icon: '👾',
+    key: 'games',
+    backgroundUrl: 'https://wallpaperaccess.com/full/5927911.gif',
+  },
 };
 
 const shortPosts: ShortPostResponse[] = [

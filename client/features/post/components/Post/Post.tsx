@@ -17,11 +17,11 @@ export const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <Paper>
       <Box>
-        <PostHeader />
+        <PostHeader post={post} />
         {post?.image && <PostImage imageUrl={post.image} />}
-        <PostStats />
+        <PostStats stats={post.stats} />
         <PostText body={post.body} />
-        <PostFooter />
+        <PostFooter post={post} />
       </Box>
     </Paper>
   );

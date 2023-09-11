@@ -1,4 +1,5 @@
 import { OutputData } from '@editorjs/editorjs';
+import { DataProp } from 'editorjs-blocks-react-renderer';
 
 export type Theme = 'light' | 'dark' | 'auto';
 
@@ -58,11 +59,12 @@ export type Category = {
 export type PostResponse = {
   id: string;
   title: string;
-  body: OutputData['blocks'];
+  body: DataProp;
   user: User;
   stats: PostStats;
   tags: Tag[] | null;
   image?: string;
+  category: Category;
 };
 
 export type ShortPostResponse = {

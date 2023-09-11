@@ -5,8 +5,13 @@ import { Box, IconButton, Typography as MuiTypography, useTheme } from '@mui/mat
 import { styles } from './style';
 import { NextLinkComposed, Typography } from '@/components';
 import { constants } from '@/common';
+import { PostResponse } from '@/types';
 
-export const PostHeader = () => {
+interface PostHeaderProps {
+  post: PostResponse;
+}
+
+export const PostHeader: React.FC<PostHeaderProps> = ({ post }) => {
   const { t } = useTranslation();
   const theme = useTheme();
 
@@ -16,16 +21,16 @@ export const PostHeader = () => {
         <Box
           css={styles.root}
           component={NextLinkComposed}
-          to={{ pathname: `/${constants.CATEGORIES[0].key}` }}
+          to={{ pathname: `/${post.category.key}` }}
         >
           <IconButton color='primary' sx={{ borderRadius: theme.shape.borderRadius }}>
             <MuiTypography>
-              {constants.CATEGORIES[0].icon} {t(`layout.categories.${constants.CATEGORIES[0].key}`)}
+              {post.category.icon} {t(`layout.categories.${post.category.key}`)}
             </MuiTypography>
           </IconButton>
         </Box>
         <Typography component={NextLinkComposed} to={{ pathname: `/` }}>
-          Author Name
+          {post.user.fullName}
         </Typography>
         <MuiTypography fontWeight={200} sx={{ opacity: 0.5 }}>
           6 hours
@@ -33,8 +38,7 @@ export const PostHeader = () => {
       </Box>
       <Box>
         <MuiTypography textAlign='justify' variant='h6' fontWeight={800}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua.
+          {post.title}
         </MuiTypography>
       </Box>
     </Box>

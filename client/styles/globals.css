@@ -5,3 +5,12 @@ body {
   /* background-color: #1a202c !important; */
   font-family: Roboto, 'Helvetica Neue', Helvetica, sans-serif;
 }
+
+.image > img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.text {
+  text-align: justify;
+}

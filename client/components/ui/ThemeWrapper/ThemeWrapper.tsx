@@ -22,7 +22,7 @@ export const ThemeWrapper: React.FC<React.PropsWithChildren> = ({ children }) =>
     }
 
     return darkTheme;
-  }, [theme]);
+  }, [theme, prefersLightMode]);
 
   return <ThemeProvider theme={preferedTheme}>{children}</ThemeProvider>;
 };

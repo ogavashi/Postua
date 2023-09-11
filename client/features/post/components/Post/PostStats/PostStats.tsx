@@ -17,8 +17,14 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import { useCallback, useState } from 'react';
 import { Box } from './Box.styled';
 import { Typography } from '@/components';
+import { PostStats as Stats } from '@/types';
+import { formatStats } from '@/features/post';
 
-export const PostStats = () => {
+interface PostStatsProps {
+  stats: Stats;
+}
+
+export const PostStats: React.FC<PostStatsProps> = ({ stats }) => {
   const [showStats, setShowStats] = useState(false);
 
   const theme = useTheme();
@@ -58,8 +64,8 @@ export const PostStats = () => {
       </MuiBox>
       <MuiBox display='flex' gap={4}>
         <Button sx={{ display: 'flex', gap: 3 }} onClick={toggleShowStats}>
-          <Typography fontWeight={300}>11K Views</Typography>
-          <Typography fontWeight={300}>3K Visitings</Typography>
+          <Typography fontWeight={300}>{formatStats(stats.views)} Views</Typography>
+          <Typography fontWeight={300}>{formatStats(stats.visitings)} Visitings</Typography>
         </Button>
       </MuiBox>
       <Modal
@@ -90,13 +96,13 @@ export const PostStats = () => {
             <MuiBox width='100%' display='flex' alignItems='center' gap={3}>
               <MuiBox>
                 <MuiTypography variant='h5' fontWeight={700}>
-                  42618
+                  {stats.views}
                 </MuiTypography>
                 <MuiTypography>views in feed</MuiTypography>
               </MuiBox>
               <MuiBox>
                 <MuiTypography variant='h5' fontWeight={700}>
-                  23124
+                  {stats.visitings}
                 </MuiTypography>
                 <MuiTypography>visitings of page</MuiTypography>
               </MuiBox>

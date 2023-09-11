@@ -8,23 +8,58 @@ import CachedIcon from '@mui/icons-material/Cached';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { PostResponse } from '@/types';
+import { useCallback, useEffect, useState } from 'react';
 
-export const PostFooter = () => {
+interface PostFooterProps {
+  post: PostResponse;
+}
+
+export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
   const theme = useTheme();
+
+  const [isLiked, setIsLiked] = useState(false);
+
+  const [likeAmount, setLikeAmount] = useState(post.stats.likes);
+
+  //REDO later
+  const handleLike = useCallback(() => {
+    if (isLiked) {
+      setIsLiked(false);
+      setLikeAmount((prev) => prev - 1);
+
+      return;
+    }
+    setIsLiked(true);
+    setLikeAmount((prev) => prev + 1);
+  }, [isLiked]);
+
+  const LikeIcon = () => {
+    const style = {
+      sx: { fontSize: 16, position: 'relative', mr: 0.5 },
+    };
+
+    return isLiked ? <FavoriteIcon {...style} /> : <FavoriteBorderIcon {...style} />;
+  };
 
   return (
     <Box px={2} pb={2} display='flex' flexDirection='column' gap={1}>
       <Box display='flex' alignItems='center' gap={2}>
-        <Typography variant='h6' component={NextLinkComposed} to={'/tag/starfield'}>
-          #starfield
-        </Typography>
-        <Typography variant='h6' component={NextLinkComposed} to={'/tag/news'}>
-          #news
-        </Typography>
+        {post.tags?.map((tag) => (
+          <Typography
+            variant='h6'
+            component={NextLinkComposed}
+            to={`/tag/${tag.key}`}
+            key={tag.key}
+          >
+            #{tag.key}
+          </Typography>
+        ))}
       </Box>
       <Box display='flex' justifyContent='space-between'>
         <Box display='flex' gap={1}>
           <IconButton
+            onClick={handleLike}
             size='small'
             color='error'
             sx={{
@@ -34,8 +69,8 @@ export const PostFooter = () => {
               ml: 0.5,
             }}
           >
-            <FavoriteBorderIcon sx={{ fontSize: 21, position: 'relative', mr: 0.5 }} />
-            <MuiTypography>15</MuiTypography>
+            <LikeIcon />
+            <MuiTypography>{likeAmount}</MuiTypography>
           </IconButton>
           <IconButton
             size='small'
@@ -48,7 +83,7 @@ export const PostFooter = () => {
             }}
           >
             <InsertCommentIcon sx={{ fontSize: 21, position: 'relative', mr: 0.5 }} />
-            <MuiTypography>152</MuiTypography>
+            <MuiTypography>{post.stats.comments}</MuiTypography>
           </IconButton>
           <IconButton
             size='small'

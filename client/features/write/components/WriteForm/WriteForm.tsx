@@ -15,8 +15,6 @@ export const WriteForm = () => {
 
   const { t } = useTranslation();
 
-  console.log(blocks);
-
   const CategorySelect = () => (
     <Select label='Category' size='small' sx={{ minWidth: 170 }} color='primary' value='news'>
       <MenuItem key='news' value='news' color='primary'>

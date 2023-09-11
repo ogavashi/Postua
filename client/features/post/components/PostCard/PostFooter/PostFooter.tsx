@@ -9,6 +9,7 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { PostStats, ShortPostResponse } from '@/types';
 import { useCallback, useMemo, useState } from 'react';
+import { formatStats } from '@/features/post';
 
 interface PostFooterProps {
   stats: PostStats;
@@ -35,10 +36,10 @@ export const PostFooter: React.FC<PostFooterProps> = ({ stats }) => {
     <Box width='100%' display='flex' flexDirection='column' gap={1} mt={2} px={2} pb={2}>
       <Box display='flex' gap={4}>
         <Typography fontWeight={300} sx={{ opacity: 0.8 }}>
-          {stats.views} Views
+          {formatStats(stats.views)} Views
         </Typography>
         <Typography fontWeight={300} sx={{ opacity: 0.8 }}>
-          {stats.visitings} Visitings
+          {formatStats(stats.visitings)} Visitings
         </Typography>
       </Box>
       <Box display='flex' justifyContent='space-between'>
