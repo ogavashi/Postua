@@ -12,7 +12,6 @@ import { CategoryPostProps } from '@/types';
 
 const CategoryPost: NextPageWithLayout<CategoryPostProps> = ({ pageProps }) => {
   const router = useRouter();
-
   const { post } = pageProps;
 
   return (
