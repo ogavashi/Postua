@@ -10,13 +10,24 @@ import { SelectFilter } from '@/features/filters';
 import { PostList } from '@/features/post';
 
 import { constants } from '@/common';
+import { NextApiService } from '@/services';
+import { GetServerSideProps, NextPageContext } from 'next';
+import { ShortPostResponse } from '@/types';
 
-const Popular: NextPageWithLayout = () => {
+interface PopularPageProps {
+  pageProps: {
+    posts: ShortPostResponse[] | null;
+  };
+}
+
+const Popular: NextPageWithLayout<PopularPageProps> = ({ pageProps }) => {
+  const { posts } = pageProps;
+
   return (
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
       <SelectFilter pageKey={'popular'} options={constants.FILTERS_TIME} />
       <NewsCard />
-      <PostList />
+      <PostList posts={posts} />
     </Box>
   );
 };
@@ -25,10 +36,26 @@ Popular.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
-export async function getServerSideProps({ locale }: { locale: string }) {
+export async function getServerSideProps(ctx: NextPageContext) {
+  const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
+
+  try {
+    const data = await NextApiService(ctx).post.getAll();
+
+    return {
+      props: {
+        ...localeProps,
+        posts: data,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'errors'])),
+      ...localeProps,
+      posts: null,
     },
   };
 }

@@ -7,23 +7,44 @@ import CachedIcon from '@mui/icons-material/Cached';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { PostStats, ShortPostResponse } from '@/types';
+import { useCallback, useMemo, useState } from 'react';
 
-export const PostFooter = () => {
+interface PostFooterProps {
+  stats: PostStats;
+}
+
+export const PostFooter: React.FC<PostFooterProps> = ({ stats }) => {
   const theme = useTheme();
+
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = useCallback(() => {
+    setIsLiked((prev) => !prev);
+  }, []);
+
+  const LikeIcon = () => {
+    const style = {
+      sx: { fontSize: 16, position: 'relative', mr: 0.5 },
+    };
+
+    return isLiked ? <FavoriteIcon {...style} /> : <FavoriteBorderIcon {...style} />;
+  };
 
   return (
     <Box width='100%' display='flex' flexDirection='column' gap={1} mt={2} px={2} pb={2}>
       <Box display='flex' gap={4}>
         <Typography fontWeight={300} sx={{ opacity: 0.8 }}>
-          11K Views
+          {stats.views} Views
         </Typography>
         <Typography fontWeight={300} sx={{ opacity: 0.8 }}>
-          5K Visitings
+          {stats.visitings} Visitings
         </Typography>
       </Box>
       <Box display='flex' justifyContent='space-between'>
         <Box gap={2}>
           <IconButton
+            onClick={handleLike}
             size='small'
             color='error'
             sx={{
@@ -33,8 +54,8 @@ export const PostFooter = () => {
               ml: 0.5,
             }}
           >
-            <FavoriteBorderIcon sx={{ fontSize: 16, position: 'relative', mr: 0.5 }} />
-            <Typography>15</Typography>
+            <LikeIcon />
+            <Typography>{stats.likes}</Typography>
           </IconButton>
           <IconButton
             size='small'
@@ -47,7 +68,7 @@ export const PostFooter = () => {
             }}
           >
             <InsertCommentIcon sx={{ fontSize: 16, position: 'relative', mr: 0.5 }} />
-            <Typography>152</Typography>
+            <Typography>{stats.comments}</Typography>
           </IconButton>
           <IconButton
             size='small'

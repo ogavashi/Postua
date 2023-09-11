@@ -1,12 +1,13 @@
 import { NextPageContext, GetServerSidePropsContext } from 'next';
 import Cookies, { parseCookies } from 'nookies';
 import { ApiClient } from './ApiClient';
-import { User } from './entities';
+import { Post, User } from './entities';
 import { AppConfig } from '@/common';
 import { store } from '@/store';
 
 class ApiService {
   public user: User;
+  public post: Post;
 
   constructor({ token, apiUrl }: { token?: string; apiUrl?: string }) {
     if (!apiUrl) {
@@ -16,6 +17,7 @@ class ApiService {
     const apiClient = new ApiClient({ token, baseUrl: apiUrl });
 
     this.user = new User({ apiClient });
+    this.post = new Post({ apiClient });
   }
 }
 

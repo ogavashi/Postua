@@ -1,6 +1,5 @@
-import { LoginRequest, RegisterRequest, UserResponse } from '@/types';
 import { Base } from '.';
-import { store } from '@/store';
+import { LoginRequest, RegisterRequest, UserResponse } from '@/types';
 
 const mockUser = {
   email: 'user@email.com',

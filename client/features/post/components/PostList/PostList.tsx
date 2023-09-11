@@ -1,12 +1,14 @@
 import { Box, SxProps, Theme } from '@mui/material';
 
 import { PostCard } from '@/features/post';
+import { ShortPostResponse } from '@/types';
 
 interface PostListprops {
   sx?: SxProps<Theme>;
+  posts: ShortPostResponse[] | null;
 }
 
-export const PostList: React.FC<PostListprops> = ({ sx = [] }) => {
+export const PostList: React.FC<PostListprops> = ({ sx = [], posts }) => {
   return (
     <Box
       display='flex'
@@ -14,9 +16,7 @@ export const PostList: React.FC<PostListprops> = ({ sx = [] }) => {
       gap={2}
       sx={{ width: { xs: '100%', md: 640 }, ...sx }}
     >
-      <PostCard />
-      <PostCard />
-      <PostCard />
+      {posts && posts.map((post) => <PostCard key={post.id} post={post} />)}
     </Box>
   );
 };

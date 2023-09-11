@@ -8,8 +8,13 @@ import { constants } from '@/common';
 import { NextLinkComposed, Typography } from '@/components';
 
 import { styles } from './style';
+import { ShortPostResponse } from '@/types';
 
-export const PostHeader = () => {
+interface PostHeaderdProps {
+  post: ShortPostResponse;
+}
+
+export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
   const { t } = useTranslation();
 
   const theme = useTheme();
@@ -20,20 +25,20 @@ export const PostHeader = () => {
         <Box
           css={styles.root}
           component={NextLinkComposed}
-          to={{ pathname: `/${constants.CATEGORIES[0].key}` }}
+          to={{ pathname: `/${post.category.key}` }}
         >
           <IconButton color='primary' size='small' sx={{ borderRadius: theme.shape.borderRadius }}>
             <MuiTypography>
-              {constants.CATEGORIES[0].icon} {t(`layout.categories.${constants.CATEGORIES[0].key}`)}
+              {post.category.icon} {t(`layout.categories.${constants.CATEGORIES[0].key}`)}
             </MuiTypography>
           </IconButton>
         </Box>
         <Typography
           component={NextLinkComposed}
-          to={{ pathname: `/user/1337` }}
+          to={{ pathname: `/user/${post.user.id}` }}
           display={{ xs: 'none', md: 'flex' }}
         >
-          Full Name
+          {post.user.fullName}
         </Typography>
         <MuiTypography fontWeight={200} sx={{ opacity: 0.5 }}>
           6 hours

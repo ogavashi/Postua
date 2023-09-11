@@ -1,16 +1,20 @@
 import { NextLinkComposed, Typography } from '@/components';
+import { ShortPostResponse } from '@/types';
 
-export const PostTitle = () => {
+interface PostTitleProps {
+  post: ShortPostResponse;
+}
+
+export const PostTitle: React.FC<PostTitleProps> = ({ post }) => {
   return (
     <Typography
       sx={{ px: 2 }}
       textAlign='justify'
       variant='h6'
       component={NextLinkComposed}
-      to={{ pathname: `/games/123` }}
+      to={{ pathname: `/${post.category.key}/${post.id}` }}
     >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua.
+      {post.title}
     </Typography>
   );
 };
