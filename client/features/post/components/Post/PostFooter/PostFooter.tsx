@@ -9,7 +9,8 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { PostResponse } from '@/types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { PostViewStats } from '../PostViewStats';
 
 interface PostFooterProps {
   post: PostResponse;
@@ -17,6 +18,12 @@ interface PostFooterProps {
 
 export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
   const theme = useTheme();
+
+  const [showStats, setShowStats] = useState(false);
+
+  const toggleShowStats = useCallback(() => {
+    setShowStats((prev) => !prev);
+  }, []);
 
   const [isLiked, setIsLiked] = useState(false);
 
@@ -44,6 +51,9 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
 
   return (
     <Box px={2} pb={2} display='flex' flexDirection='column' gap={1}>
+      <Box display={{ xs: 'flex', lg: 'none' }}>
+        <PostViewStats stats={post.stats} showStats={showStats} toggleShowStats={toggleShowStats} />
+      </Box>
       <Box display='flex' alignItems='center' gap={2}>
         {post.tags?.map((tag) => (
           <Typography

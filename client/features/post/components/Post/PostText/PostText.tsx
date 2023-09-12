@@ -8,7 +8,7 @@ interface PostTextProps {
 
 export const PostText: React.FC<PostTextProps> = ({ body }) => {
   return (
-    <Box px={2} py={2}>
+    <Box px={2} pb={2}>
       <Blocks
         data={body}
         config={{

@@ -19,6 +19,8 @@ import { Box } from './Box.styled';
 import { Typography } from '@/components';
 import { PostStats as Stats } from '@/types';
 import { formatStats } from '@/features/post';
+import { PostStatsModal } from '../PostStatsModal';
+import { PostViewStats } from '../PostViewStats';
 
 interface PostStatsProps {
   stats: Stats;
@@ -34,7 +36,12 @@ export const PostStats: React.FC<PostStatsProps> = ({ stats }) => {
   }, []);
 
   return (
-    <MuiBox px={2} display='flex' alignItems='center' justifyContent='space-between'>
+    <MuiBox
+      px={2}
+      display={{ xs: 'none', lg: 'flex' }}
+      alignItems='center'
+      justifyContent='space-between'
+    >
       <MuiBox>
         <IconButton
           size='small'
@@ -62,54 +69,7 @@ export const PostStats: React.FC<PostStatsProps> = ({ stats }) => {
           <BookmarkAddIcon sx={{ fontSize: 21, position: 'relative' }} />
         </IconButton>
       </MuiBox>
-      <MuiBox display='flex' gap={4}>
-        <Button sx={{ display: 'flex', gap: 3 }} onClick={toggleShowStats}>
-          <Typography fontWeight={300}>{formatStats(stats.views)} Views</Typography>
-          <Typography fontWeight={300}>{formatStats(stats.visitings)} Visitings</Typography>
-        </Button>
-      </MuiBox>
-      <Modal
-        open={showStats}
-        onClose={toggleShowStats}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
-      >
-        <Fade in={showStats}>
-          <Box>
-            <MuiBox
-              display='flex'
-              justifyContent='space-between'
-              alignContent='center'
-              width='100%'
-            >
-              <MuiTypography variant='h4'>Stats</MuiTypography>
-              <IconButton color='primary' onClick={toggleShowStats}>
-                <CloseIcon />
-              </IconButton>
-            </MuiBox>
-            <Divider sx={{ width: '100%' }} />
-            <MuiBox width='100%' display='flex' alignItems='center' gap={3}>
-              <MuiBox>
-                <MuiTypography variant='h5' fontWeight={700}>
-                  {stats.views}
-                </MuiTypography>
-                <MuiTypography>views in feed</MuiTypography>
-              </MuiBox>
-              <MuiBox>
-                <MuiTypography variant='h5' fontWeight={700}>
-                  {stats.visitings}
-                </MuiTypography>
-                <MuiTypography>visitings of page</MuiTypography>
-              </MuiBox>
-            </MuiBox>
-          </Box>
-        </Fade>
-      </Modal>
+      <PostViewStats stats={stats} showStats={showStats} toggleShowStats={toggleShowStats} />
     </MuiBox>
   );
 };

@@ -29,7 +29,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({ post }) => {
             </MuiTypography>
           </IconButton>
         </Box>
-        <Typography component={NextLinkComposed} to={{ pathname: `/` }}>
+        <Typography component={NextLinkComposed} to={{ pathname: `/user/${post.user.id}` }}>
           {post.user.fullName}
         </Typography>
         <MuiTypography fontWeight={200} sx={{ opacity: 0.5 }}>

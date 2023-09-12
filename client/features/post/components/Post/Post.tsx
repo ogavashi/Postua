@@ -19,7 +19,9 @@ export const Post: React.FC<PostProps> = ({ post }) => {
       <Box>
         <PostHeader post={post} />
         {post?.image && <PostImage imageUrl={post.image} />}
-        <PostStats stats={post.stats} />
+        <Box>
+          <PostStats stats={post.stats} />
+        </Box>
         <PostText body={post.body} />
         <PostFooter post={post} />
       </Box>
