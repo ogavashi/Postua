@@ -8,10 +8,10 @@ import { constants } from '@/common';
 import { NextLinkComposed, Typography } from '@/components';
 
 import { styles } from './style';
-import { ShortPostResponse } from '@/types';
+import { ShortPostItem } from '@/types';
 
 interface PostHeaderdProps {
-  post: ShortPostResponse;
+  post: ShortPostItem;
 }
 
 export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {

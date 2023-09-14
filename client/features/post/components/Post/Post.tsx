@@ -7,10 +7,10 @@ import { PostImage } from './PostImage';
 import { PostStats } from './PostStats';
 import { PostText } from './PostText';
 import { PostFooter } from './PostFooter';
-import { PostResponse } from '@/types';
+import { PostItem } from '@/types';
 
 interface PostProps {
-  post: PostResponse;
+  post: PostItem;
 }
 
 export const Post: React.FC<PostProps> = ({ post }) => {

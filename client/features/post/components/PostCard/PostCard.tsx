@@ -4,10 +4,10 @@ import { PostHeader } from './PostHeader';
 import { PostTitle } from './PostTitle';
 import { PostImage } from './PostImage';
 import { PostFooter } from './PostFooter';
-import { ShortPostResponse } from '@/types';
+import { ShortPostItem } from '@/types';
 
 interface PostCardProps {
-  post: ShortPostResponse;
+  post: ShortPostItem;
 }
 
 export const PostCard: React.FC<PostCardProps> = ({ post }) => {

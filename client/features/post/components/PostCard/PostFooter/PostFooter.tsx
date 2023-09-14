@@ -7,7 +7,7 @@ import CachedIcon from '@mui/icons-material/Cached';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { PostStats, ShortPostResponse } from '@/types';
+import { PostStats, ShortPostItem } from '@/types';
 import { useCallback, useMemo, useState } from 'react';
 import { formatStats } from '@/features/post';
 

@@ -26,6 +26,7 @@ import { appActions } from '@/features/app/store';
 import { Language, Theme } from '@/types';
 import { NextApiService } from '@/services';
 import { userActions } from '@/features/user';
+import { SnackbarProvider } from 'notistack';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -59,7 +60,7 @@ function MyApp(props: AppPropsWithLayout) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <NextNProgress />
-          {getLayout(<Component {...pageProps} />)}
+          <SnackbarProvider>{getLayout(<Component {...pageProps} />)}</SnackbarProvider>
         </ThemeWrapper>
       </CacheProvider>
     </Provider>

@@ -56,7 +56,7 @@ export type Category = {
   backgroundUrl: string;
 };
 
-export type PostResponse = {
+export type PostItem = {
   id: string;
   title: string;
   body: DataProp;
@@ -67,7 +67,7 @@ export type PostResponse = {
   category: Category;
 };
 
-export type ShortPostResponse = {
+export type ShortPostItem = {
   id: string;
   title: string;
   description: string;
@@ -79,6 +79,6 @@ export type ShortPostResponse = {
 
 export interface CategoryPostProps {
   pageProps: {
-    post: PostResponse;
+    post: PostItem;
   };
 }

@@ -12,11 +12,11 @@ import { PostList } from '@/features/post';
 import { constants } from '@/common';
 import { NextApiService } from '@/services';
 import { GetServerSideProps, NextPageContext } from 'next';
-import { ShortPostResponse } from '@/types';
+import { ShortPostItem } from '@/types';
 
 interface PopularPageProps {
   pageProps: {
-    posts: ShortPostResponse[] | null;
+    posts: ShortPostItem[] | null;
   };
 }
 

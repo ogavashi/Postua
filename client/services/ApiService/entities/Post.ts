@@ -1,5 +1,5 @@
 import { Base } from '.';
-import { PostResponse, ShortPostResponse, Tag } from '@/types';
+import { PostItem, ShortPostItem, Tag } from '@/types';
 
 const tags: Tag[] = [
   {
@@ -58,7 +58,7 @@ const postStats = {
   visitings: 320000,
 };
 
-const post: PostResponse = {
+const post: PostItem = {
   id: '123',
   title: 'Post title 1. This is post tile 1.',
   body: body,
@@ -73,7 +73,7 @@ const post: PostResponse = {
   },
 };
 
-const shortPosts: ShortPostResponse[] = [
+const shortPosts: ShortPostItem[] = [
   {
     id: '123',
     title: 'Post title 1. This is post tile 1.',

@@ -5,10 +5,10 @@ import { Box, IconButton, Typography as MuiTypography, useTheme } from '@mui/mat
 import { styles } from './style';
 import { NextLinkComposed, Typography } from '@/components';
 import { constants } from '@/common';
-import { PostResponse } from '@/types';
+import { PostItem } from '@/types';
 
 interface PostHeaderProps {
-  post: PostResponse;
+  post: PostItem;
 }
 
 export const PostHeader: React.FC<PostHeaderProps> = ({ post }) => {

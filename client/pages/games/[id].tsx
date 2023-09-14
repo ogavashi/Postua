@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { Post } from '@/features/post';
 import { NextPageContext } from 'next/types';
 import { NextApiService } from '@/services';
-import { CategoryPostProps, PostResponse } from '@/types';
+import { CategoryPostProps, PostItem } from '@/types';
 
 const CategoryPost: NextPageWithLayout<CategoryPostProps> = ({ pageProps }) => {
   const router = useRouter();

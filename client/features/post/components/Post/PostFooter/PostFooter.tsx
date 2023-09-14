@@ -8,12 +8,12 @@ import CachedIcon from '@mui/icons-material/Cached';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { PostResponse } from '@/types';
+import { PostItem } from '@/types';
 import { useCallback, useState } from 'react';
 import { PostViewStats } from '../PostViewStats';
 
 interface PostFooterProps {
-  post: PostResponse;
+  post: PostItem;
 }
 
 export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {

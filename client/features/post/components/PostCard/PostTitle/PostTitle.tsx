@@ -1,8 +1,8 @@
 import { NextLinkComposed, Typography } from '@/components';
-import { ShortPostResponse } from '@/types';
+import { ShortPostItem } from '@/types';
 
 interface PostTitleProps {
-  post: ShortPostResponse;
+  post: ShortPostItem;
 }
 
 export const PostTitle: React.FC<PostTitleProps> = ({ post }) => {

@@ -1,11 +1,11 @@
 import { Box, SxProps, Theme } from '@mui/material';
 
 import { PostCard } from '@/features/post';
-import { ShortPostResponse } from '@/types';
+import { ShortPostItem } from '@/types';
 
 interface PostListprops {
   sx?: SxProps<Theme>;
-  posts?: ShortPostResponse[] | null;
+  posts?: ShortPostItem[] | null;
 }
 
 export const PostList: React.FC<PostListprops> = ({ sx = [], posts }) => {

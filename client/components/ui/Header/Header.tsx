@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { useTranslation } from 'next-i18next';
 
 import { AppBar, Box, Button, IconButton, Toolbar } from '@mui/material';
@@ -15,6 +17,8 @@ import { userSelectors } from '@/features/user';
 
 export const Header = () => {
   const user = useAppSelector(userSelectors.data);
+
+  const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -33,6 +37,10 @@ export const Header = () => {
   const handleSettingsToggle = useCallback(() => {
     setShowSettings((prevState) => !prevState);
   }, []);
+
+  const handleNavigateToWrite = useCallback(() => {
+    router.push('/write');
+  }, [router]);
 
   return (
     <ElevationScroll>
@@ -62,6 +70,7 @@ export const Header = () => {
                       variant='contained'
                       color='secondary'
                       startIcon={<EditNoteIcon />}
+                      onClick={handleNavigateToWrite}
                     >
                       {t('layout.ui.post')}
                     </Button>

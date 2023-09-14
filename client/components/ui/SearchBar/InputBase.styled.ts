@@ -8,5 +8,6 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: theme.spacing(2),
     transition: theme.transitions.create('width'),
   },
-  width: '100% !important',
+  minWidth: 255,
+  width: '100%',
 }));
