@@ -14,8 +14,8 @@ const Popular: NextPageWithLayout = () => {
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
       <SelectFilter
         pageKey={'fresh'}
-        options={constants.FILTERS_RARING}
-        defaultValue={constants.FILTERS_RARING[1]}
+        options={constants.FILTERS_RATING}
+        defaultValue={constants.FILTERS_RATING[1]}
       />
       <PostList />
     </Box>

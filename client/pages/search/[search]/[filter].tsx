@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { NextPageWithLayout } from '../_app';
+import { NextPageWithLayout } from '../../_app';
 import { GetServerSideProps } from 'next';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -12,33 +12,35 @@ import { SearchValue } from '@/features/search';
 import { NextPageContext } from 'next/types';
 import { NextApiService } from '@/services';
 import { ShortPostItem, Tag } from '@/types';
+import { SelectFilter } from '@/features/filters';
 
-interface TagPageProps {
+interface FilteredSearchPageProps {
   pageProps: {
     posts: ShortPostItem[] | null;
-    tag: Tag;
+    searchValue: string;
   };
 }
 
-const TagPage: NextPageWithLayout<TagPageProps> = ({ pageProps }) => {
-  const { tag, posts } = pageProps;
+const FilteredSearchPage: NextPageWithLayout<FilteredSearchPageProps> = ({ pageProps }) => {
+  const { searchValue, posts } = pageProps;
 
   return (
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
-      <SearchValue value={`#${tag.key}`} amount={posts?.length} />
+      <SearchValue value={searchValue} amount={posts?.length} />
+      <SelectFilter pageKey='search' queryKey='search' options={constants.FILTERS_SEARCH} />
       <PostList posts={posts} />
     </Box>
   );
 };
 
-TagPage.getLayout = (page: React.ReactNode) => {
+FilteredSearchPage.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
 
-  const { tag } = ctx.query;
+  const { search } = ctx.query;
   try {
     const data = await NextApiService(ctx).post.getAll();
 
@@ -46,9 +48,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
       props: {
         ...localeProps,
         posts: data,
-        tag: {
-          key: tag,
-        },
+        searchValue: search,
       },
     };
   } catch (error) {
@@ -63,4 +63,4 @@ export async function getServerSideProps(ctx: NextPageContext) {
   };
 }
 
-export default TagPage;
+export default FilteredSearchPage;

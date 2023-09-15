@@ -40,7 +40,17 @@
       "from-10": "From -10",
       "from5": "From +5",
       "from10": "From +10",
-      "all": "All"
+      "all": "All",
+      "best": "Best",
+      "fresh": "Fresh",
+      "old": "Old",
+      "users": "Users",
+      "games": "Games",
+      "music": "Music",
+      "tech": "Tech",
+      "anime": "Anime",
+      "cinema": "Cinema",
+      "software": "Software"
     }
   }
 }

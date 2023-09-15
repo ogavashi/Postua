@@ -70,7 +70,7 @@ export const constants = {
       key: 'allTime',
     },
   ],
-  FILTERS_RARING: [
+  FILTERS_RATING: [
     {
       key: 'from-10',
     },
@@ -83,6 +83,17 @@ export const constants = {
     {
       key: 'all',
     },
+  ],
+  FILTERS_TAG: [{ key: 'best' }, { key: 'fresh' }, { key: 'old' }],
+  FILTERS_SEARCH: [
+    { key: 'all' },
+    { key: 'users' },
+    { key: 'games' },
+    { key: 'music' },
+    { key: 'tech' },
+    { key: 'anime' },
+    { key: 'cinema' },
+    { key: 'software' },
   ],
   CATEGORY_TABS: ['posts', 'subscribers', 'rules'],
   USER_TABS: ['posts', 'subscribers', 'subscriptions'],
