@@ -3,7 +3,8 @@
     "menu": {
       "popular": "Популярне",
       "fresh": "Нове",
-      "subscriptions": "Підписки"
+      "subscriptions": "Підписки",
+      "saved": "Збережені"
     },
     "categories": {
       "games": "Ігри",

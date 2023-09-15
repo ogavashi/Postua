@@ -3,7 +3,8 @@
     "menu": {
       "popular": "Popular",
       "fresh": "Fresh",
-      "subscriptions": "Subscriptions"
+      "subscriptions": "Subscriptions",
+      "saved": "Saved"
     },
     "categories": {
       "games": "Games",
