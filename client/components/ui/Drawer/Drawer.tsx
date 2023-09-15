@@ -8,9 +8,10 @@ import { SideMenu } from '@/features/sideMenu';
 interface DrawerProps {
   isOpen: boolean;
   handleDrawerToggle: () => void;
+  setMobileOpen: (value: boolean) => void;
 }
 
-export const Drawer: React.FC<DrawerProps> = ({ isOpen, handleDrawerToggle }) => {
+export const Drawer: React.FC<DrawerProps> = ({ isOpen, handleDrawerToggle, setMobileOpen }) => {
   const theme = useTheme();
 
   return (
@@ -35,7 +36,7 @@ export const Drawer: React.FC<DrawerProps> = ({ isOpen, handleDrawerToggle }) =>
             <IconButton onClick={handleDrawerToggle}>
               <CloseIcon color='primary' />
             </IconButton>
-            <SearchBar sx={{ width: '100%' }} />
+            <SearchBar sx={{ width: '100%' }} setMobileOpen={setMobileOpen} />
           </Box>
           <Divider />
           <SideMenu handleDrawerToggle={handleDrawerToggle} />

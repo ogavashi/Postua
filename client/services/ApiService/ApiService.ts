@@ -1,12 +1,13 @@
 import { NextPageContext, GetServerSidePropsContext } from 'next';
 import Cookies, { parseCookies } from 'nookies';
 import { ApiClient } from './ApiClient';
-import { Post, User } from './entities';
+import { Post, Search, User } from './entities';
 import { AppConfig } from '@/common';
 
 class ApiService {
   public user: User;
   public post: Post;
+  public search: Search;
 
   constructor({
     ctx,
@@ -26,6 +27,7 @@ class ApiService {
 
     this.user = new User({ apiClient });
     this.post = new Post({ apiClient });
+    this.search = new Search({ apiClient });
   }
 }
 

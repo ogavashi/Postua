@@ -1,5 +1,6 @@
 import { OutputData } from '@editorjs/editorjs';
 import { DataProp } from 'editorjs-blocks-react-renderer';
+import { type } from 'os';
 
 export type Theme = 'light' | 'dark' | 'auto';
 
@@ -77,8 +78,14 @@ export type ShortPostItem = {
   category: Category;
 };
 
-export interface CategoryPostProps {
+export type CategoryPostProps = {
   pageProps: {
     post: PostItem;
   };
-}
+};
+
+type SearchResultType = 'post' | 'user' | 'category';
+
+export type SearchResult = (User | ShortPostItem | Category) & { type: SearchResultType };
+
+export type SearchResults = SearchResult[];

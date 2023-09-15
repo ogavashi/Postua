@@ -1,2 +1,2 @@
-export { SearchValue } from './components';
+export { SearchValue, SearchPreview } from './components';
 export { useSearch } from './hooks';

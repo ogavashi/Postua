@@ -88,7 +88,11 @@ export const Header = () => {
             </Box>
           </Box>
         </Toolbar>
-        <Drawer isOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
+        <Drawer
+          isOpen={mobileOpen}
+          handleDrawerToggle={handleDrawerToggle}
+          setMobileOpen={setMobileOpen}
+        />
         <AuthModal isOpen={showModal} handleClose={handleCloseModal} />
       </AppBar>
     </ElevationScroll>

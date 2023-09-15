@@ -16,7 +16,7 @@ export const SearchValue: React.FC<SearchValueProps> = ({ value, amount }) => {
         </Typography>
         {amount && (
           <Typography variant='h6' sx={{ opacity: 0.8 }}>
-            Found {amount} {amount > 1 ? 'posts' : 'post'}
+            Found {amount} {amount > 1 ? 'items' : 'item'}
           </Typography>
         )}
       </Box>

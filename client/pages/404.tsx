@@ -6,7 +6,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { useTranslation } from 'next-i18next';
 
+import notFound from '../animations/404.json';
+
 import ErrorIcon from '@mui/icons-material/Error';
+import Lottie from 'lottie-react';
 
 const NotFound: NextPageWithLayout = () => {
   const { t } = useTranslation();
@@ -18,21 +21,9 @@ const NotFound: NextPageWithLayout = () => {
       alignItems='center'
       flexDirection={{ xs: 'column', md: 'row' }}
       height='calc(100vh - 100px)'
-      gap={{ xs: 1, md: 5 }}
       mt='auto'
     >
-      <ErrorIcon sx={{ fontSize: { xs: 96, md: 128 } }} color='primary' />
-      <Box
-        display='flex'
-        alignItems={{ xs: 'center', md: 'flex-start' }}
-        flexDirection='column'
-        gap={2}
-      >
-        <Typography variant='h1'>404</Typography>
-        <Typography variant='h3' textAlign='center'>
-          {t('layout.ui.pageNotFound')}
-        </Typography>
-      </Box>
+      <Lottie animationData={notFound} loop={true} />
     </Box>
   );
 };
