@@ -2,6 +2,8 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ListIcon from '@mui/icons-material/List';
 
+import FolderSpecialIcon from '@mui/icons-material/FolderSpecial';
+
 export const constants = {
   CATEGORIES: [
     {
@@ -43,14 +45,22 @@ export const constants = {
     {
       icon: WhatshotIcon,
       key: 'popular',
+      protectedItem: false,
     },
     {
       icon: AccessTimeIcon,
       key: 'fresh',
+      protectedItem: false,
     },
     {
       icon: ListIcon,
       key: 'subscriptions',
+      protectedItem: false,
+    },
+    {
+      icon: FolderSpecialIcon,
+      key: 'saved',
+      protectedItem: true,
     },
   ],
   FILTERS_TIME: [
@@ -88,6 +98,15 @@ export const constants = {
   FILTERS_SEARCH: [
     { key: 'all' },
     { key: 'users' },
+    { key: 'games' },
+    { key: 'music' },
+    { key: 'tech' },
+    { key: 'anime' },
+    { key: 'cinema' },
+    { key: 'software' },
+  ],
+  FILTERS_SAVED: [
+    { key: 'all' },
     { key: 'games' },
     { key: 'music' },
     { key: 'tech' },

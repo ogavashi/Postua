@@ -3,25 +3,20 @@ import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-
 import { SelectFilter } from '@/features/filters';
 import { constants } from '@/common';
 import { PostList } from '@/features/post';
 
-const Fresh: NextPageWithLayout = () => {
+const Saved: NextPageWithLayout = () => {
   return (
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
-      <SelectFilter
-        pageKey={'fresh'}
-        options={constants.FILTERS_RATING}
-        defaultValue={constants.FILTERS_RATING[1]}
-      />
+      <SelectFilter options={constants.FILTERS_SAVED} />
       <PostList />
     </Box>
   );
 };
 
-Fresh.getLayout = (page: React.ReactNode) => {
+Saved.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
@@ -33,4 +28,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   };
 }
 
-export default Fresh;
+export default Saved;
