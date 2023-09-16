@@ -48,5 +48,12 @@ export const useNavigation = (options?: Options) => {
     [router]
   );
 
-  return { category, navigateCategory, defaultTab, navigateTabs };
+  const handleNavigate = useCallback(
+    (path: string) => {
+      router.push(`/${path}`);
+    },
+    [router]
+  );
+
+  return { category, navigateCategory, defaultTab, navigateTabs, handleNavigate };
 };

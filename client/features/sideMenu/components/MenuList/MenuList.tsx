@@ -27,7 +27,11 @@ export const MenuList: React.FC<MenuListProps> = ({ handleDrawerToggle }) => {
         ({ key, icon: Icon, protectedItem }) =>
           ((protectedItem && user) || !protectedItem) && (
             <ListItem key={key} sx={{ py: 0.5, px: 1.5 }}>
-              <ListItemButton selected={category === key} onClick={() => navigateCategory(key)}>
+              <ListItemButton
+                selected={category === key}
+                onClick={() => navigateCategory(key)}
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
                 <Icon color='primary' sx={{ fontSize: 32, mr: 1.15 }} />
                 <ListItemText primary={t(`layout.menu.${key}`)} />
               </ListItemButton>
