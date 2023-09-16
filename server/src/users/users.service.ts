@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,7 +14,9 @@ export class UsersService {
   ) {}
 
   async findById(id: number) {
-    return this.repository.findOneBy({ id });
+    const { password, ...user } = await this.repository.findOneBy({ id });
+
+    return user;
   }
 
   async findByEmail(email: string) {

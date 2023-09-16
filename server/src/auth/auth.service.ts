@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -29,7 +31,10 @@ export class AuthService {
     try {
       const userData = await this.usersService.create(dto);
 
+      const { password, ...user } = userData;
+
       return {
+        ...user,
         token: this.jwtService.sign({ id: userData.id }),
       };
     } catch (error) {
@@ -39,8 +44,9 @@ export class AuthService {
     }
   }
 
-  async login(user: any) {
+  async login(user: User) {
     return {
+      ...user,
       token: this.jwtService.sign({ id: user.id }),
     };
   }
