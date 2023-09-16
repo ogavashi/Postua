@@ -1,3 +1,3 @@
 export const AppConfig = {
-  apiUrl: process.env.API_URL || 'http://localhost:7777',
+  apiUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:7777',
 };
