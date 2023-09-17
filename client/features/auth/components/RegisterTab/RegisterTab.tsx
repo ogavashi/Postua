@@ -48,9 +48,11 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle, handleClose 
     try {
       const data = await ApiService.user.register(dto);
 
-      dispatch(userActions.setUser(data));
+      const { token, user } = data;
 
-      setCookie(null, 'postUaToken', data.token, {
+      dispatch(userActions.setUser(user));
+
+      setCookie(null, 'postUaToken', token, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
       });

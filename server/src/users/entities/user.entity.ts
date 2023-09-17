@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Column,
   Entity,
@@ -14,6 +15,7 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
 
@@ -26,9 +28,15 @@ export class User {
   @Column({ nullable: true })
   backgroundUrl?: string;
 
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
+  constructor(partial: Partial<User>) {
+    Object.assign(this, partial);
+  }
 }

@@ -16,12 +16,13 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Menu } from './Menu.styled';
 import { MenuItem } from '@/components';
 import { useNavigation } from '@/hooks';
-import { UserResponse } from '@/types';
+import { UserData } from '@/types';
 import { useAppDispatch } from '@/store';
 import { userActions } from '@/features/user';
+import { useRouter } from 'next/router';
 
 interface ProfileBarProps {
-  user: UserResponse;
+  user: UserData;
 }
 
 export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
@@ -29,6 +30,8 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
   const dispatch = useAppDispatch();
+
+  const router = useRouter();
 
   const handleProfileMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -52,6 +55,7 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
   const handleLogout = useCallback(() => {
     dispatch(userActions.unSetUser());
     destroyCookie(null, 'postUaToken', { path: '/' });
+    router.reload();
   }, []);
 
   return (

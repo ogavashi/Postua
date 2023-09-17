@@ -1,5 +1,5 @@
 import { RootState } from '@/store';
-import { Language, Theme, UserResponse } from '@/types';
+import { UserData } from '@/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { HYDRATE } from 'next-redux-wrapper';
@@ -10,7 +10,7 @@ type HydrateAction = {
 };
 
 export interface UserState {
-  data: UserResponse | null;
+  data: UserData | null;
 }
 
 const initialState: UserState = {
@@ -21,7 +21,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<UserResponse>) {
+    setUser(state, action: PayloadAction<UserData>) {
       state.data = action.payload;
     },
     unSetUser(state) {

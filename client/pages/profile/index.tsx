@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Paper, Slider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
@@ -6,11 +6,11 @@ import { wrapper } from '@/store';
 
 import { ProfileCard } from '@/features/profile';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { UserResponse } from '@/types';
+import { UserData } from '@/types';
 
 interface ProfileProps {
   pageProps: {
-    user: UserResponse;
+    user: UserData;
   };
 }
 

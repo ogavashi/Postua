@@ -1,5 +1,5 @@
 import { Base } from '.';
-import { LoginRequest, RegisterRequest, UserResponse } from '@/types';
+import { LoginRequest, RegisterRequest, UpdateUserDtoRequest, UserResponse } from '@/types';
 
 export class User extends Base {
   async login(dto: LoginRequest) {
@@ -12,9 +12,13 @@ export class User extends Base {
   }
 
   async register(dto: RegisterRequest) {
+    const { confirmPassword, ...userFormData } = dto as RegisterRequest & {
+      confirmPassword: string;
+    };
+
     const { data } = await this.apiClient.instance.post<RegisterRequest, { data: UserResponse }>(
       '/auth/register',
-      dto
+      userFormData
     );
 
     return data;
@@ -23,5 +27,9 @@ export class User extends Base {
   async getMe() {
     const { data } = await this.apiClient.instance.get<UserResponse>('/users/me');
     return data;
+  }
+
+  async update(dto: UpdateUserDtoRequest) {
+    await this.apiClient.instance.patch('users/me', dto);
   }
 }

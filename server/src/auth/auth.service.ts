@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 
@@ -18,36 +18,22 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...result } = user;
-
-      return result;
+      return user;
     }
 
     return null;
   }
 
   async register(dto: CreateUserDto) {
-    try {
-      const userData = await this.usersService.create(dto);
+    const user = await this.usersService.create(dto);
+    const token = this.jwtService.sign({ id: user.id });
 
-      const { password, ...user } = userData;
-
-      return {
-        ...user,
-        token: this.jwtService.sign({ id: userData.id }),
-      };
-    } catch (error) {
-      throw new ForbiddenException(
-        `Could not register user. ${error.message}.`,
-      );
-    }
+    return { user: new User(user), token };
   }
 
   async login(user: User) {
-    return {
-      ...user,
-      token: this.jwtService.sign({ id: user.id }),
-    };
+    const token = this.jwtService.sign({ id: user.id });
+
+    return { user: new User(user), token };
   }
 }

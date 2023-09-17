@@ -22,13 +22,33 @@ export type RegisterRequest = {
   password: string;
 };
 
-export type UserResponse = {
+export type UserData = {
+  id: string;
   email: string;
   fullName: string;
-  id: string;
-  backgroundUrl: string;
   avatarUrl: string;
+  backgroundUrl: string;
+  memberFrom: string;
+};
+
+export type UserResponse = {
+  user: UserData;
   token: string;
+};
+
+export type UpdateUserDtoRequest = {
+  fullName?: string;
+  backgroundUrl?: string;
+  avatarUrl?: string;
+  password?: string;
+};
+
+export type UserForm = {
+  fullName?: string;
+  backgroundUrl?: string;
+  avatarUrl?: string;
+  password?: string;
+  confirmPassword?: string;
 };
 
 export type User = {

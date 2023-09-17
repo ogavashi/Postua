@@ -17,15 +17,17 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 
 import { FormProvider, useForm } from 'react-hook-form';
-import { updateSchema } from '@/features/profile';
+import { normalizeUserData, updateSchema } from '@/features/profile';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormField } from '@/features/auth';
 import { useTranslatedErrors } from '@/hooks';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { UserResponse } from '@/types';
+import { UserData, UserResponse } from '@/types';
+import { ApiService } from '@/services';
+import { useSnackbar } from 'notistack';
 
 type ProfileCard = {
-  user: UserResponse;
+  user: UserData;
 };
 
 export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
@@ -56,11 +58,34 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
 
-  const onSubmit = useCallback((data: any) => {
-    console.log(data);
-  }, []);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const onSubmit = useCallback(
+    async (data: any) => {
+      const updatedUser = normalizeUserData({
+        ...data,
+        avatarUrl: userData.avatarUrl,
+        backgroundUrl: userData.backgroundUrl,
+      });
+
+      try {
+        setIsLoading(true);
+
+        await ApiService.user.update(updatedUser);
+        enqueueSnackbar('Successfully updated profile', { variant: 'success' });
+      } catch (error) {
+        enqueueSnackbar('Failed to update profile', { variant: 'error' });
+      } finally {
+        toggleEditable();
+        setIsLoading(false);
+      }
+    },
+    [userData]
+  );
 
   const handleCancel = useCallback(() => {
     methods.reset();
@@ -196,12 +221,12 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
                 <Button
                   variant='contained'
                   color='error'
-                  disabled={disabled}
+                  disabled={disabled || isLoading}
                   onClick={handleCancel}
                 >
                   Cancel
                 </Button>
-                <Button variant='contained' disabled={disabled} type='submit'>
+                <Button variant='contained' disabled={disabled || isLoading} type='submit'>
                   Save
                 </Button>
               </Box>

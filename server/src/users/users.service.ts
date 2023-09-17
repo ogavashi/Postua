@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { hashPassword } from 'src/utils/hashPassword';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -14,9 +15,7 @@ export class UsersService {
   ) {}
 
   async findById(id: number) {
-    const { password, ...user } = await this.repository.findOneBy({ id });
-
-    return user;
+    return this.repository.findOneBy({ id });
   }
 
   async findByEmail(email: string) {
@@ -33,5 +32,16 @@ export class UsersService {
     const password = await hashPassword(dto.password);
 
     return this.repository.save({ ...dto, password });
+  }
+
+  async update(id: number, dto: UpdateUserDto) {
+    let updatedUser = { ...dto };
+
+    if (updatedUser?.password) {
+      const password = await hashPassword(updatedUser.password);
+      updatedUser = { ...updatedUser, password };
+    }
+
+    return this.repository.update(id, updatedUser);
   }
 }

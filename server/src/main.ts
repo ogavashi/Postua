@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { setupSwagger } from './swagger.config';
+import { validationExceptionFactory } from './shared/exceptions/validation.exceptions';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,7 +17,10 @@ async function bootstrap() {
       'Origin,X-Requested-With,Content-Type,Accept,Authorization,authorization,X-Forwarded-for',
   });
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({ exceptionFactory: validationExceptionFactory }),
+  );
+
   setupSwagger(app);
   await app.listen(7777);
 }

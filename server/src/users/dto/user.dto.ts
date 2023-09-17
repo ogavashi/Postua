@@ -21,5 +21,5 @@ export class UserDto {
 
   @ApiProperty()
   @IsString()
-  readonly token: string;
+  readonly memberFrom: string;
 }
