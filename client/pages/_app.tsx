@@ -79,9 +79,9 @@ MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Comp
   }
 
   try {
-    const userData = await NextApiService(ctx).user.getMe();
+    const user = await NextApiService(ctx).user.getMe();
 
-    store.dispatch(userActions.setUser(userData));
+    store.dispatch(userActions.setUser(user));
   } catch (error) {
     if (ctx.asPath === '/write' && ctx.res) {
       ctx.res.writeHead(302, {
@@ -89,7 +89,6 @@ MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Comp
       });
       ctx.res.end();
     }
-    console.log(error);
   }
 
   return {

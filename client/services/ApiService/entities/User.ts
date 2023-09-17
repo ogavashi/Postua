@@ -1,5 +1,11 @@
 import { Base } from '.';
-import { LoginRequest, RegisterRequest, UpdateUserDtoRequest, UserResponse } from '@/types';
+import {
+  LoginRequest,
+  RegisterRequest,
+  UpdateUserDtoRequest,
+  UserData,
+  UserResponse,
+} from '@/types';
 
 export class User extends Base {
   async login(dto: LoginRequest) {
@@ -25,7 +31,7 @@ export class User extends Base {
   }
 
   async getMe() {
-    const { data } = await this.apiClient.instance.get<UserResponse>('/users/me');
+    const { data } = await this.apiClient.instance.get<UserData>('/users/me');
     return data;
   }
 
