@@ -17,6 +17,7 @@ import { RegisterRequest } from '@/types';
 import { ApiService } from '@/services';
 import { useAppDispatch } from '@/store';
 import { userActions } from '@/features/user';
+import { useToastError } from '@/features/errors';
 
 interface RegisterTabProps {
   onToggle: () => void;
@@ -40,6 +41,8 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle, handleClose 
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const toast = useToastError();
+
   const translatedErrors = useTranslatedErrors(errors);
 
   const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
@@ -57,7 +60,11 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle, handleClose 
         path: '/',
       });
       handleClose();
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        toast(error.message, 'error');
+      }
+    }
   }, []);
   return (
     <FormProvider {...methods}>

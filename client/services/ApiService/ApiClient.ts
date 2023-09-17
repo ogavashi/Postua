@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { GetServerSidePropsContext, NextPageContext } from 'next';
-import Cookies, { parseCookies } from 'nookies';
+import { handleAxiosError } from './interceptors';
 
 export class ApiClient {
   instance: AxiosInstance;
@@ -12,5 +11,10 @@ export class ApiClient {
         Authorization: 'Bearer ' + token,
       },
     });
+
+    this.instance.interceptors.response.use(
+      (response) => response,
+      (error) => handleAxiosError(error)
+    );
   }
 }

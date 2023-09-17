@@ -109,3 +109,7 @@ type SearchResultType = 'post' | 'user' | 'category';
 export type SearchResult = (User | ShortPostItem | Category) & { type: SearchResultType };
 
 export type SearchResults = SearchResult[];
+
+export type ServerError = { [key in string]: [string] | string | number };
+
+export type ParsedError = { message: string } | { [key in string]: string | number };

@@ -17,5 +17,9 @@
     "notEquals": "Field is required",
     "DBError": "Field is not valid",
     "noMatch": "Passwords do not match"
+  },
+  "general": {
+    "invalid_credentials": "Invalid credentials",
+    "email_registred": "Email is already taken"
   }
 }
