@@ -29,6 +29,9 @@ export class Post {
   @Column({ type: 'jsonb' })
   category: Category;
 
+  @Column({ nullable: true })
+  tags?: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { PostStatsService } from 'src/postStats/postStats.service';
 import { generatePeriodFilter } from 'src/utils/generatePeriodFilter';
+import { formatTags } from 'src/utils/formatTags';
 
 const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
@@ -24,6 +25,7 @@ export class PostsService {
   async create(userId: number, createPostDto: CreatePostDto) {
     const { id } = await this.repository.save({
       ...createPostDto,
+      tags: formatTags(createPostDto?.tags),
       user: { id: userId },
     });
 

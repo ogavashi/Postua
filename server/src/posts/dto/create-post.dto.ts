@@ -30,4 +30,9 @@ export class CreatePostDto {
 
   @ApiProperty()
   category: CategoryDto;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  tags?: string;
 }

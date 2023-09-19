@@ -36,7 +36,7 @@ export class PostsController {
 
   @Get('/popular')
   @ApiResponse({ type: PostDto })
-  popular(@Query('period') period: string) {
+  popular(@Query('period') period: string = 'today') {
     return this.postsService.popular(period);
   }
 

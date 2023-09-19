@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostStats } from './entities/postStats.entity';
 import { Repository } from 'typeorm';
+import { extractTags } from 'src/utils/extractTags';
 
 @Injectable()
 export class PostStatsService {
@@ -26,7 +27,12 @@ export class PostStatsService {
     const posts = items.map(({ post, id, ...stats }) => {
       const { password, ...userData } = post.user;
 
-      return { ...post, user: userData, stats };
+      return {
+        ...post,
+        tags: post?.tags ? extractTags(post.tags) : null,
+        user: userData,
+        stats,
+      };
     });
 
     return posts;
