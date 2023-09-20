@@ -16,6 +16,7 @@ import { formatTags } from 'src/utils/formatTags';
 import { UsersService } from 'src/users/users.service';
 import { LikesService } from 'src/likes/likes.service';
 import { DislikesService } from 'src/dislikes/dislikes.service';
+import { RepostsService } from 'src/reposts/reposts.service';
 
 const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
@@ -30,6 +31,8 @@ export class PostsService {
     private likesService: LikesService,
     @Inject(forwardRef(() => DislikesService))
     private dislikesService: DislikesService,
+    @Inject(forwardRef(() => RepostsService))
+    private repostsService: RepostsService,
   ) {}
 
   async create(userId: number, createPostDto: CreatePostDto) {
@@ -65,6 +68,10 @@ export class PostsService {
           ...post,
           isLiked: await this.likesService.findByUserAndPost(userId, post.id),
           isDisliked: await this.dislikesService.findByUserAndPost(
+            userId,
+            post.id,
+          ),
+          isReposted: await this.repostsService.findByUserAndPost(
             userId,
             post.id,
           ),

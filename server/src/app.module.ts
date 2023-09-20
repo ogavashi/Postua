@@ -16,6 +16,7 @@ import { Saved } from './saved/entities/saved.entity';
 import { Repost } from './reposts/entities/repost.entity';
 import { Role } from './roles/entities/role.entity';
 import { LikesModule } from './likes/likes.module';
+import { RepostsModule } from './reposts/reposts.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { LikesModule } from './likes/likes.module';
     AuthModule,
     PostsModule,
     LikesModule,
+    RepostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

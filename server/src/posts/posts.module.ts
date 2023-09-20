@@ -7,6 +7,7 @@ import { PostStatsModule } from 'src/postStats/postStats.module';
 import { UsersModule } from 'src/users/users.module';
 import { LikesModule } from 'src/likes/likes.module';
 import { DislikesModule } from 'src/dislikes/dislikes.module';
+import { RepostsModule } from 'src/reposts/reposts.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { DislikesModule } from 'src/dislikes/dislikes.module';
     TypeOrmModule.forFeature([Post]),
     forwardRef(() => LikesModule),
     forwardRef(() => DislikesModule),
+    forwardRef(() => RepostsModule),
   ],
   controllers: [PostsController],
   providers: [PostsService],
