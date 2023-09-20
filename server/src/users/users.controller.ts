@@ -7,6 +7,7 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -41,6 +42,24 @@ export class UsersController {
   @ApiOkResponse({ type: UserDto })
   update(@UserId() id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Patch('/role/toggle')
+  toggleRole(@UserId() id: number, @Query('userId') userId: number) {
+    return this.usersService.toggleRole(id, userId);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Patch('/role')
+  setRole(
+    @UserId() id: number,
+    @Query('userId') userId: number,
+    @Query('roleId') roleId: number,
+  ) {
+    return this.usersService.setUserRole(id, userId, roleId);
   }
 
   @Get('/me')

@@ -14,6 +14,7 @@ import { Like } from './likes/entities/like.entity';
 import { Dislike } from './dislikes/entities/dislike.entity';
 import { Saved } from './saved/entities/saved.entity';
 import { Repost } from './reposts/entities/repost.entity';
+import { Role } from './roles/entities/role.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,17 @@ import { Repost } from './reposts/entities/repost.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Post, PostStats, Comment, Like, Dislike, Repost, Saved],
+      entities: [
+        User,
+        Post,
+        PostStats,
+        Comment,
+        Like,
+        Dislike,
+        Repost,
+        Saved,
+        Role,
+      ],
       synchronize: true,
     }),
     UsersModule,

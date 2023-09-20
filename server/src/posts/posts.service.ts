@@ -11,6 +11,7 @@ import { Post } from './entities/post.entity';
 import { PostStatsService } from 'src/postStats/postStats.service';
 import { generatePeriodFilter } from 'src/utils/generatePeriodFilter';
 import { formatTags } from 'src/utils/formatTags';
+import { UsersService } from 'src/users/users.service';
 
 const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
@@ -20,6 +21,7 @@ export class PostsService {
     @InjectRepository(Post)
     private repository: Repository<Post>,
     private postStatsService: PostStatsService,
+    private userService: UsersService,
   ) {}
 
   async create(userId: number, createPostDto: CreatePostDto) {
@@ -73,14 +75,16 @@ export class PostsService {
   async remove(id: number, userId: number) {
     const post = await this.repository.findOne({ where: { id } });
 
+    const user = await this.userService.findById(userId);
+
     if (!post) {
       throw new NotFoundException('no_post');
     }
 
-    if (post.user.id !== userId) {
-      throw new ForbiddenException('no_access');
+    if (post.user.id === userId || user.role.id === 3) {
+      return this.repository.delete(id);
     }
 
-    return this.repository.delete(id);
+    throw new ForbiddenException('no_access');
   }
 }

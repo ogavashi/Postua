@@ -1,10 +1,12 @@
 import { Exclude } from 'class-transformer';
+import { Role } from 'src/roles/entities/role.entity';
 import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity('users')
@@ -27,6 +29,9 @@ export class User {
 
   @Column({ nullable: true })
   backgroundUrl?: string;
+
+  @ManyToOne(() => Role, { eager: true })
+  role: Role;
 
   @Exclude()
   @CreateDateColumn({ type: 'timestamp' })

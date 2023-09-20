@@ -1,7 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNumber, IsString, MinLength } from 'class-validator';
+import { RoleDto } from 'src/roles/dto/role.dto';
 
 export class UserDto {
+  @ApiProperty()
+  @IsNumber()
+  readonly id: number;
+
   @ApiProperty()
   @IsEmail()
   readonly email: string;
@@ -22,4 +27,7 @@ export class UserDto {
   @ApiProperty()
   @IsString()
   readonly memberFrom: string;
+
+  @ApiProperty()
+  readonly role: RoleDto;
 }

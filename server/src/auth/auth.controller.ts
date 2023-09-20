@@ -13,9 +13,9 @@ import { AuthService } from './auth.service';
 import { User } from 'src/users/entities/user.entity';
 import { LocalAuthGuard } from './guards/local.guard';
 import { LoginDto } from './dto/login.dto';
-import { UserDto } from 'src/users/dto/user.dto';
 import { UserFormatInterceptor } from 'src/shared/interceptors/use-format.interceptor';
 import { AuthResponseDto } from './dto/auth-response.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @ApiTags('auth')
 @Controller()
@@ -33,8 +33,8 @@ export class AuthController {
   }
 
   @Post('auth/register')
-  @ApiBody({ type: AuthResponseDto })
-  @ApiOkResponse({ type: UserDto })
+  @ApiBody({ type: RegisterDto })
+  @ApiOkResponse({ type: AuthResponseDto })
   register(@Body() dto: CreateUserDto) {
     return this.authService.register(dto);
   }
