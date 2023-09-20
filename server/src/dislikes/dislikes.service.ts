@@ -8,22 +8,22 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Like } from './entities/like.entity';
 import { PostsService } from 'src/posts/posts.service';
 import { PostStatsService } from 'src/postStats/postStats.service';
+import { Dislike } from './entities/dislike.entity';
 
 @Injectable()
-export class LikesService {
+export class DislikesService {
   constructor(
-    @InjectRepository(Like)
-    private repository: Repository<Like>,
+    @InjectRepository(Dislike)
+    private repository: Repository<Dislike>,
     @Inject(forwardRef(() => PostStatsService))
     private postStatsService: PostStatsService,
     @Inject(forwardRef(() => PostsService))
     private postsService: PostsService,
   ) {}
 
-  async like(postId: number, userId: number) {
+  async dislike(postId: number, userId: number) {
     const post = await this.postsService.findOne(postId);
 
     if (!post) {
@@ -31,35 +31,35 @@ export class LikesService {
     }
 
     if (post.user.id === userId) {
-      throw new ConflictException('self_like');
+      throw new ConflictException('self_dislike');
     }
 
     const postStats = await this.postStatsService.findOne(post.id);
 
-    const liked = await this.repository.findOne({
+    const disliked = await this.repository.findOne({
       where: { post: { id: postId }, user: { id: userId } },
     });
 
-    if (liked) {
-      postStats.likes = postStats.likes - 1;
+    if (disliked) {
+      postStats.dislikes = postStats.dislikes - 1;
       await this.postStatsService.update(postStats.id, postStats);
 
-      return this.remove(liked.id);
+      return this.remove(disliked.id);
     }
 
-    const newLike = { post: { id: postId }, user: { id: userId } };
-    postStats.likes = postStats.likes + 1;
+    const newDislike = { post: { id: postId }, user: { id: userId } };
+    postStats.dislikes = postStats.dislikes + 1;
     await this.postStatsService.update(postStats.id, postStats);
 
-    return this.repository.save(newLike);
+    return this.repository.save(newDislike);
   }
 
   async findByUserAndPost(userId: number, postId: number) {
-    const liked = await this.repository.findOne({
+    const disliked = await this.repository.findOne({
       where: { user: { id: userId }, post: { id: postId } },
     });
 
-    return !!liked;
+    return !!disliked;
   }
 
   findAll() {
