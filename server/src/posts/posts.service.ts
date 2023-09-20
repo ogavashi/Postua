@@ -48,12 +48,32 @@ export class PostsService {
     this.postStatsService.create(id);
   }
 
-  findAll() {
-    return this.repository.find({
+  async findAll(userId?: number) {
+    const posts = await this.repository.find({
       order: {
         createdAt: 'DESC',
       },
     });
+
+    if (userId) {
+      return await Promise.all(
+        posts.map(async (post) => ({
+          ...post,
+          isLiked: await this.likesService.findByUserAndPost(userId, post.id),
+          isDisliked: await this.dislikesService.findByUserAndPost(
+            userId,
+            post.id,
+          ),
+          isReposted: await this.repostsService.findByUserAndPost(
+            userId,
+            post.id,
+          ),
+          isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+        })),
+      );
+    }
+
+    return posts;
   }
 
   async popular(period: string, userId?: number) {
@@ -86,8 +106,30 @@ export class PostsService {
     return posts;
   }
 
-  findOne(id: number) {
-    return this.repository.findOne({ where: { id } });
+  async findOne(id: number, userId?: number) {
+    const post = await this.repository.findOne({ where: { id } });
+
+    if (!post) {
+      throw new NotFoundException('no_post');
+    }
+
+    if (userId) {
+      return {
+        ...post,
+        isLiked: await this.likesService.findByUserAndPost(userId, post.id),
+        isDisliked: await this.dislikesService.findByUserAndPost(
+          userId,
+          post.id,
+        ),
+        isReposted: await this.repostsService.findByUserAndPost(
+          userId,
+          post.id,
+        ),
+        isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+      };
+    }
+
+    return post;
   }
 
   async update(id: number, updatePostDto: UpdatePostDto, userId: number) {

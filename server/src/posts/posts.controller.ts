@@ -30,9 +30,11 @@ export class PostsController {
     return this.postsService.create(id, createPostDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(CustomJwtAuthGuard)
   @Get()
-  findAll() {
-    return this.postsService.findAll();
+  findAll(@UserId() id?: number) {
+    return this.postsService.findAll(id);
   }
 
   @ApiBearerAuth()
@@ -43,9 +45,12 @@ export class PostsController {
     return this.postsService.popular(period, id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(CustomJwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postsService.findOne(+id);
+  findOne(@Param('id') id: string, @UserId() userId?: number) {
+    console.log(userId);
+    return this.postsService.findOne(+id, userId);
   }
 
   @ApiBearerAuth()
