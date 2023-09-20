@@ -11,11 +11,11 @@ import { AddViewDto } from './dto/addView.dto';
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class ViewsController {
-  constructor(private readonly likesService: ViewsService) {}
+  constructor(private readonly viewsService: ViewsService) {}
 
   @Post()
   @ApiBody({ type: AddViewDto })
   create(@UserId() id: number, @Body() data: AddViewDto) {
-    return this.likesService.view(data.postId, id);
+    return this.viewsService.view(data.postId, id);
   }
 }

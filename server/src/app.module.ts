@@ -20,6 +20,8 @@ import { RepostsModule } from './reposts/reposts.module';
 import { SavedModule } from './saved/saved.module';
 import { ViewsModule } from './views/views.module';
 import { View } from './views/entities/view.entity';
+import { VisitingsModule } from './visitings/visitings.module';
+import { Visit } from './visitings/entities/visit.entity';
 
 @Module({
   imports: [
@@ -42,6 +44,7 @@ import { View } from './views/entities/view.entity';
         Saved,
         Role,
         View,
+        Visit,
       ],
       synchronize: true,
     }),
@@ -52,6 +55,7 @@ import { View } from './views/entities/view.entity';
     RepostsModule,
     SavedModule,
     ViewsModule,
+    VisitingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
