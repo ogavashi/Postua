@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PostsService } from 'src/posts/posts.service';
 import { Saved } from './entities/saved.entity';
+import { PageOptionsDto } from 'src/page/dto/page-options.dto';
 
 @Injectable()
 export class SavedService {
@@ -48,8 +49,25 @@ export class SavedService {
     return !!reposted;
   }
 
-  findAll() {
-    return `This action returns all roles`;
+  async findAll(pageOptions: PageOptionsDto, id: number) {
+    const saved = await this.repository.find({
+      where: { user: { id } },
+      skip: pageOptions.skip,
+      take: pageOptions.take,
+    });
+
+    const posts = saved.map(({ post }) => {
+      const { password, ...userData } = post.user;
+
+      return {
+        ...post,
+        user: userData,
+      };
+    });
+
+    const count = await this.repository.count({ where: { user: { id } } });
+
+    return { data: posts, count };
   }
 
   findOne(id: number) {

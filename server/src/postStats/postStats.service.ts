@@ -27,14 +27,15 @@ export class PostStatsService {
     this.repository.save(statsItem);
   }
 
-  async getAll(pageOptions: PageOptionsDto) {
+  async getAll(pageOptions: PageOptionsDto, filter = {}) {
     const items = await this.repository.find({
       order: { post: { createdAt: 'DESC' } },
+      where: filter,
       skip: pageOptions.skip,
       take: pageOptions.take,
     });
 
-    const count = await this.repository.count();
+    const count = await this.repository.count({ where: filter });
 
     const posts = items.map(({ post, id, ...stats }) => {
       const { password, ...userData } = post.user;

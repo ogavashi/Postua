@@ -16,11 +16,11 @@ import { formatTags } from 'src/utils/formatTags';
 import { UsersService } from 'src/users/users.service';
 import { LikesService } from 'src/likes/likes.service';
 import { DislikesService } from 'src/dislikes/dislikes.service';
-import { RepostsService } from 'src/reposts/reposts.service';
 import { SavedService } from 'src/saved/saved.service';
 import { PageOptionsDto } from 'src/page/dto/page-options.dto';
 import { PageDto } from 'src/page/dto/page.dto';
 import { PageMetaDto } from 'src/page/dto/page-meta.dto';
+import { SubsService } from 'src/subs/subs.service';
 
 const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
@@ -31,12 +31,11 @@ export class PostsService {
     private repository: Repository<Post>,
     private postStatsService: PostStatsService,
     private userService: UsersService,
+    private subsService: SubsService,
     @Inject(forwardRef(() => LikesService))
     private likesService: LikesService,
     @Inject(forwardRef(() => DislikesService))
     private dislikesService: DislikesService,
-    @Inject(forwardRef(() => RepostsService))
-    private repostsService: RepostsService,
     @Inject(forwardRef(() => SavedService))
     private savedService: SavedService,
   ) {}
@@ -69,11 +68,11 @@ export class PostsService {
             userId,
             post.id,
           ),
-          isReposted: await this.repostsService.findByUserAndPost(
-            userId,
-            post.id,
-          ),
           isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+          isSubscribed: await this.subsService.findByUserAndCategory(
+            userId,
+            post.category.key,
+          ),
         })),
       );
 
@@ -109,11 +108,81 @@ export class PostsService {
             userId,
             post.id,
           ),
-          isReposted: await this.repostsService.findByUserAndPost(
+          isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+          isSubscribed: await this.subsService.findByUserAndCategory(
+            userId,
+            post.category.key,
+          ),
+        })),
+      );
+
+      return new PageDto(formattedPosts, pageMetaDto);
+    }
+
+    return new PageDto(posts, pageMetaDto);
+  }
+
+  async saved(pageOptions: PageOptionsDto, userId: number) {
+    const { data: posts, count } = await this.savedService.findAll(
+      pageOptions,
+      userId,
+    );
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto: pageOptions,
+    });
+
+    const formattedPosts = await Promise.all(
+      posts.map(async (post) => ({
+        ...post,
+        isLiked: await this.likesService.findByUserAndPost(userId, post.id),
+        isDisliked: await this.dislikesService.findByUserAndPost(
+          userId,
+          post.id,
+        ),
+        isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+        isSubscribed: await this.subsService.findByUserAndCategory(
+          userId,
+          post.category.key,
+        ),
+      })),
+    );
+
+    return new PageDto(formattedPosts, pageMetaDto);
+  }
+
+  async userProfile(
+    pageOptions: PageOptionsDto,
+    userId: number,
+    senderId?: number,
+  ) {
+    const { data: posts, count } = await this.postStatsService.getAll(
+      pageOptions,
+      {
+        post: { user: { id: userId } },
+      },
+    );
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto: pageOptions,
+    });
+
+    if (senderId) {
+      const formattedPosts = await Promise.all(
+        posts.map(async (post) => ({
+          ...post,
+          isLiked: await this.likesService.findByUserAndPost(senderId, post.id),
+          isDisliked: await this.dislikesService.findByUserAndPost(
             userId,
             post.id,
           ),
-          isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+          isSaved: await this.savedService.findByUserAndPost(senderId, post.id),
+          isSubscribed: await this.subsService.findByUserAndCategory(
+            userId,
+            post.category.key,
+          ),
         })),
       );
 
@@ -135,10 +204,6 @@ export class PostsService {
         ...post,
         isLiked: await this.likesService.findByUserAndPost(userId, post.id),
         isDisliked: await this.dislikesService.findByUserAndPost(
-          userId,
-          post.id,
-        ),
-        isReposted: await this.repostsService.findByUserAndPost(
           userId,
           post.id,
         ),

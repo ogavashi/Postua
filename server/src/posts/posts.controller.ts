@@ -52,6 +52,24 @@ export class PostsController {
   }
 
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('/saved')
+  get(@Query() pageOptionsDto: PageOptionsDto, @UserId() id: number) {
+    return this.postsService.saved(pageOptionsDto, id);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(CustomJwtAuthGuard)
+  @Get('/user/:userId')
+  profile(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @Param('userId') id: string,
+    @UserId() userId?: number,
+  ) {
+    return this.postsService.userProfile(pageOptionsDto, +id, userId);
+  }
+
+  @ApiBearerAuth()
   @UseGuards(CustomJwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @UserId() userId?: number) {

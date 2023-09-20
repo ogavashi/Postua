@@ -7,17 +7,17 @@ import { PostStatsModule } from 'src/postStats/postStats.module';
 import { UsersModule } from 'src/users/users.module';
 import { LikesModule } from 'src/likes/likes.module';
 import { DislikesModule } from 'src/dislikes/dislikes.module';
-import { RepostsModule } from 'src/reposts/reposts.module';
 import { SavedModule } from 'src/saved/saved.module';
+import { SubsModule } from 'src/subs/subs.module';
 
 @Module({
   imports: [
     PostStatsModule,
     UsersModule,
+    SubsModule,
     TypeOrmModule.forFeature([Post]),
     forwardRef(() => LikesModule),
     forwardRef(() => DislikesModule),
-    forwardRef(() => RepostsModule),
     forwardRef(() => SavedModule),
   ],
   controllers: [PostsController],
