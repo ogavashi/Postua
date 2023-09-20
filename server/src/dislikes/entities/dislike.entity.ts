@@ -7,9 +7,9 @@ export class Dislike {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, { eager: true, onDelete: 'CASCADE' })
   user: User;
 
-  @ManyToOne(() => Post, { eager: true })
+  @ManyToOne(() => Post, { eager: true, onDelete: 'CASCADE' })
   post: Post;
 }

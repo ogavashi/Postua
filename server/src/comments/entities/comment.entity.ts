@@ -21,10 +21,10 @@ export class Comment {
   @Column({ nullable: true })
   parent: number;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, { eager: true, onDelete: 'CASCADE' })
   user: User;
 
-  @ManyToOne(() => Post, { eager: true })
+  @ManyToOne(() => Post, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   post: Post;
 

@@ -52,15 +52,8 @@ export class PostsService {
   }
 
   async findAll(pageOptions: PageOptionsDto, userId?: number) {
-    const posts = await this.repository.find({
-      order: {
-        createdAt: 'DESC',
-      },
-      skip: pageOptions.skip,
-      take: pageOptions.take,
-    });
-
-    const count = await this.repository.count();
+    const { data: posts, count } =
+      await this.postStatsService.getAll(pageOptions);
 
     const pageMetaDto = new PageMetaDto({
       itemCount: count,
@@ -131,7 +124,7 @@ export class PostsService {
   }
 
   async findOne(id: number, userId?: number) {
-    const post = await this.repository.findOne({ where: { id } });
+    const post = await this.postStatsService.getOne(id);
 
     if (!post) {
       throw new NotFoundException('no_post');

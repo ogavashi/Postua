@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  forwardRef,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostStats } from './entities/postStats.entity';
 import { Repository } from 'typeorm';
@@ -20,6 +25,29 @@ export class PostStatsService {
     const statsItem = await this.repository.create({ post: { id: postId } });
 
     this.repository.save(statsItem);
+  }
+
+  async getAll(pageOptions: PageOptionsDto) {
+    const items = await this.repository.find({
+      order: { post: { createdAt: 'DESC' } },
+      skip: pageOptions.skip,
+      take: pageOptions.take,
+    });
+
+    const count = await this.repository.count();
+
+    const posts = items.map(({ post, id, ...stats }) => {
+      const { password, ...userData } = post.user;
+
+      return {
+        ...post,
+        tags: post?.tags ? extractTags(post.tags) : null,
+        user: userData,
+        stats,
+      };
+    });
+
+    return { data: posts, count };
   }
 
   async popular(filter: any, pageOptions: PageOptionsDto) {
@@ -44,6 +72,24 @@ export class PostStatsService {
     });
 
     return { data: posts, count };
+  }
+
+  async getOne(id: number) {
+    const data = await this.repository.findOne({ where: { post: { id } } });
+
+    if (!data) {
+      throw new NotFoundException('no_post');
+    }
+
+    const { post, id: statId, ...stats } = data;
+    const { password, ...userData } = post.user;
+
+    return {
+      ...post,
+      tags: post?.tags ? extractTags(post.tags) : null,
+      user: userData,
+      stats,
+    };
   }
 
   findOne(id: number) {
