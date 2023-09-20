@@ -1,7 +1,9 @@
 import {
   ForbiddenException,
+  Inject,
   Injectable,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -12,6 +14,7 @@ import { PostStatsService } from 'src/postStats/postStats.service';
 import { generatePeriodFilter } from 'src/utils/generatePeriodFilter';
 import { formatTags } from 'src/utils/formatTags';
 import { UsersService } from 'src/users/users.service';
+import { LikesService } from 'src/likes/likes.service';
 
 const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
@@ -22,6 +25,8 @@ export class PostsService {
     private repository: Repository<Post>,
     private postStatsService: PostStatsService,
     private userService: UsersService,
+    @Inject(forwardRef(() => LikesService))
+    private likesService: LikesService,
   ) {}
 
   async create(userId: number, createPostDto: CreatePostDto) {
@@ -42,14 +47,23 @@ export class PostsService {
     });
   }
 
-  async popular(period: string) {
+  async popular(period: string, userId?: number) {
     if (!periodFilters.includes(period)) {
       throw new NotFoundException('uknown_period');
     }
 
     const periodFilter = generatePeriodFilter(period);
 
-    const posts = this.postStatsService.popular(periodFilter);
+    const posts = await this.postStatsService.popular(periodFilter);
+
+    if (userId) {
+      return await Promise.all(
+        posts.map(async (post) => ({
+          ...post,
+          isLiked: await this.likesService.findByUserAndPost(userId, post.id),
+        })),
+      );
+    }
 
     return posts;
   }

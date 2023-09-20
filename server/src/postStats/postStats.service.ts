@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostStats } from './entities/postStats.entity';
 import { Repository } from 'typeorm';
 import { extractTags } from 'src/utils/extractTags';
+import { PostStatsDto } from './dto/postStats.dto';
+import { LikesService } from 'src/likes/likes.service';
 
 @Injectable()
 export class PostStatsService {
   constructor(
     @InjectRepository(PostStats)
+    @Inject(forwardRef(() => LikesService))
     private repository: Repository<PostStats>,
   ) {}
 
@@ -39,11 +42,11 @@ export class PostStatsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} post`;
+    return this.repository.findOne({ where: { post: { id } } });
   }
 
-  update(id: number) {
-    return `This action updates a #${id} post`;
+  update(id: number, dto: PostStatsDto) {
+    return this.repository.update(id, dto);
   }
 
   remove(id: number) {

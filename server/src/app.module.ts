@@ -15,6 +15,7 @@ import { Dislike } from './dislikes/entities/dislike.entity';
 import { Saved } from './saved/entities/saved.entity';
 import { Repost } from './reposts/entities/repost.entity';
 import { Role } from './roles/entities/role.entity';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { Role } from './roles/entities/role.entity';
     UsersModule,
     AuthModule,
     PostsModule,
+    LikesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

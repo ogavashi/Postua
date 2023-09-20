@@ -16,6 +16,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { UserId } from 'src/decorators/user-id.decorator';
 import { PostDto } from './dto/post.dto';
+import { CustomJwtAuthGuard } from 'src/auth/guards/custom.guard';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -34,10 +35,12 @@ export class PostsController {
     return this.postsService.findAll();
   }
 
+  @ApiBearerAuth()
+  @UseGuards(CustomJwtAuthGuard)
   @Get('/popular')
   @ApiResponse({ type: PostDto })
-  popular(@Query('period') period: string = 'today') {
-    return this.postsService.popular(period);
+  popular(@Query('period') period: string = 'today', @UserId() id?: number) {
+    return this.postsService.popular(period, id);
   }
 
   @Get(':id')
