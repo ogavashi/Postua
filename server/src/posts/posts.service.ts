@@ -17,6 +17,7 @@ import { UsersService } from 'src/users/users.service';
 import { LikesService } from 'src/likes/likes.service';
 import { DislikesService } from 'src/dislikes/dislikes.service';
 import { RepostsService } from 'src/reposts/reposts.service';
+import { SavedService } from 'src/saved/saved.service';
 
 const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
@@ -33,6 +34,8 @@ export class PostsService {
     private dislikesService: DislikesService,
     @Inject(forwardRef(() => RepostsService))
     private repostsService: RepostsService,
+    @Inject(forwardRef(() => SavedService))
+    private savedService: SavedService,
   ) {}
 
   async create(userId: number, createPostDto: CreatePostDto) {
@@ -75,6 +78,7 @@ export class PostsService {
             userId,
             post.id,
           ),
+          isSaved: await this.savedService.findByUserAndPost(userId, post.id),
         })),
       );
     }
