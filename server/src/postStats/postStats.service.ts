@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { extractTags } from 'src/utils/extractTags';
 import { PostStatsDto } from './dto/postStats.dto';
 import { LikesService } from 'src/likes/likes.service';
+import { PageOptionsDto } from 'src/page/dto/page-options.dto';
 
 @Injectable()
 export class PostStatsService {
@@ -21,11 +22,15 @@ export class PostStatsService {
     this.repository.save(statsItem);
   }
 
-  async popular(filter: any) {
+  async popular(filter: any, pageOptions: PageOptionsDto) {
     const items = await this.repository.find({
       where: { post: filter },
       order: { likes: 'DESC', views: 'DESC' },
+      skip: pageOptions.skip,
+      take: pageOptions.take,
     });
+
+    const count = await this.repository.count({ where: { post: filter } });
 
     const posts = items.map(({ post, id, ...stats }) => {
       const { password, ...userData } = post.user;
@@ -38,7 +43,7 @@ export class PostStatsService {
       };
     });
 
-    return posts;
+    return { data: posts, count };
   }
 
   findOne(id: number) {

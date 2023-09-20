@@ -17,6 +17,8 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { UserId } from 'src/decorators/user-id.decorator';
 import { PostDto } from './dto/post.dto';
 import { CustomJwtAuthGuard } from 'src/auth/guards/custom.guard';
+import { PageOptionsDto } from 'src/page/dto/page-options.dto';
+import { PageDto } from 'src/page/dto/page.dto';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -33,23 +35,26 @@ export class PostsController {
   @ApiBearerAuth()
   @UseGuards(CustomJwtAuthGuard)
   @Get()
-  findAll(@UserId() id?: number) {
-    return this.postsService.findAll(id);
+  findAll(@Query() pageOptionsDto: PageOptionsDto, @UserId() id?: number) {
+    return this.postsService.findAll(pageOptionsDto, id);
   }
 
   @ApiBearerAuth()
   @UseGuards(CustomJwtAuthGuard)
   @Get('/popular')
-  @ApiResponse({ type: PostDto })
-  popular(@Query('period') period: string = 'today', @UserId() id?: number) {
-    return this.postsService.popular(period, id);
+  @ApiResponse({ type: PageDto<PostDto> })
+  popular(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @Query('period') period: string = 'today',
+    @UserId() id?: number,
+  ) {
+    return this.postsService.popular(pageOptionsDto, period, id);
   }
 
   @ApiBearerAuth()
   @UseGuards(CustomJwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @UserId() userId?: number) {
-    console.log(userId);
     return this.postsService.findOne(+id, userId);
   }
 

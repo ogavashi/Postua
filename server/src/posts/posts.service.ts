@@ -18,6 +18,9 @@ import { LikesService } from 'src/likes/likes.service';
 import { DislikesService } from 'src/dislikes/dislikes.service';
 import { RepostsService } from 'src/reposts/reposts.service';
 import { SavedService } from 'src/saved/saved.service';
+import { PageOptionsDto } from 'src/page/dto/page-options.dto';
+import { PageDto } from 'src/page/dto/page.dto';
+import { PageMetaDto } from 'src/page/dto/page-meta.dto';
 
 const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
@@ -48,15 +51,24 @@ export class PostsService {
     this.postStatsService.create(id);
   }
 
-  async findAll(userId?: number) {
+  async findAll(pageOptions: PageOptionsDto, userId?: number) {
     const posts = await this.repository.find({
       order: {
         createdAt: 'DESC',
       },
+      skip: pageOptions.skip,
+      take: pageOptions.take,
+    });
+
+    const count = await this.repository.count();
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto: pageOptions,
     });
 
     if (userId) {
-      return await Promise.all(
+      const formattedPosts = await Promise.all(
         posts.map(async (post) => ({
           ...post,
           isLiked: await this.likesService.findByUserAndPost(userId, post.id),
@@ -71,22 +83,32 @@ export class PostsService {
           isSaved: await this.savedService.findByUserAndPost(userId, post.id),
         })),
       );
+
+      return new PageDto(formattedPosts, pageMetaDto);
     }
 
-    return posts;
+    return new PageDto(posts, pageMetaDto);
   }
 
-  async popular(period: string, userId?: number) {
+  async popular(pageOptions: PageOptionsDto, period: string, userId?: number) {
     if (!periodFilters.includes(period)) {
       throw new NotFoundException('uknown_period');
     }
 
     const periodFilter = generatePeriodFilter(period);
 
-    const posts = await this.postStatsService.popular(periodFilter);
+    const { data: posts, count } = await this.postStatsService.popular(
+      periodFilter,
+      pageOptions,
+    );
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto: pageOptions,
+    });
 
     if (userId) {
-      return await Promise.all(
+      const formattedPosts = await Promise.all(
         posts.map(async (post) => ({
           ...post,
           isLiked: await this.likesService.findByUserAndPost(userId, post.id),
@@ -101,9 +123,11 @@ export class PostsService {
           isSaved: await this.savedService.findByUserAndPost(userId, post.id),
         })),
       );
+
+      return new PageDto(formattedPosts, pageMetaDto);
     }
 
-    return posts;
+    return new PageDto(posts, pageMetaDto);
   }
 
   async findOne(id: number, userId?: number) {
