@@ -22,6 +22,7 @@ import { VisitingsModule } from './visitings/visitings.module';
 import { Visit } from './visitings/entities/visit.entity';
 import { SubsModule } from './subs/subs.module';
 import { Sub } from './subs/entities/sub.entity';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { Sub } from './subs/entities/sub.entity';
     ViewsModule,
     VisitingsModule,
     SubsModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

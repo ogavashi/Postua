@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { hashPassword } from 'src/utils/hashPassword';
@@ -100,5 +100,16 @@ export class UsersService {
     }
 
     return this.repository.update(id, updatedUser);
+  }
+
+  async search(search: string) {
+    const users = await this.repository.find({
+      where: { fullName: Like(`%${search}%`) },
+    });
+
+    return users.map(({ password, ...userData }) => ({
+      ...userData,
+      type: 'user',
+    }));
   }
 }

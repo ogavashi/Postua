@@ -51,6 +51,26 @@ export class PostStatsService {
     return { data: posts, count };
   }
 
+  async search(filter = {}) {
+    const items = await this.repository.find({
+      order: { post: { createdAt: 'DESC' } },
+      where: filter,
+    });
+
+    const posts = items.map(({ post, id, ...stats }) => {
+      const { password, ...userData } = post.user;
+
+      return {
+        ...post,
+        tags: post?.tags ? extractTags(post.tags) : null,
+        user: userData,
+        stats,
+      };
+    });
+
+    return posts;
+  }
+
   async popular(filter: any, pageOptions: PageOptionsDto) {
     const items = await this.repository.find({
       where: { post: filter },
