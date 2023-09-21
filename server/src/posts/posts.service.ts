@@ -21,8 +21,11 @@ import { PageOptionsDto } from 'src/page/dto/page-options.dto';
 import { PageDto } from 'src/page/dto/page.dto';
 import { PageMetaDto } from 'src/page/dto/page-meta.dto';
 import { SubsService } from 'src/subs/subs.service';
+import { generateRatingFilter } from 'src/utils/generateRatingFilter';
 
 const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
+
+const ratingFilters = ['from-10', 'from5', 'from10', 'all'];
 
 @Injectable()
 export class PostsService {
@@ -91,6 +94,46 @@ export class PostsService {
 
     const { data: posts, count } = await this.postStatsService.popular(
       periodFilter,
+      pageOptions,
+    );
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto: pageOptions,
+    });
+
+    if (userId) {
+      const formattedPosts = await Promise.all(
+        posts.map(async (post) => ({
+          ...post,
+          isLiked: await this.likesService.findByUserAndPost(userId, post.id),
+          isDisliked: await this.dislikesService.findByUserAndPost(
+            userId,
+            post.id,
+          ),
+          isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+          isSubscribed: await this.subsService.findByUserAndCategory(
+            userId,
+            post.category.key,
+          ),
+        })),
+      );
+
+      return new PageDto(formattedPosts, pageMetaDto);
+    }
+
+    return new PageDto(posts, pageMetaDto);
+  }
+
+  async fresh(pageOptions: PageOptionsDto, rating: string, userId?: number) {
+    if (!ratingFilters.includes(rating)) {
+      throw new NotFoundException('uknown_rating');
+    }
+
+    const ratingFilter = generateRatingFilter(rating);
+
+    const { data: posts, count } = await this.postStatsService.fresh(
+      ratingFilter,
       pageOptions,
     );
 

@@ -52,6 +52,18 @@ export class PostsController {
   }
 
   @ApiBearerAuth()
+  @UseGuards(CustomJwtAuthGuard)
+  @Get('/fresh')
+  @ApiResponse({ type: PageDto<PostDto> })
+  fresh(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @Query('rating') rating: string = 'from5',
+    @UserId() id?: number,
+  ) {
+    return this.postsService.fresh(pageOptionsDto, rating, id);
+  }
+
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('/saved')
   get(@Query() pageOptionsDto: PageOptionsDto, @UserId() id: number) {

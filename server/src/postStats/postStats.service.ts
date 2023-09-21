@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostStats } from './entities/postStats.entity';
-import { Repository } from 'typeorm';
+import { LessThanOrEqual, MoreThanOrEqual, Raw, Repository } from 'typeorm';
 import { extractTags } from 'src/utils/extractTags';
 import { PostStatsDto } from './dto/postStats.dto';
 import { LikesService } from 'src/likes/likes.service';
@@ -60,6 +60,30 @@ export class PostStatsService {
     });
 
     const count = await this.repository.count({ where: { post: filter } });
+
+    const posts = items.map(({ post, id, ...stats }) => {
+      const { password, ...userData } = post.user;
+
+      return {
+        ...post,
+        tags: post?.tags ? extractTags(post.tags) : null,
+        user: userData,
+        stats,
+      };
+    });
+
+    return { data: posts, count };
+  }
+
+  async fresh(filter: any, pageOptions: PageOptionsDto) {
+    const items = await this.repository.find({
+      where: filter,
+      order: { post: { createdAt: 'DESC' } },
+      skip: pageOptions.skip,
+      take: pageOptions.take,
+    });
+
+    const count = await this.repository.count({ where: filter });
 
     const posts = items.map(({ post, id, ...stats }) => {
       const { password, ...userData } = post.user;
