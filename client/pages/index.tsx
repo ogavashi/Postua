@@ -40,12 +40,21 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
 
   try {
-    const data = await NextApiService(ctx).post.getAll();
+    const query = {
+      period: 'today',
+      take: 10,
+      page: 1,
+      order: 'ASC',
+    };
+
+    const { posts } = await NextApiService(ctx).post.getPopular(query);
+
+    console.log('posts', posts);
 
     return {
       props: {
         ...localeProps,
-        posts: data,
+        posts,
       },
     };
   } catch (error) {

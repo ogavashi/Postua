@@ -8,6 +8,8 @@ import { Card as NewsCard } from '@/features/news';
 import { SelectFilter } from '@/features/filters';
 import { constants } from '@/common';
 import { PostList } from '@/features/post';
+import { NextPageContext } from 'next/types';
+import { NextApiService } from '@/services';
 
 const Popular: NextPageWithLayout = () => {
   return (
@@ -23,10 +25,33 @@ Popular.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
-export async function getServerSideProps({ locale }: { locale: string }) {
+export async function getServerSideProps(ctx: NextPageContext) {
+  const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
+
+  try {
+    const query = {
+      period: 'today',
+      take: 10,
+      page: 1,
+      order: 'ASC',
+    };
+
+    const { posts } = await NextApiService(ctx).post.getPopular(query);
+
+    return {
+      props: {
+        ...localeProps,
+        posts,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'errors'])),
+      ...localeProps,
+      posts: null,
     },
   };
 }
