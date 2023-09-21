@@ -5,6 +5,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Sub } from './entities/sub.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
+import { PageOptionsDto } from 'src/page/dto/page-options.dto';
+import { PageMetaDto } from 'src/page/dto/page-meta.dto';
+import { PageDto } from 'src/page/dto/page.dto';
 
 const CATEGORIES = ['games', 'music', 'tech', 'anime', 'cinema', 'software'];
 
@@ -30,6 +33,33 @@ export class SubsService {
     }
 
     return this.remove(id);
+  }
+
+  async findUsers(pageOptions: PageOptionsDto, category: string) {
+    if (!CATEGORIES.includes(category)) {
+      throw new NotFoundException('no_category');
+    }
+
+    const items = await this.repository.find({
+      where: { category },
+      skip: pageOptions.skip,
+      take: pageOptions.take,
+    });
+
+    const count = await this.repository.count({ where: { category } });
+
+    const users = items.map((item) => {
+      const { password, ...userData } = item.user;
+
+      return userData;
+    });
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto: pageOptions,
+    });
+
+    return new PageDto(users, pageMetaDto);
   }
 
   async findUserSubs(userId: number) {
