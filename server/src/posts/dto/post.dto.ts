@@ -1,5 +1,4 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { CategoryDto } from './category.dto';
 import { IsArray, IsOptional, IsString } from 'class-validator';
 import { OutputBlockData } from './create-post.dto';
 import { PostStatsDto } from 'src/postStats/dto/postStats.dto';
@@ -20,7 +19,8 @@ export class PostDto {
   image?: string;
 
   @ApiProperty()
-  category: CategoryDto;
+  @IsString()
+  category: string;
 
   @ApiProperty()
   user: UserDto;

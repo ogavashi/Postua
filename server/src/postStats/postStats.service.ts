@@ -137,6 +137,33 @@ export class PostStatsService {
     };
   }
 
+  async getByCategory(category: string, pageOptions: PageOptionsDto) {
+    const items = await this.repository.find({
+      where: {
+        post: { category },
+      },
+      skip: pageOptions.skip,
+      take: pageOptions.take,
+    });
+
+    const count = await this.repository.count({
+      where: { post: { category } },
+    });
+
+    const posts = items.map(({ post, id, ...stats }) => {
+      const { password, ...userData } = post.user;
+
+      return {
+        ...post,
+        tags: post?.tags ? extractTags(post.tags) : null,
+        user: userData,
+        stats,
+      };
+    });
+
+    return { data: posts, count };
+  }
+
   findOne(id: number) {
     return this.repository.findOne({ where: { post: { id } } });
   }

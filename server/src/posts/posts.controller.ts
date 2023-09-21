@@ -89,6 +89,17 @@ export class PostsController {
   }
 
   @ApiBearerAuth()
+  @UseGuards(CustomJwtAuthGuard)
+  @Get('/category/:category')
+  getByCategory(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @Param('category') category: string,
+    @UserId() userId?: number,
+  ) {
+    return this.postsService.getByCategory(pageOptionsDto, category, userId);
+  }
+
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(

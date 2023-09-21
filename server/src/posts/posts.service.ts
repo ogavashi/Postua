@@ -74,7 +74,7 @@ export class PostsService {
           isSaved: await this.savedService.findByUserAndPost(userId, post.id),
           isSubscribed: await this.subsService.findByUserAndCategory(
             userId,
-            post.category.key,
+            post.category,
           ),
         })),
       );
@@ -114,7 +114,7 @@ export class PostsService {
           isSaved: await this.savedService.findByUserAndPost(userId, post.id),
           isSubscribed: await this.subsService.findByUserAndCategory(
             userId,
-            post.category.key,
+            post.category,
           ),
         })),
       );
@@ -154,7 +154,7 @@ export class PostsService {
           isSaved: await this.savedService.findByUserAndPost(userId, post.id),
           isSubscribed: await this.subsService.findByUserAndCategory(
             userId,
-            post.category.key,
+            post.category,
           ),
         })),
       );
@@ -187,7 +187,7 @@ export class PostsService {
         isSaved: await this.savedService.findByUserAndPost(userId, post.id),
         isSubscribed: await this.subsService.findByUserAndCategory(
           userId,
-          post.category.key,
+          post.category,
         ),
       })),
     );
@@ -224,7 +224,7 @@ export class PostsService {
           isSaved: await this.savedService.findByUserAndPost(senderId, post.id),
           isSubscribed: await this.subsService.findByUserAndCategory(
             userId,
-            post.category.key,
+            post.category,
           ),
         })),
       );
@@ -300,6 +300,11 @@ export class PostsService {
       {
         post: { tags: Like(`%${search}%`) },
       },
+      {
+        post: {
+          category: Like(`%${search}%`),
+        },
+      },
     ]);
 
     if (userId) {
@@ -315,7 +320,7 @@ export class PostsService {
           isSaved: await this.savedService.findByUserAndPost(userId, post.id),
           isSubscribed: await this.subsService.findByUserAndCategory(
             userId,
-            post.category.key,
+            post.category,
           ),
         })),
       );
@@ -324,5 +329,44 @@ export class PostsService {
     }
 
     return posts;
+  }
+
+  async getByCategory(
+    pageOptions: PageOptionsDto,
+    category: string,
+    userId?: number,
+  ) {
+    const { data: posts, count } = await this.postStatsService.getByCategory(
+      category,
+      pageOptions,
+    );
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto: pageOptions,
+    });
+
+    if (userId) {
+      const result = await Promise.all(
+        posts.map(async (post) => ({
+          ...post,
+          type: 'post',
+          isLiked: await this.likesService.findByUserAndPost(userId, post.id),
+          isDisliked: await this.dislikesService.findByUserAndPost(
+            userId,
+            post.id,
+          ),
+          isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+          isSubscribed: await this.subsService.findByUserAndCategory(
+            userId,
+            post.category,
+          ),
+        })),
+      );
+
+      return new PageDto(result, pageMetaDto);
+    }
+
+    return new PageDto(posts, pageMetaDto);
   }
 }

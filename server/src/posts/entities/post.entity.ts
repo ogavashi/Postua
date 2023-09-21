@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Category, OutputBlockData } from '../dto/create-post.dto';
+import { OutputBlockData } from '../dto/create-post.dto';
 import { User } from 'src/users/entities/user.entity';
 
 @Entity('posts')
@@ -26,8 +26,8 @@ export class Post {
   @Column()
   image?: string;
 
-  @Column({ type: 'jsonb' })
-  category: Category;
+  @Column()
+  category: string;
 
   @Column({ nullable: true })
   tags?: string;
