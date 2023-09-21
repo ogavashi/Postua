@@ -9,12 +9,21 @@ import { PostList } from '@/features/post';
 import { NextPageContext } from 'next/types';
 import { NextApiService } from '@/services';
 import { getPeriod } from '@/lib';
+import { ShortPostItem } from '@/types';
 
-const Popular: NextPageWithLayout = () => {
+interface PopularPageProps {
+  pageProps: {
+    posts: ShortPostItem[] | null;
+  };
+}
+
+const Popular: NextPageWithLayout<PopularPageProps> = ({ pageProps }) => {
+  const { posts } = pageProps;
+
   return (
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
       <SelectFilter options={constants.FILTERS_TIME} />
-      <PostList />
+      <PostList posts={posts} />
     </Box>
   );
 };
@@ -37,17 +46,16 @@ export async function getServerSideProps(ctx: NextPageContext) {
     };
   }
 
+  console.log(period);
+
   try {
-    const query = {
-      period,
+    const page = {
       take: 10,
       page: 1,
       order: 'ASC',
     };
 
-    const { posts } = await NextApiService(ctx).post.getPopular(query);
-
-console.log(posts)
+    const { posts } = await NextApiService(ctx).post.getPopular(page, period);
 
     return {
       props: {

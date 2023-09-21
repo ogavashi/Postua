@@ -41,13 +41,12 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
   try {
     const query = {
-      period: 'today',
       take: 10,
       page: 1,
       order: 'ASC',
     };
 
-    const { posts } = await NextApiService(ctx).post.getPopular(query);
+    const { posts } = await NextApiService(ctx).post.getPopular(query, 'today');
 
     console.log('posts', posts);
 

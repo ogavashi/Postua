@@ -5,6 +5,8 @@ export const generatePeriodFilter = (period: string) => {
 
   const start = new Date();
 
+  console.log(period);
+
   switch (period) {
     case 'today':
       start.setHours(0, 0, 0, 0);

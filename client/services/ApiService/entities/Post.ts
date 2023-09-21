@@ -1,16 +1,17 @@
 import { Base } from '.';
 import { PostItem, ShortPostItem, Tag } from '@/types';
 
-type PopularSearchDto = {
-  period: string;
+type PageOptionsDto = {
   take: number;
   page: number;
   order: string;
 };
 
 export class Post extends Base {
-  async getPopular(query: PopularSearchDto) {
-    const { data } = await this.apiClient.instance.get(`/posts/popular`, { params: { query } });
+  async getPopular(pageOptionsDto: PageOptionsDto, period: string) {
+    const { data } = await this.apiClient.instance.get(`/posts/popular`, {
+      params: { pageOptionsDto, period },
+    });
 
     const { data: posts, meta } = data;
 

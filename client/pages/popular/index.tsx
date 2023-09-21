@@ -29,14 +29,13 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
 
   try {
-    const query = {
-      period: 'today',
+    const page = {
       take: 10,
       page: 1,
       order: 'ASC',
     };
 
-    const { posts } = await NextApiService(ctx).post.getPopular(query);
+    const { posts } = await NextApiService(ctx).post.getPopular(page, 'today');
 
     return {
       props: {
