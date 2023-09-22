@@ -7,29 +7,38 @@ import CachedIcon from '@mui/icons-material/Cached';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { PostStats, ShortPostItem } from '@/types';
-import { useCallback, useMemo, useState } from 'react';
+import { PostItem, PostStats } from '@/types';
+import { useCallback, useState } from 'react';
 import { formatStats } from '@/features/post';
+import { ApiService } from '@/services';
 
 interface PostFooterProps {
-  stats: PostStats;
+  post: PostItem;
 }
 
-export const PostFooter: React.FC<PostFooterProps> = ({ stats }) => {
+export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
   const theme = useTheme();
 
-  const [isLiked, setIsLiked] = useState(false);
+  const { stats } = post;
 
-  const handleLike = useCallback(() => {
-    setIsLiked((prev) => !prev);
-  }, []);
+  const [like, setLike] = useState({ isLiked: post.isLiked || false, count: post.stats.likes });
+
+  const handleLike = useCallback(async () => {
+    setLike((prev) => ({
+      isLiked: !prev.isLiked,
+      count: prev.isLiked ? prev.count - 1 : prev.count + 1,
+    }));
+    try {
+      ApiService.post.like(+post.id);
+    } catch (error) {}
+  }, [like]);
 
   const LikeIcon = () => {
     const style = {
       sx: { fontSize: 16, position: 'relative', mr: 0.5 },
     };
 
-    return isLiked ? <FavoriteIcon {...style} /> : <FavoriteBorderIcon {...style} />;
+    return like.isLiked ? <FavoriteIcon {...style} /> : <FavoriteBorderIcon {...style} />;
   };
 
   return (
@@ -56,7 +65,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({ stats }) => {
             }}
           >
             <LikeIcon />
-            <Typography>{stats.likes}</Typography>
+            <Typography>{like.count}</Typography>
           </IconButton>
           <IconButton
             size='small'

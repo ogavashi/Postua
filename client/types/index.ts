@@ -83,19 +83,13 @@ export type PostItem = {
   body: DataProp;
   user: User;
   stats: PostStats;
-  tags: Tag[] | null;
+  tags: string[];
   image?: string;
-  category: Category;
-};
-
-export type ShortPostItem = {
-  id: string;
-  title: string;
-  description: string;
-  image?: string;
-  stats: PostStats;
-  user: User;
-  category: Category;
+  category: string;
+  isLiked?: boolean;
+  isDisliked?: boolean;
+  isSaved?: boolean;
+  isSubscribed?: boolean;
 };
 
 export type CategoryPostProps = {
@@ -104,12 +98,27 @@ export type CategoryPostProps = {
   };
 };
 
+export type PageOptions = {
+  page: number;
+  take: number;
+  itemCount: number;
+  pageCount: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+};
+
 type SearchResultType = 'post' | 'user' | 'category';
 
-export type SearchResult = (User | ShortPostItem | Category) & { type: SearchResultType };
+export type SearchResult = (User | PostItem | Category) & { type: SearchResultType };
 
 export type SearchResults = SearchResult[];
 
 export type ServerError = { [key in string]: [string] | string | number };
 
 export type ParsedError = { message: string } | { [key in string]: string | number };
+
+export type PageOptionsDto = {
+  take: number;
+  page: number;
+  order: string;
+};

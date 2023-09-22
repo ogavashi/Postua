@@ -1,16 +1,10 @@
+import { PageOptionsDto } from '@/types';
 import { Base } from '.';
-import { PostItem, ShortPostItem, Tag } from '@/types';
-
-type PageOptionsDto = {
-  take: number;
-  page: number;
-  order: string;
-};
 
 export class Post extends Base {
-  async getPopular(pageOptionsDto: PageOptionsDto, period: string) {
+  async getPopular(pageOptionsDto: PageOptionsDto, period?: string) {
     const { data } = await this.apiClient.instance.get(`/posts/popular`, {
-      params: { pageOptionsDto, period },
+      params: { ...pageOptionsDto, period },
     });
 
     const { data: posts, meta } = data;
@@ -18,17 +12,21 @@ export class Post extends Base {
     return { posts, meta };
   }
 
-  async post(data) {
-    await this.apiClient.instance.post(`/posts`, data);
+  async like(id: number) {
+    await this.apiClient.instance.post('/likes', { postId: id });
   }
 
-  async getAll() {
-    const data = shortPosts;
+  // async post(data) {
+  //   await this.apiClient.instance.post(`/posts`, data);
+  // }
 
-    return data;
-  }
+  // async getAll() {
+  //   const data = shortPosts;
 
-  async getOne(id: number) {
-    return post;
-  }
+  //   return data;
+  // }
+
+  // async getOne(id: number) {
+  //   return post;
+  // }
 }

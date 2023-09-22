@@ -1,33 +1,41 @@
-import { Box, Button, ButtonGroup, Paper, Slider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { NextPageWithLayout } from './_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useRouter } from 'next/router';
 
 import { Card as NewsCard } from '@/features/news';
 import { SelectFilter } from '@/features/filters';
 import { PostList } from '@/features/post';
 
 import { constants } from '@/common';
-import { NextApiService } from '@/services';
-import { GetServerSideProps, NextPageContext } from 'next';
-import { ShortPostItem } from '@/types';
+import { ApiService, NextApiService } from '@/services';
+import { NextPageContext } from 'next';
+import { PageOptionsDto, PostItem } from '@/types';
 
 interface PopularPageProps {
   pageProps: {
-    posts: ShortPostItem[] | null;
+    posts: PostItem[];
+    nextPage?: boolean;
+    filter?: string;
   };
 }
 
 const Popular: NextPageWithLayout<PopularPageProps> = ({ pageProps }) => {
-  const { posts } = pageProps;
+  const { posts, nextPage, filter } = pageProps;
+
+  const apiCall = (pageOptionsDto: PageOptionsDto, period?: string) =>
+    ApiService.post.getPopular(pageOptionsDto, period);
 
   return (
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
-      <SelectFilter pageKey={'popular'} options={constants.FILTERS_TIME} />
+      <SelectFilter
+        pageKey={'popular'}
+        options={constants.FILTERS_TIME}
+        defaultValue={constants.FILTERS_TIME.at(-1)}
+      />
       <NewsCard />
-      <PostList posts={posts} />
+      <PostList posts={posts} nextPage={nextPage} filter={filter} apiCall={apiCall} />
     </Box>
   );
 };
@@ -41,19 +49,19 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
   try {
     const query = {
-      take: 10,
+      take: 2,
       page: 1,
       order: 'ASC',
     };
 
-    const { posts } = await NextApiService(ctx).post.getPopular(query, 'today');
-
-    console.log('posts', posts);
+    const { posts, meta } = await NextApiService(ctx).post.getPopular(query, 'allTime');
 
     return {
       props: {
         ...localeProps,
         posts,
+        nextPage: meta.hasNextPage,
+        filter: 'allTime',
       },
     };
   } catch (error) {
@@ -63,7 +71,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
   return {
     props: {
       ...localeProps,
-      posts: null,
+      posts: [],
     },
   };
 }

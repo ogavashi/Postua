@@ -1,8 +1,8 @@
 import { NextLinkComposed, Typography } from '@/components';
-import { ShortPostItem } from '@/types';
+import { PostItem } from '@/types';
 
 interface PostTitleProps {
-  post: ShortPostItem;
+  post: PostItem;
 }
 
 export const PostTitle: React.FC<PostTitleProps> = ({ post }) => {
@@ -12,7 +12,7 @@ export const PostTitle: React.FC<PostTitleProps> = ({ post }) => {
       textAlign='justify'
       variant='h6'
       component={NextLinkComposed}
-      to={{ pathname: `/${post.category.key}/${post.id}` }}
+      to={{ pathname: `/${post.category}/${post.id}` }}
     >
       {post.title}
     </Typography>

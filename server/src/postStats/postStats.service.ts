@@ -72,10 +72,14 @@ export class PostStatsService {
   }
 
   async popular(filter: any, pageOptions: PageOptionsDto) {
+    const skip = (pageOptions.page - 1) * pageOptions.take;
+
+    console.log(pageOptions.page);
+
     const items = await this.repository.find({
       where: { post: filter },
       order: { likes: 'DESC', views: 'DESC' },
-      skip: pageOptions.skip,
+      skip: skip,
       take: pageOptions.take,
     });
 

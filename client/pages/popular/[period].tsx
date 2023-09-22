@@ -7,28 +7,37 @@ import { SelectFilter } from '@/features/filters';
 import { constants } from '@/common';
 import { PostList } from '@/features/post';
 import { NextPageContext } from 'next/types';
-import { NextApiService } from '@/services';
+import { ApiService, NextApiService } from '@/services';
+import { PageOptionsDto, PostItem } from '@/types';
 import { getPeriod } from '@/lib';
-import { ShortPostItem } from '@/types';
 
-interface PopularPageProps {
+interface PopularPeriodPageProps {
   pageProps: {
-    posts: ShortPostItem[] | null;
+    posts: PostItem[];
+    nextPage?: boolean;
+    filter?: string;
   };
 }
 
-const Popular: NextPageWithLayout<PopularPageProps> = ({ pageProps }) => {
-  const { posts } = pageProps;
+const PopularPeriod: NextPageWithLayout<PopularPeriodPageProps> = ({ pageProps }) => {
+  const { posts, nextPage, filter } = pageProps;
+
+  const apiCall = (pageOptionsDto: PageOptionsDto, period?: string) =>
+    ApiService.post.getPopular(pageOptionsDto, period);
 
   return (
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
-      <SelectFilter options={constants.FILTERS_TIME} />
-      <PostList posts={posts} />
+      <SelectFilter
+        pageKey={'popular'}
+        options={constants.FILTERS_TIME}
+        defaultValue={constants.FILTERS_TIME.at(-1)}
+      />
+      <PostList posts={posts} nextPage={nextPage} filter={filter} apiCall={apiCall} />
     </Box>
   );
 };
 
-Popular.getLayout = (page: React.ReactNode) => {
+PopularPeriod.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
@@ -46,21 +55,21 @@ export async function getServerSideProps(ctx: NextPageContext) {
     };
   }
 
-  console.log(period);
-
   try {
-    const page = {
-      take: 10,
+    const query = {
+      take: 2,
       page: 1,
       order: 'ASC',
     };
 
-    const { posts } = await NextApiService(ctx).post.getPopular(page, period);
+    const { posts, meta } = await NextApiService(ctx).post.getPopular(query, period);
 
     return {
       props: {
         ...localeProps,
         posts,
+        nextPage: meta.hasNextPage,
+        filter: period,
       },
     };
   } catch (error) {
@@ -70,9 +79,9 @@ export async function getServerSideProps(ctx: NextPageContext) {
   return {
     props: {
       ...localeProps,
-      posts: null,
+      posts: [],
     },
   };
 }
 
-export default Popular;
+export default PopularPeriod;

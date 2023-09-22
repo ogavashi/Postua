@@ -8,10 +8,10 @@ import { constants } from '@/common';
 import { NextLinkComposed, Typography } from '@/components';
 
 import { styles } from './style';
-import { ShortPostItem } from '@/types';
+import { PostItem } from '@/types';
 
 interface PostHeaderdProps {
-  post: ShortPostItem;
+  post: PostItem;
 }
 
 export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
@@ -19,17 +19,15 @@ export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
 
   const theme = useTheme();
 
+  const category = constants.CATEGORIES.find(({ key }) => key === post.category)!;
+
   return (
     <Box display='flex' alignItems='center' justifyContent='space-between' px={2} pt={2}>
       <Box display='flex' alignItems='center' gap={5}>
-        <Box
-          css={styles.root}
-          component={NextLinkComposed}
-          to={{ pathname: `/${post.category.key}` }}
-        >
+        <Box css={styles.root} component={NextLinkComposed} to={{ pathname: `/${category.key}` }}>
           <IconButton color='primary' size='small' sx={{ borderRadius: theme.shape.borderRadius }}>
             <MuiTypography>
-              {post.category.icon} {t(`layout.categories.${constants.CATEGORIES[0].key}`)}
+              {category.icon} {t(`layout.categories.${category.key}`)}
             </MuiTypography>
           </IconButton>
         </Box>

@@ -27,6 +27,7 @@ import { Language, Theme } from '@/types';
 import { NextApiService } from '@/services';
 import { userActions } from '@/features/user';
 import { SnackbarProvider } from 'notistack';
+import { useRouter } from 'next/router';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -47,6 +48,8 @@ function MyApp(props: AppPropsWithLayout) {
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
+  const router = useRouter();
+
   usePreserveScroll();
 
   return (
@@ -60,7 +63,9 @@ function MyApp(props: AppPropsWithLayout) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <NextNProgress />
-          <SnackbarProvider>{getLayout(<Component {...pageProps} />)}</SnackbarProvider>
+          <SnackbarProvider>
+            {getLayout(<Component {...pageProps} key={router.asPath} />)}
+          </SnackbarProvider>
         </ThemeWrapper>
       </CacheProvider>
     </Provider>
