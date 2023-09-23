@@ -10,16 +10,17 @@ import { Subscription } from './Subscription';
 import { CategoryDto } from '@/features/category';
 
 interface SubscriptionCardProps {
-  category: CategoryDto;
+  subs: { id: number; category: string }[];
+  userId: string;
 }
 
-export const SubscriptionsCard: React.FC<SubscriptionCardProps> = ({ category }) => {
+export const SubscriptionsCard: React.FC<SubscriptionCardProps> = ({ subs, userId }) => {
   const { t } = useTranslation();
 
   const router = useRouter();
 
   const handleNavigate = useCallback(() => {
-    router.push(`${category.key}/subscriptions`);
+    router.push(`${userId}/subscriptions`);
   }, [router]);
 
   return (
@@ -33,11 +34,9 @@ export const SubscriptionsCard: React.FC<SubscriptionCardProps> = ({ category })
           Subscriptions
         </Typography>
         <Box display='flex' flexDirection='column' gap={2} pb={2}>
-          {Array(3)
-            .fill(0)
-            .map((_, i) => (
-              <Subscription key={i} category={category} />
-            ))}
+          {subs.slice(0, 3).map((sub) => (
+            <Subscription key={sub.id} category={sub.category} />
+          ))}
         </Box>
         <Button onClick={handleNavigate}>Show all</Button>
       </Box>

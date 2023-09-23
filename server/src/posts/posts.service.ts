@@ -236,7 +236,6 @@ export class PostsService {
           ),
         })),
       );
-
       return new PageDto(formattedPosts, pageMetaDto);
     }
 

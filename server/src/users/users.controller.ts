@@ -8,6 +8,7 @@ import {
   ClassSerializerInterceptor,
   Patch,
   Query,
+  Param,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -69,5 +70,11 @@ export class UsersController {
   @ApiOkResponse({ type: UserDto })
   getMe(@UserId() id: number) {
     return this.usersService.findById(id);
+  }
+
+  @Get(':id')
+  @UseInterceptors(UserFormatInterceptor)
+  findOne(@Param('id') id: string) {
+    return this.usersService.findById(+id);
   }
 }

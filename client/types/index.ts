@@ -29,6 +29,7 @@ export type UserData = {
   avatarUrl: string;
   backgroundUrl: string;
   memberFrom: string;
+  role: { id: number; name: string };
 };
 
 export type UserResponse = {

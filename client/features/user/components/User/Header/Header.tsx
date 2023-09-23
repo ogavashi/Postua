@@ -2,21 +2,22 @@ import { useCallback, useState, useMemo } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import StarsIcon from '@mui/icons-material/Stars';
 
 import { Avatar, Box, Button, Tabs, Typography, useTheme } from '@mui/material';
 
 import { Tab } from './Tab.styled';
 
 import { useNavigation } from '@/hooks';
-import { UserDto } from '@/features/user';
 import { constants } from '@/common';
+import { UserData } from '@/types';
 
 interface HeaderProps {
-  user: UserDto;
+  user: UserData;
+  subsCount: number;
 }
 
-export const Header: React.FC<HeaderProps> = ({ user }) => {
+export const Header: React.FC<HeaderProps> = ({ user, subsCount }) => {
   const { t } = useTranslation();
 
   const { defaultTab, navigateTabs } = useNavigation({
@@ -30,13 +31,11 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
     <Box pt={1} px={2} display='flex' flexDirection='column' gap={2}>
       <Box display='flex' justifyContent='space-between' alignItems='center'>
         <Box display='flex' alignItems='center' gap={2}>
-          <Avatar
-            src={
-              user?.avatarUrl ||
-              'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'
-            }
-            sx={{ width: 86, height: 86 }}
-          />
+          {user?.avatarUrl ? (
+            <Avatar src={user?.avatarUrl} sx={{ width: 86, height: 86 }} />
+          ) : (
+            <Avatar sx={{ width: 86, height: 86 }}>{user.fullName[0]}</Avatar>
+          )}
           <Box>
             <Typography sx={{ fontSize: { xs: 18, md: 34 } }} variant='h4'>
               {user.fullName}
@@ -46,22 +45,19 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
             </Typography>
           </Box>
         </Box>
-        <Button endIcon={<LibraryAddIcon />} variant='contained'>
-          Subscribe
-        </Button>
+        {user.role.id > 1 && <StarsIcon color='warning' sx={{ fontSize: 48 }} />}
       </Box>
       <Box display='flex' flexDirection='column' gap={2}>
         <Typography sx={{ display: { xs: 'flex', md: 'none' }, opacity: 0.5 }}>
           {user.email}
         </Typography>
-        <Typography>On platform since 18.03.2023</Typography>
+        <Typography>On platform since {user.memberFrom}</Typography>
         <Typography fontWeight={300} sx={{ opacity: 0.6 }}>
-          291 321 subscribers
+          {subsCount} subscriptions
         </Typography>
       </Box>
       <Tabs value={activeTab} onChange={navigateTabs}>
-        <Tab label='Posts' key='posts' />
-        <Tab label='Subscribers' key='subscribers' />
+        <Tab label='Posts' key='posts' />\
         <Tab label='Subscriptions' key='subscriptions' />
       </Tabs>
     </Box>

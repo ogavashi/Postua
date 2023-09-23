@@ -39,6 +39,12 @@ export class User extends Base {
     await this.apiClient.instance.patch('users/me', dto);
   }
 
+  async getById(id: number) {
+    const { data } = await this.apiClient.instance.get<UserData>(`/users/${id}`);
+
+    return data;
+  }
+
   async getSubscriptions() {
     const { data } = await this.apiClient.instance.get<UserData>('/subs');
 

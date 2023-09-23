@@ -115,5 +115,5 @@ export const constants = {
     { key: 'software' },
   ],
   CATEGORY_TABS: ['posts', 'subscribers', 'rules'],
-  USER_TABS: ['posts', 'subscribers', 'subscriptions'],
+  USER_TABS: ['posts', 'subscriptions'],
 };

@@ -4,12 +4,14 @@ import { CategoryDto } from '@/features/category';
 import { SubscribersCard } from '@/features/subscribers';
 import { RulesCard } from '@/features/rules';
 import { SubscriptionsCard } from '@/features/subscriptions';
+import { UserData } from '@/types';
 
 interface SideCardsProps {
-  category: CategoryDto;
+  subs: { id: number; category: string }[];
+  userId: string;
 }
 
-export const SideCards: React.FC<SideCardsProps> = ({ category }) => {
+export const SideCards: React.FC<SideCardsProps> = ({ subs, userId }) => {
   return (
     <Box
       sx={{
@@ -20,10 +22,10 @@ export const SideCards: React.FC<SideCardsProps> = ({ category }) => {
         flexDirection: 'column',
         gap: 2,
         maxWidth: 410,
+        width: '100%',
       }}
     >
-      <SubscribersCard categoryKey={`/user/1337`} />
-      <SubscriptionsCard category={category} />
+      <SubscriptionsCard subs={subs} userId={userId} />
     </Box>
   );
 };

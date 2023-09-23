@@ -11,4 +11,10 @@ export class Subscribers extends Base {
 
     return { users, meta };
   }
+
+  async getSubscriptions(userId: number) {
+    const { data } = await this.apiClient.instance.get(`/subs/user/${userId}`);
+
+    return data;
+  }
 }

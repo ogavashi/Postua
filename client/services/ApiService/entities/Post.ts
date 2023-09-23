@@ -63,6 +63,16 @@ export class Post extends Base {
     return { posts, meta };
   }
 
+  async getByUser(pageOptionsDto: PageOptionsDto, userId: number) {
+    const { data } = await this.apiClient.instance.get(`/posts/user/${userId}`, {
+      params: { ...pageOptionsDto },
+    });
+
+    const { data: posts, meta } = data;
+
+    return { posts, meta };
+  }
+
   async view(id: number) {
     await this.apiClient.instance.post('/views', { postId: id });
   }

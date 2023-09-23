@@ -2,18 +2,19 @@ import { Box, Paper } from '@mui/material';
 
 import { Background } from './Background';
 import { Header } from './Header';
-import { UserDto } from '@/features/user';
+import { UserData } from '@/types';
 
 interface UserProps {
-  user: UserDto;
+  user: UserData;
+  subsCount: number;
 }
 
-export const User: React.FC<UserProps> = ({ user }) => {
+export const User: React.FC<UserProps> = ({ user, subsCount }) => {
   return (
     <Paper>
       <Box>
-        <Background url={user.backgroundUrl} />
-        <Header user={user} />
+        <Background url={user?.backgroundUrl} />
+        <Header user={user} subsCount={subsCount} />
       </Box>
     </Paper>
   );

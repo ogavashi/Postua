@@ -6,28 +6,31 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 import { NextLinkComposed, Typography } from '@/components';
 import { CategoryDto } from '@/features/category';
+import { constants } from '@/common';
 
 interface SubscriptionProps {
-  category: CategoryDto;
+  category: string;
 }
 
 export const Subscription: React.FC<SubscriptionProps> = ({ category }) => {
   const { t } = useTranslation();
 
+  const constantCategory = constants.CATEGORIES.find(({ key }) => key === category)!;
+
   return (
     <Box display='flex' flexDirection='row' alignItems='center' justifyContent='space-between'>
       <Box
         component={NextLinkComposed}
-        to={{ pathname: `/${category.key}` }}
+        to={{ pathname: `/${constantCategory.key}` }}
         sx={{ textDecoration: 'none', color: 'inherit' }}
         width='100%'
       >
         <Box display='flex' flexDirection='row' alignItems='center' gap={1}>
           <Typography variant='h6' minWidth={50} fontSize={32}>
-            {category.icon}
+            {constantCategory.icon}
           </Typography>
           <Typography variant='h6' fontWeight={800}>
-            {t(`layout.categories.${category.key}`)}
+            {t(`layout.categories.${constantCategory.key}`)}
           </Typography>
         </Box>
       </Box>
