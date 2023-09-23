@@ -1,13 +1,14 @@
 import { NextPageContext, GetServerSidePropsContext } from 'next';
 import Cookies, { parseCookies } from 'nookies';
 import { ApiClient } from './ApiClient';
-import { Post, Search, User } from './entities';
+import { Post, Search, Subscribers, User } from './entities';
 import { AppConfig } from '@/common';
 
 class ApiService {
   public user: User;
   public post: Post;
   public search: Search;
+  public subscribers: Subscribers;
   private apiClient: ApiClient;
 
   constructor({
@@ -29,6 +30,7 @@ class ApiService {
     this.user = new User({ apiClient: this.apiClient });
     this.post = new Post({ apiClient: this.apiClient });
     this.search = new Search({ apiClient: this.apiClient });
+    this.subscribers = new Subscribers({ apiClient: this.apiClient });
   }
 
   setAuthToken(token: string) {

@@ -13,6 +13,7 @@ import { styles } from './style';
 import { PostItem } from '@/types';
 import { getPostTime, useInteraction } from '@/features/post';
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 interface PostHeaderdProps {
   post: PostItem;
@@ -22,6 +23,15 @@ export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
   const { t } = useTranslation();
 
   const theme = useTheme();
+
+  const router = useRouter();
+
+  const isCategoryPage = useMemo(() => {
+    const path = router.pathname.split('/')[1];
+    const isCategoryPage = constants.CATEGORIES.find(({ key }) => key === path);
+
+    return !!isCategoryPage;
+  }, [router]);
 
   const category = constants.CATEGORIES.find(({ key }) => key === post.category)!;
 
@@ -62,24 +72,26 @@ export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
           {timeAgo}
         </MuiTypography>
       </Box>
-      <IconButton
-        color='primary'
-        size='small'
-        sx={{ borderRadius: theme.shape.borderRadius }}
-        onClick={handleSubscribe}
-      >
-        {subscribed ? (
-          <>
-            <MuiTypography sx={{ mr: 1 }}>{'Unsubscribe'}</MuiTypography>
-            <RemoveCircleIcon />
-          </>
-        ) : (
-          <>
-            <MuiTypography sx={{ mr: 1 }}>{'Subscribe'}</MuiTypography>
-            <AddCircleIcon />
-          </>
-        )}
-      </IconButton>
+      {!isCategoryPage && (
+        <IconButton
+          color='primary'
+          size='small'
+          sx={{ borderRadius: theme.shape.borderRadius }}
+          onClick={handleSubscribe}
+        >
+          {subscribed ? (
+            <>
+              <MuiTypography sx={{ mr: 1 }}>{'Unsubscribe'}</MuiTypography>
+              <RemoveCircleIcon />
+            </>
+          ) : (
+            <>
+              <MuiTypography sx={{ mr: 1 }}>{'Subscribe'}</MuiTypography>
+              <AddCircleIcon />
+            </>
+          )}
+        </IconButton>
+      )}
     </Box>
   );
 };

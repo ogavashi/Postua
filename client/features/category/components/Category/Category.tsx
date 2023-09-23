@@ -6,14 +6,16 @@ import { CategoryDto } from '@/features/category';
 
 interface CategoryProps {
   category: CategoryDto;
+  subsCount: number;
+  isSubbed: boolean;
 }
 
-export const Category: React.FC<CategoryProps> = ({ category }) => {
+export const Category: React.FC<CategoryProps> = ({ category, isSubbed, subsCount }) => {
   return (
     <Paper>
       <Box>
         <Background url={category.backgroundUrl} />
-        <Header category={category} />
+        <Header category={category} isSubbed={isSubbed} subsCount={subsCount} />
       </Box>
     </Paper>
   );

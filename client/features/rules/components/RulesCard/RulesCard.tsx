@@ -10,7 +10,7 @@ export const RulesCard: React.FC<RulesCardProps> = ({ categoryKey }) => {
   const router = useRouter();
 
   const handleNavigate = useCallback(() => {
-    router.push(`${categoryKey}/subscribers`);
+    router.push(`${categoryKey}/rules`);
   }, [router]);
 
   return (
