@@ -62,9 +62,9 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle, handleClose 
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
       });
+      ApiService.setAuthToken(token);
       handleClose();
       toast('register_success', 'success');
-      router.reload();
     } catch (error) {
       if (error instanceof Error) {
         toastError(error.message, 'error');

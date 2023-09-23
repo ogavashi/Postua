@@ -24,6 +24,10 @@ export class Post extends Base {
     await this.apiClient.instance.post('/subs', { category });
   }
 
+  async save(id: number) {
+    await this.apiClient.instance.post('/saved', { postId: id });
+  }
+
   // async post(data) {
   //   await this.apiClient.instance.post(`/posts`, data);
   // }

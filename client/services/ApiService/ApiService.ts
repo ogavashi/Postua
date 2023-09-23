@@ -8,6 +8,7 @@ class ApiService {
   public user: User;
   public post: Post;
   public search: Search;
+  private apiClient: ApiClient;
 
   constructor({
     ctx,
@@ -23,11 +24,15 @@ class ApiService {
     const cookies = ctx ? Cookies.get(ctx) : parseCookies();
     const token = cookies.postUaToken;
 
-    const apiClient = new ApiClient({ token, baseUrl: apiUrl });
+    this.apiClient = new ApiClient({ token, baseUrl: apiUrl });
 
-    this.user = new User({ apiClient });
-    this.post = new Post({ apiClient });
-    this.search = new Search({ apiClient });
+    this.user = new User({ apiClient: this.apiClient });
+    this.post = new Post({ apiClient: this.apiClient });
+    this.search = new Search({ apiClient: this.apiClient });
+  }
+
+  setAuthToken(token: string) {
+    this.apiClient.setToken(token);
   }
 }
 

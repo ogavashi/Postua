@@ -90,6 +90,7 @@ export type PostItem = {
   isDisliked?: boolean;
   isSaved?: boolean;
   isSubscribed?: boolean;
+  createdAt: string;
 };
 
 export type CategoryPostProps = {

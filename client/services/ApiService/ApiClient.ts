@@ -17,4 +17,8 @@ export class ApiClient {
       (error) => handleAxiosError(error)
     );
   }
+
+  setToken(token: string) {
+    this.instance.defaults.headers.Authorization = 'Bearer ' + token;
+  }
 }

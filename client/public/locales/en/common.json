@@ -53,5 +53,18 @@
       "cinema": "Cinema",
       "software": "Software"
     }
+  },
+  "time": {
+    "ago": "ago",
+    "second": "second",
+    "seconds": "seconds",
+    "minute": "minute",
+    "minutes": "minutes",
+    "hour": "hour",
+    "hours": "hours",
+    "month": "month",
+    "months": "months",
+    "year": "year",
+    "years": "years"
   }
 }

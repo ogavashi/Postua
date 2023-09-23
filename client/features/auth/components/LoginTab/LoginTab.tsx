@@ -60,9 +60,9 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle, handleClose }) => 
         path: '/',
       });
 
+      ApiService.setAuthToken(token);
       handleClose();
       toast('login_success', 'success');
-      router.reload();
     } catch (error) {
       if (error instanceof Error) {
         toastError(error.message, 'error');

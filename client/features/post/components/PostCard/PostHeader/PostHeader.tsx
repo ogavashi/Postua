@@ -10,7 +10,8 @@ import { NextLinkComposed, Typography } from '@/components';
 
 import { styles } from './style';
 import { PostItem } from '@/types';
-import { useInteraction } from '@/features/post';
+import { getPostTime, useInteraction } from '@/features/post';
+import { useMemo } from 'react';
 
 interface PostHeaderdProps {
   post: PostItem;
@@ -24,6 +25,18 @@ export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
   const category = constants.CATEGORIES.find(({ key }) => key === post.category)!;
 
   const { subscribed, handleSubscribe } = useInteraction(post);
+
+  const timeAgo = useMemo(() => {
+    const { unit, time } = getPostTime(post.createdAt);
+    const localedUnit = t(`time.${unit}`);
+    const ago = t(`time.ago`);
+
+    if (time) {
+      return `${time} ${localedUnit} ${ago}`;
+    }
+
+    return `${localedUnit} ${ago}`;
+  }, [post]);
 
   return (
     <Box display='flex' alignItems='center' justifyContent='space-between' px={2} pt={2}>
@@ -43,7 +56,7 @@ export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
           {post.user.fullName}
         </Typography>
         <MuiTypography fontWeight={200} sx={{ opacity: 0.5 }}>
-          6 hours
+          {timeAgo}
         </MuiTypography>
       </Box>
       <IconButton

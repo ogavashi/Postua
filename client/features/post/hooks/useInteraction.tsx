@@ -18,6 +18,8 @@ export const useInteraction = (post: PostItem) => {
   });
   const [subscribed, setSubscribed] = useState(!!post?.isSubscribed);
 
+  const [saved, setSaved] = useState(!!post?.isSaved);
+
   const dispatch = useAppDispatch();
 
   const showAuthModal = useCallback(() => dispatch(appActions.setAuthModal(true)), []);
@@ -54,10 +56,29 @@ export const useInteraction = (post: PostItem) => {
     }
   }, [dislike]);
 
+  const handleSave = useCallback(async () => {
+    setSaved((prev) => !prev);
+    try {
+      await ApiService.post.save(+post.id);
+    } catch (error) {
+      showAuthModal();
+      if (error instanceof Error) {
+        toastError(error.message, 'error');
+      }
+      setSaved(saved);
+    }
+  }, [saved]);
+
   const handleSubscribe = useCallback(async () => {
     setSubscribed((prev) => !prev);
     try {
       await ApiService.post.subscribe(post.category);
+
+      if (!subscribed) {
+        router.push(`/${post.category}`);
+
+        return;
+      }
       router.reload();
     } catch (error) {
       showAuthModal();
@@ -66,7 +87,7 @@ export const useInteraction = (post: PostItem) => {
       }
       setSubscribed(subscribed);
     }
-  }, [like]);
+  }, [subscribed]);
 
   const handleShare = useCallback(() => {
     const url = `${window.location.toString()}${post.category}/${post.id}`;
@@ -74,5 +95,15 @@ export const useInteraction = (post: PostItem) => {
     toast('copy_clipboard', 'success');
   }, [post]);
 
-  return { like, handleLike, subscribed, handleSubscribe, handleShare, dislike, handleDislike };
+  return {
+    like,
+    handleLike,
+    subscribed,
+    handleSubscribe,
+    handleShare,
+    dislike,
+    handleDislike,
+    saved,
+    handleSave,
+  };
 };

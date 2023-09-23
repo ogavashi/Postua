@@ -2,17 +2,13 @@ import { Box, IconButton, Typography, useTheme } from '@mui/material';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import InsertCommentIcon from '@mui/icons-material/InsertComment';
-import CachedIcon from '@mui/icons-material/Cached';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import IosShareIcon from '@mui/icons-material/IosShare';
 
-import { PostItem, PostStats } from '@/types';
-import { useCallback, useState } from 'react';
+import { PostItem } from '@/types';
 import { formatStats, useInteraction } from '@/features/post';
-import { ApiService } from '@/services';
 
 interface PostFooterProps {
   post: PostItem;
@@ -23,7 +19,8 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
 
   const { stats } = post;
 
-  const { like, handleLike, handleShare, dislike, handleDislike } = useInteraction(post);
+  const { like, handleLike, handleShare, dislike, handleDislike, saved, handleSave } =
+    useInteraction(post);
 
   const LikeIcon = () => {
     const style = {
@@ -87,6 +84,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
             <IosShareIcon sx={{ fontSize: 18, position: 'relative' }} />
           </IconButton>
           <IconButton
+            onClick={handleSave}
             size='small'
             color='primary'
             sx={{
@@ -96,7 +94,11 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
               ml: 0.5,
             }}
           >
-            <BookmarkAddIcon sx={{ fontSize: 18, position: 'relative' }} />
+            {saved ? (
+              <BookmarkAddedIcon sx={{ fontSize: 18, position: 'relative' }} />
+            ) : (
+              <BookmarkAddIcon sx={{ fontSize: 18, position: 'relative' }} />
+            )}
           </IconButton>
         </Box>
         <IconButton
