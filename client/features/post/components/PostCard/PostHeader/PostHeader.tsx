@@ -2,6 +2,7 @@ import { useTranslation } from 'next-i18next';
 
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import StarsIcon from '@mui/icons-material/Stars';
 
 import { Box, IconButton, Typography as MuiTypography, useTheme } from '@mui/material';
 
@@ -54,8 +55,10 @@ export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
           display={{ xs: 'none', md: 'flex' }}
         >
           {post.user.fullName}
+          {post.user.role.id > 1 && <StarsIcon color='warning' sx={{ ml: 1 }} />}
         </Typography>
-        <MuiTypography fontWeight={200} sx={{ opacity: 0.5 }}>
+
+        <MuiTypography fontWeight={200} sx={{ opacity: 0.5, display: { xs: 'none', lg: 'flex' } }}>
           {timeAgo}
         </MuiTypography>
       </Box>

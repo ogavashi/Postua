@@ -56,6 +56,7 @@ export type User = {
   email: string;
   fullName: string;
   avatarUrl: string;
+  role: { id: number; name: string };
 };
 
 export type PostStats = {
