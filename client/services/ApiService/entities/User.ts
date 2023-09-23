@@ -38,4 +38,10 @@ export class User extends Base {
   async update(dto: UpdateUserDtoRequest) {
     await this.apiClient.instance.patch('users/me', dto);
   }
+
+  async getSubscriptions() {
+    const { data } = await this.apiClient.instance.get<UserData>('/subs');
+
+    return data;
+  }
 }

@@ -32,6 +32,13 @@ export class SubsController {
     return this.subsService.findUserSubs(+id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  getAuthSubs(@UserId() id: string) {
+    return this.subsService.findUserSubs(+id);
+  }
+
   @Get('users/:category')
   getUsers(
     @Query() pageOptionsDto: PageOptionsDto,
