@@ -12,7 +12,7 @@ import {
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { UserId } from 'src/decorators/user-id.decorator';
 import { PostDto } from './dto/post.dto';
@@ -64,10 +64,15 @@ export class PostsController {
   }
 
   @ApiBearerAuth()
+  @ApiQuery({ name: 'category', required: false, type: String })
   @UseGuards(JwtAuthGuard)
   @Get('/saved')
-  get(@Query() pageOptionsDto: PageOptionsDto, @UserId() id: number) {
-    return this.postsService.saved(pageOptionsDto, id);
+  get(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @UserId() id: number,
+    @Query('category') category?: string,
+  ) {
+    return this.postsService.saved(pageOptionsDto, id, category);
   }
 
   @ApiBearerAuth()

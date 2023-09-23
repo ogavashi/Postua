@@ -49,7 +49,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
   if (!period) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/404',
         permanent: false,
       },
     };

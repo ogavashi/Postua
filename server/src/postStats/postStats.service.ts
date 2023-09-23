@@ -17,7 +17,6 @@ import { PageOptionsDto } from 'src/page/dto/page-options.dto';
 export class PostStatsService {
   constructor(
     @InjectRepository(PostStats)
-    @Inject(forwardRef(() => LikesService))
     private repository: Repository<PostStats>,
   ) {}
 

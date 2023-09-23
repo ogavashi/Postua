@@ -27,6 +27,8 @@ const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
 const ratingFilters = ['from-10', 'from5', 'from10', 'all'];
 
+const CATEGORIES = ['games', 'music', 'tech', 'anime', 'cinema', 'software'];
+
 @Injectable()
 export class PostsService {
   constructor(
@@ -165,10 +167,15 @@ export class PostsService {
     return new PageDto(posts, pageMetaDto);
   }
 
-  async saved(pageOptions: PageOptionsDto, userId: number) {
+  async saved(pageOptions: PageOptionsDto, userId: number, category?: string) {
+    if (category && !CATEGORIES.includes(category)) {
+      throw new NotFoundException('no_category');
+    }
+
     const { data: posts, count } = await this.savedService.findAll(
       pageOptions,
       userId,
+      category,
     );
 
     const pageMetaDto = new PageMetaDto({
@@ -179,6 +186,7 @@ export class PostsService {
     const formattedPosts = await Promise.all(
       posts.map(async (post) => ({
         ...post,
+        stats: (await this.postStatsService.getOne(post.id)).stats,
         isLiked: await this.likesService.findByUserAndPost(userId, post.id),
         isDisliked: await this.dislikesService.findByUserAndPost(
           userId,

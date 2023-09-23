@@ -12,6 +12,25 @@ export class Post extends Base {
     return { posts, meta };
   }
 
+  async getFresh(pageOptionsDto: PageOptionsDto, rating?: string) {
+    const { data } = await this.apiClient.instance.get(`/posts/fresh`, {
+      params: { ...pageOptionsDto, rating },
+    });
+    const { data: posts, meta } = data;
+
+    return { posts, meta };
+  }
+
+  async getSaved(pageOptionsDto: PageOptionsDto, category: string = '') {
+    const { data } = await this.apiClient.instance.get(`/posts/saved`, {
+      params: { ...pageOptionsDto, category },
+    });
+
+    const { data: posts, meta } = data;
+
+    return { posts, meta };
+  }
+
   async like(id: number) {
     await this.apiClient.instance.post('/likes', { postId: id });
   }

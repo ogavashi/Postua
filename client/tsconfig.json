@@ -24,6 +24,6 @@
     "**/*.tsx",
     "next-i18next.config.js",
     "features/editor/lib/EditorTools.js"
-  ],
+, "lib/getCategoryts"  ],
   "exclude": ["node_modules"]
 }

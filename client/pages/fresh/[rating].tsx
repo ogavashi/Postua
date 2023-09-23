@@ -1,15 +1,31 @@
-import { Box, Button, ButtonGroup, Paper, Slider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useRouter } from 'next/router';
-import { Card as NewsCard } from '@/features/news';
+
 import { SelectFilter } from '@/features/filters';
 import { constants } from '@/common';
 import { PostList } from '@/features/post';
+import { NextPageContext } from 'next/types';
+import { ApiService, NextApiService } from '@/services';
+import { PageOptionsDto, PostItem } from '@/types';
+import { getRating } from '@/lib';
 
-const Popular: NextPageWithLayout = () => {
+interface FreshPageProps {
+  pageProps: {
+    posts: PostItem[];
+    nextPage?: boolean;
+    filter?: string;
+  };
+}
+
+const Fresh: NextPageWithLayout<FreshPageProps> = ({ pageProps }) => {
+  const { posts, nextPage, filter } = pageProps;
+
+  const apiCall = (pageOptionsDto: PageOptionsDto, rating?: string) =>
+    ApiService.post.getFresh(pageOptionsDto, rating);
+
   return (
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
       <SelectFilter
@@ -17,21 +33,56 @@ const Popular: NextPageWithLayout = () => {
         options={constants.FILTERS_RATING}
         defaultValue={constants.FILTERS_RATING[1]}
       />
-      <PostList />
+      <PostList posts={posts} nextPage={nextPage} filter={filter} apiCall={apiCall} />
     </Box>
   );
 };
 
-Popular.getLayout = (page: React.ReactNode) => {
+Fresh.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
-export async function getServerSideProps({ locale }: { locale: string }) {
+export async function getServerSideProps(ctx: NextPageContext) {
+  const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
+
+  const rating = getRating(ctx.query?.rating);
+
+  if (!rating) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
+
+  try {
+    const query = {
+      take: 2,
+      page: 1,
+      order: 'ASC',
+    };
+
+    const { posts, meta } = await NextApiService(ctx).post.getFresh(query, rating);
+
+    return {
+      props: {
+        ...localeProps,
+        posts,
+        nextPage: meta.hasNextPage,
+        filter: rating,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'errors'])),
+      ...localeProps,
+      posts: [],
     },
   };
 }
 
-export default Popular;
+export default Fresh;

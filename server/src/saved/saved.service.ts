@@ -49,11 +49,15 @@ export class SavedService {
     return !!reposted;
   }
 
-  async findAll(pageOptions: PageOptionsDto, id: number) {
+  async findAll(pageOptions: PageOptionsDto, id: number, category?: string) {
     const skip = (pageOptions.page - 1) * pageOptions.take;
 
+    const where = category
+      ? { user: { id }, post: { category } }
+      : { user: { id } };
+
     const saved = await this.repository.find({
-      where: { user: { id } },
+      where,
       skip: skip,
       take: pageOptions.take,
     });
