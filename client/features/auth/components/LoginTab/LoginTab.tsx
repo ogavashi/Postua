@@ -14,8 +14,7 @@ import { ApiService } from '@/services';
 import { useAppDispatch } from '@/store';
 import { userActions } from '@/features/user';
 import { setCookie } from 'nookies';
-import { useSnackbar } from 'notistack';
-import { useToastError } from '@/features/errors';
+import { useToast } from '@/features/toast';
 
 interface LoginTabProps {
   onToggle: () => void;
@@ -37,7 +36,7 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle, handleClose }) => 
 
   const { t } = useTranslation();
 
-  const toast = useToastError();
+  const { toastError, toast } = useToast();
 
   const dispatch = useAppDispatch();
 
@@ -59,9 +58,10 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle, handleClose }) => 
       });
 
       handleClose();
+      toast('login_success', 'success');
     } catch (error) {
       if (error instanceof Error) {
-        toast(error.message, 'error');
+        toastError(error.message, 'error');
       }
     }
   }, []);

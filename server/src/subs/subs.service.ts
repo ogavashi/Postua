@@ -32,7 +32,7 @@ export class SubsService {
       return this.repository.save({ ...createSubDto, user: { id: id } });
     }
 
-    return this.remove(id);
+    return this.remove(subscribed.id);
   }
 
   async findUsers(pageOptions: PageOptionsDto, category: string) {
@@ -40,9 +40,11 @@ export class SubsService {
       throw new NotFoundException('no_category');
     }
 
+    const skip = (pageOptions.page - 1) * pageOptions.take;
+
     const items = await this.repository.find({
       where: { category },
-      skip: pageOptions.skip,
+      skip: skip,
       take: pageOptions.take,
     });
 

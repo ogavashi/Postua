@@ -1,2 +1,3 @@
 export { PostCard, PostList, Post } from './components';
 export { formatStats } from './lib';
+export { useInteraction } from './hooks';

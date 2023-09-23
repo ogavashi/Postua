@@ -7,9 +7,11 @@ import CachedIcon from '@mui/icons-material/Cached';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import IosShareIcon from '@mui/icons-material/IosShare';
+
 import { PostItem, PostStats } from '@/types';
 import { useCallback, useState } from 'react';
-import { formatStats } from '@/features/post';
+import { formatStats, useInteraction } from '@/features/post';
 import { ApiService } from '@/services';
 
 interface PostFooterProps {
@@ -21,17 +23,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
 
   const { stats } = post;
 
-  const [like, setLike] = useState({ isLiked: post.isLiked || false, count: post.stats.likes });
-
-  const handleLike = useCallback(async () => {
-    setLike((prev) => ({
-      isLiked: !prev.isLiked,
-      count: prev.isLiked ? prev.count - 1 : prev.count + 1,
-    }));
-    try {
-      ApiService.post.like(+post.id);
-    } catch (error) {}
-  }, [like]);
+  const { like, handleLike, handleShare, dislike, handleDislike } = useInteraction(post);
 
   const LikeIcon = () => {
     const style = {
@@ -67,7 +59,8 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
             <LikeIcon />
             <Typography>{like.count}</Typography>
           </IconButton>
-          <IconButton
+          {/*TODO: Add comments */}
+          {/* <IconButton
             size='small'
             color='primary'
             sx={{
@@ -79,8 +72,9 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
           >
             <InsertCommentIcon sx={{ fontSize: 16, position: 'relative', mr: 0.5 }} />
             <Typography>{stats.comments}</Typography>
-          </IconButton>
+          </IconButton> */}
           <IconButton
+            onClick={handleShare}
             size='small'
             color='primary'
             sx={{
@@ -90,7 +84,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
               ml: 0.5,
             }}
           >
-            <CachedIcon sx={{ fontSize: 18, position: 'relative' }} />
+            <IosShareIcon sx={{ fontSize: 18, position: 'relative' }} />
           </IconButton>
           <IconButton
             size='small'
@@ -106,8 +100,9 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
           </IconButton>
         </Box>
         <IconButton
+          onClick={handleDislike}
           size='small'
-          color='warning'
+          color={dislike.isDisliked ? 'error' : 'warning'}
           sx={{
             position: 'relative',
             py: 0.1,

@@ -16,6 +16,14 @@ export class Post extends Base {
     await this.apiClient.instance.post('/likes', { postId: id });
   }
 
+  async dislike(id: number) {
+    await this.apiClient.instance.post('/dislikes', { postId: id });
+  }
+
+  async subscribe(category: string) {
+    await this.apiClient.instance.post('/subs', { category });
+  }
+
   // async post(data) {
   //   await this.apiClient.instance.post(`/posts`, data);
   // }

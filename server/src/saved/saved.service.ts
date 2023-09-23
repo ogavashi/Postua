@@ -50,9 +50,11 @@ export class SavedService {
   }
 
   async findAll(pageOptions: PageOptionsDto, id: number) {
+    const skip = (pageOptions.page - 1) * pageOptions.take;
+
     const saved = await this.repository.find({
       where: { user: { id } },
-      skip: pageOptions.skip,
+      skip: skip,
       take: pageOptions.take,
     });
 

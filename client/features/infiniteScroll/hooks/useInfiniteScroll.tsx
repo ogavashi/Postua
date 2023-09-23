@@ -1,3 +1,4 @@
+import { useToast } from '@/features/toast';
 import { ApiService } from '@/services';
 import { PostItem } from '@/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -18,6 +19,8 @@ export const useInfiniteScroll = (
 
   const observerTarget = useRef(null);
 
+  const { toastError } = useToast();
+
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -26,7 +29,9 @@ export const useInfiniteScroll = (
       setPageOptions((prev) => ({ ...prev, hasNextPage: meta.hasNextPage }));
       setItems((prev) => [...prev, ...posts]);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toastError(error.message, 'error');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -41,7 +46,11 @@ export const useInfiniteScroll = (
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if ((entries[0].isIntersecting || entries[1]?.isIntersecting) && pageOptions.hasNextPage) {
+        if (
+          (entries[0].isIntersecting || entries[1]?.isIntersecting) &&
+          pageOptions.hasNextPage &&
+          !isLoading
+        ) {
           setPageOptions((prev) => ({ ...prev, page: prev.page + 1 }));
         }
       },
@@ -57,7 +66,7 @@ export const useInfiniteScroll = (
         observer.unobserve(observerTarget.current);
       }
     };
-  }, [observerTarget, pageOptions.hasNextPage]);
+  }, [observerTarget, pageOptions.hasNextPage, isLoading]);
 
   return {
     items,

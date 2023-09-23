@@ -28,10 +28,12 @@ export class PostStatsService {
   }
 
   async getAll(pageOptions: PageOptionsDto, filter = {}) {
+    const skip = (pageOptions.page - 1) * pageOptions.take;
+
     const items = await this.repository.find({
       order: { post: { createdAt: 'DESC' } },
       where: filter,
-      skip: pageOptions.skip,
+      skip: skip,
       take: pageOptions.take,
     });
 
@@ -74,8 +76,6 @@ export class PostStatsService {
   async popular(filter: any, pageOptions: PageOptionsDto) {
     const skip = (pageOptions.page - 1) * pageOptions.take;
 
-    console.log(pageOptions.page);
-
     const items = await this.repository.find({
       where: { post: filter },
       order: { likes: 'DESC', views: 'DESC' },
@@ -100,10 +100,12 @@ export class PostStatsService {
   }
 
   async fresh(filter: any, pageOptions: PageOptionsDto) {
+    const skip = (pageOptions.page - 1) * pageOptions.take;
+
     const items = await this.repository.find({
       where: filter,
       order: { post: { createdAt: 'DESC' } },
-      skip: pageOptions.skip,
+      skip: skip,
       take: pageOptions.take,
     });
 
@@ -142,11 +144,13 @@ export class PostStatsService {
   }
 
   async getByCategory(category: string, pageOptions: PageOptionsDto) {
+    const skip = (pageOptions.page - 1) * pageOptions.take;
+
     const items = await this.repository.find({
       where: {
         post: { category },
       },
-      skip: pageOptions.skip,
+      skip: skip,
       take: pageOptions.take,
     });
 
