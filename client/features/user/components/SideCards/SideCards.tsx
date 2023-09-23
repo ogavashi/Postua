@@ -1,13 +1,10 @@
 import { Box } from '@mui/material';
 
-import { CategoryDto } from '@/features/category';
-import { SubscribersCard } from '@/features/subscribers';
-import { RulesCard } from '@/features/rules';
 import { SubscriptionsCard } from '@/features/subscriptions';
-import { UserData } from '@/types';
+import { Subscribe } from '@/types';
 
 interface SideCardsProps {
-  subs: { id: number; category: string }[];
+  subs: Subscribe[];
   userId: string;
 }
 

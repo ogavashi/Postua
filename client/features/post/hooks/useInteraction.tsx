@@ -102,11 +102,15 @@ export const useInteraction = (post: PostItem) => {
   }, [post]);
 
   const handleVisit = useCallback(async () => {
-    await ApiService.post.visit(+post.id);
+    try {
+      await ApiService.post.visit(+post.id);
+    } catch (error) {}
   }, [post]);
 
   const handleView = useCallback(async () => {
-    await ApiService.post.view(+post.id);
+    try {
+      await ApiService.post.view(+post.id);
+    } catch (error) {}
   }, [post]);
 
   return {

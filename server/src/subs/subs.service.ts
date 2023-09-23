@@ -26,7 +26,9 @@ export class SubsService {
       throw new NotFoundException('no_category');
     }
 
-    const subscribed = await this.repository.findOne({ where: { category } });
+    const subscribed = await this.repository.findOne({
+      where: { category, user: { id } },
+    });
 
     if (!subscribed) {
       return this.repository.save({ ...createSubDto, user: { id: id } });
@@ -64,7 +66,7 @@ export class SubsService {
     return new PageDto(users, pageMetaDto);
   }
 
-  async findUserSubs(userId: number) {
+  async findUserSubs(userId: number, senderId?: number) {
     const user = await this.usersService.findById(userId);
 
     if (!user) {
@@ -74,6 +76,18 @@ export class SubsService {
     const subs = await this.repository.find({
       where: { user: { id: userId } },
     });
+
+    if (senderId) {
+      return await Promise.all(
+        subs.map(async ({ user, ...rest }) => ({
+          ...rest,
+          isSubscribed: await this.findByUserAndCategory(
+            senderId,
+            rest.category,
+          ),
+        })),
+      );
+    }
 
     return subs.map(({ user, ...rest }) => rest);
   }

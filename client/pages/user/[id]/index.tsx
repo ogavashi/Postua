@@ -9,14 +9,14 @@ import { constants } from '@/common';
 import { NextPageContext } from 'next/types';
 import { ApiService, NextApiService } from '@/services';
 import { getUserId } from '@/lib';
-import { PageOptionsDto, PostItem, UserData } from '@/types';
+import { PageOptionsDto, PostItem, Subscribe, UserData } from '@/types';
 
 interface UserPageProps {
   pageProps: {
     posts: PostItem[];
     nextPage?: boolean;
     filter?: string;
-    subs: { id: number; category: string }[];
+    subs: Subscribe[];
     user: UserData;
   };
 }

@@ -42,9 +42,9 @@ export async function getServerSideProps(ctx: NextPageContext) {
   }
 
   return {
-    redirect: {
-      destination: '/404',
-      permanent: false,
+    props: {
+      ...localeProps,
+      categories: [],
     },
   };
 }

@@ -14,6 +14,7 @@ import { constants } from '@/common';
 import { useRouter } from 'next/router';
 import { ApiService } from '@/services';
 import { useToast } from '@/features/toast';
+import { useShowAuthModal } from '@/features/auth';
 
 interface SubscriptionProps {
   category: string;
@@ -24,6 +25,8 @@ export const Subscription: React.FC<SubscriptionProps> = ({ category, isSubbed =
   const { t } = useTranslation();
 
   const { toastError } = useToast();
+
+  const showAuthModal = useShowAuthModal();
 
   const constantCategory = constants.CATEGORIES.find(({ key }) => key === category)!;
 
@@ -38,6 +41,7 @@ export const Subscription: React.FC<SubscriptionProps> = ({ category, isSubbed =
 
       router.reload();
     } catch (error) {
+      showAuthModal();
       if (error instanceof Error) {
         toastError(error.message, 'error');
       }

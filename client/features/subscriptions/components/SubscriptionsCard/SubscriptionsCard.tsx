@@ -8,9 +8,10 @@ import { Box, Button, Paper, Typography } from '@mui/material';
 
 import { Subscription } from './Subscription';
 import { CategoryDto } from '@/features/category';
+import { Subscribe } from '@/types';
 
 interface SubscriptionCardProps {
-  subs: { id: number; category: string }[];
+  subs: Subscribe[];
   userId: string;
 }
 
@@ -35,7 +36,7 @@ export const SubscriptionsCard: React.FC<SubscriptionCardProps> = ({ subs, userI
         </Typography>
         <Box display='flex' flexDirection='column' gap={2} pb={2}>
           {subs.slice(0, 3).map((sub) => (
-            <Subscription key={sub.id} category={sub.category} />
+            <Subscription key={sub.id} category={sub.category} isSubscribed={sub?.isSubscribed} />
           ))}
         </Box>
         <Button onClick={handleNavigate}>Show all</Button>

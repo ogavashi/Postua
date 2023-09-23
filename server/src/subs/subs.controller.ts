@@ -1,3 +1,4 @@
+import { CustomJwtAuthGuard } from 'src/auth/guards/custom.guard';
 import {
   Controller,
   Post,
@@ -27,9 +28,11 @@ export class SubsController {
     return this.subsService.create(id, createSubDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(CustomJwtAuthGuard)
   @Get('user/:userId')
-  getSubs(@Param('userId') id: string) {
-    return this.subsService.findUserSubs(+id);
+  getSubs(@Param('userId') id: string, @UserId() userId?: number) {
+    return this.subsService.findUserSubs(+id, userId);
   }
 
   @ApiBearerAuth()

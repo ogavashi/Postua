@@ -125,3 +125,9 @@ export type PageOptionsDto = {
   page: number;
   order: string;
 };
+
+export type Subscribe = {
+  id: number;
+  category: string;
+  isSubscribed?: boolean;
+};
