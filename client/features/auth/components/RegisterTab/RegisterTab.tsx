@@ -18,6 +18,7 @@ import { ApiService } from '@/services';
 import { useAppDispatch } from '@/store';
 import { userActions } from '@/features/user';
 import { useToast } from '@/features/toast';
+import { useRouter } from 'next/router';
 
 interface RegisterTabProps {
   onToggle: () => void;
@@ -41,6 +42,8 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle, handleClose 
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const router = useRouter();
+
   const { toastError, toast } = useToast();
 
   const translatedErrors = useTranslatedErrors(errors);
@@ -61,6 +64,7 @@ export const RegisterTab: React.FC<RegisterTabProps> = ({ onToggle, handleClose 
       });
       handleClose();
       toast('register_success', 'success');
+      router.reload();
     } catch (error) {
       if (error instanceof Error) {
         toastError(error.message, 'error');

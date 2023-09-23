@@ -12,11 +12,13 @@ type HydrateAction = {
 export interface AppState {
   theme: Theme;
   language: Language;
+  authModal: boolean;
 }
 
 const initialState: AppState = {
   theme: 'auto',
   language: 'ua',
+  authModal: false,
 };
 
 export const appSlice = createSlice({
@@ -28,6 +30,9 @@ export const appSlice = createSlice({
     },
     setLanguage(state, action: PayloadAction<Language>) {
       state.language = action.payload;
+    },
+    setAuthModal(state, action: PayloadAction<boolean>) {
+      state.authModal = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -44,6 +49,7 @@ export const appSelectors = {
   app: (state: RootState) => state.app,
   theme: (state: RootState) => appSelectors.app(state).theme,
   language: (state: RootState) => appSelectors.app(state).language,
+  authModal: (state: RootState) => appSelectors.app(state).authModal,
 };
 
 const { actions: appActions, reducer: appReducer } = appSlice;

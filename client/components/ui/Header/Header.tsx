@@ -12,8 +12,9 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 import { Drawer, ElevationScroll, Logo, ProfileBar, SearchBar, Settings } from '@/components';
 import { AuthModal } from '@/features/auth';
-import { store, useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { userSelectors } from '@/features/user';
+import { appActions } from '@/features/app';
 
 export const Header = () => {
   const user = useAppSelector(userSelectors.data);
@@ -21,14 +22,13 @@ export const Header = () => {
   const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
   const { t } = useTranslation();
 
-  const handleOpenModal = useCallback(() => setShowModal(true), []);
+  const dispatch = useAppDispatch();
 
-  const handleCloseModal = useCallback(() => setShowModal(false), []);
+  const handleOpenModal = useCallback(() => dispatch(appActions.setAuthModal(true)), []);
 
   const handleDrawerToggle = useCallback(() => {
     setMobileOpen((prevState) => !prevState);
@@ -93,7 +93,7 @@ export const Header = () => {
           handleDrawerToggle={handleDrawerToggle}
           setMobileOpen={setMobileOpen}
         />
-        <AuthModal isOpen={showModal} handleClose={handleCloseModal} />
+        <AuthModal />
       </AppBar>
     </ElevationScroll>
   );

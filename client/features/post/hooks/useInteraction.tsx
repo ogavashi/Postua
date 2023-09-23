@@ -1,5 +1,7 @@
+import { appActions } from '@/features/app';
 import { useToast } from '@/features/toast';
 import { ApiService } from '@/services';
+import { useAppDispatch } from '@/store';
 import { PostItem } from '@/types';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
@@ -16,6 +18,10 @@ export const useInteraction = (post: PostItem) => {
   });
   const [subscribed, setSubscribed] = useState(!!post?.isSubscribed);
 
+  const dispatch = useAppDispatch();
+
+  const showAuthModal = useCallback(() => dispatch(appActions.setAuthModal(true)), []);
+
   const handleLike = useCallback(async () => {
     setLike((prev) => ({
       isLiked: !prev.isLiked,
@@ -24,6 +30,7 @@ export const useInteraction = (post: PostItem) => {
     try {
       await ApiService.post.like(+post.id);
     } catch (error) {
+      showAuthModal();
       if (error instanceof Error) {
         toastError(error.message, 'error');
       }
@@ -39,6 +46,7 @@ export const useInteraction = (post: PostItem) => {
     try {
       await ApiService.post.dislike(+post.id);
     } catch (error) {
+      showAuthModal();
       if (error instanceof Error) {
         toastError(error.message, 'error');
       }
@@ -52,6 +60,7 @@ export const useInteraction = (post: PostItem) => {
       await ApiService.post.subscribe(post.category);
       router.reload();
     } catch (error) {
+      showAuthModal();
       if (error instanceof Error) {
         toastError(error.message, 'error');
       }

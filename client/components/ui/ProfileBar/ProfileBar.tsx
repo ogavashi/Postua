@@ -50,7 +50,7 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
     handleMobileMenuClose();
   }, []);
 
-  const { navigateCategory, handleNavigate } = useNavigation({ sideFunc: handleMenuClose });
+  const { navigateCategory } = useNavigation({ sideFunc: handleMenuClose });
 
   const handleLogout = useCallback(() => {
     dispatch(userActions.unSetUser());
@@ -61,16 +61,6 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
   return (
     <>
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <IconButton
-          size='large'
-          aria-label='show 17 new notifications'
-          color='inherit'
-          onClick={() => handleNavigate('notifications')}
-        >
-          <Badge badgeContent={17} color='error'>
-            <NotificationsIcon color='secondary' />
-          </Badge>
-        </IconButton>
         <IconButton size='large' edge='end' onClick={handleProfileMenuOpen} color='inherit'>
           <Avatar src={user.avatarUrl} />
         </IconButton>
@@ -90,12 +80,6 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
           <MenuItem>
             <EditNoteIcon color='primary' />
             Post
-          </MenuItem>
-          <MenuItem onClick={() => handleNavigate('notifications')}>
-            <Badge badgeContent={17} color='error'>
-              <NotificationsIcon color='primary' />
-            </Badge>
-            Notifications
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
             <AccountCircle color='primary' />

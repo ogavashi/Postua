@@ -17,19 +17,24 @@ import BookIcon from '@mui/icons-material/Book';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { LoginTab, RegisterTab } from '@/features/auth';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { appActions, appSelectors } from '@/features/app';
 
 type ModalState = 'register' | 'login';
 
-interface AuthModalProps {
-  isOpen: boolean;
-  handleClose: () => void;
-}
-
-export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, handleClose }) => {
+export const AuthModal = () => {
   const [modalState, setModalState] = useState<ModalState>('login');
 
   const toggleModalState = useCallback(() => {
     setModalState((prev) => (prev === 'register' ? 'login' : 'register'));
+  }, []);
+
+  const isOpen = useAppSelector(appSelectors.authModal);
+
+  const dispatch = useAppDispatch();
+
+  const handleClose = useCallback(() => {
+    dispatch(appActions.setAuthModal(false));
   }, []);
 
   const Tab = () => {

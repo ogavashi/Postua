@@ -15,6 +15,7 @@ import { useAppDispatch } from '@/store';
 import { userActions } from '@/features/user';
 import { setCookie } from 'nookies';
 import { useToast } from '@/features/toast';
+import { useRouter } from 'next/router';
 
 interface LoginTabProps {
   onToggle: () => void;
@@ -35,6 +36,8 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle, handleClose }) => 
   const translatedErrors = useTranslatedErrors(errors);
 
   const { t } = useTranslation();
+
+  const router = useRouter();
 
   const { toastError, toast } = useToast();
 
@@ -59,6 +62,7 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle, handleClose }) => 
 
       handleClose();
       toast('login_success', 'success');
+      router.reload();
     } catch (error) {
       if (error instanceof Error) {
         toastError(error.message, 'error');
