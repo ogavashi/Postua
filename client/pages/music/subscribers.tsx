@@ -8,15 +8,41 @@ import { GetServerSideProps } from 'next';
 import { Category } from '@/features/category';
 import { SubscribersList } from '@/features/subscribers';
 import { constants } from '@/common';
+import { NextPageContext } from 'next/types';
+import { ApiService, NextApiService } from '@/services';
+import { PageOptionsDto, PostItem, User } from '@/types';
 
-const SubscribersPage: NextPageWithLayout = () => {
-  const category = constants.CATEGORIES[1];
+interface SubscribersPageProps {
+  pageProps: {
+    users: User[];
+    posts: PostItem[];
+    nextUsersPage?: boolean;
+    usersCount: number;
+    filter?: string;
+  };
+}
+
+const SubscribersPage: NextPageWithLayout<SubscribersPageProps> = ({ pageProps }) => {
+  const { posts, filter, usersCount, users, nextUsersPage } = pageProps;
+
+  const category = constants.CATEGORIES.find(({ key }) => key === filter)!;
+
+  const apiCall = (pageOptionsDto: PageOptionsDto, filter: string) =>
+    ApiService.subscribers.getSubscribers(pageOptionsDto, filter);
+
+  const isSubbed = !!posts[0]?.isSubscribed;
 
   return (
     <Box display='flex' flexDirection='column' gap={2}>
-      <Category category={category} />
-      <Box>
-        <SubscribersList />
+      <Category category={category} isSubbed={isSubbed} subsCount={usersCount} />
+      <Box mb={2}>
+        <SubscribersList
+          subscribers={users}
+          usersCount={usersCount}
+          nextPage={nextUsersPage}
+          filter={filter}
+          apiCall={apiCall}
+        />
       </Box>
     </Box>
   );
@@ -26,12 +52,48 @@ SubscribersPage.getLayout = (page: React.ReactNode) => {
   return <AppLayout maxWidth='lg'>{page}</AppLayout>;
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export async function getServerSideProps(ctx: NextPageContext) {
+  const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
+
+  const category = 'music';
+
+  try {
+    const query = {
+      take: 2,
+      page: 1,
+      order: 'ASC',
+    };
+
+    const { posts } = await NextApiService(ctx).post.getByCategory(
+      { take: 1, page: 1, order: 'ASC' },
+      category
+    );
+
+    const { users, meta: usersMeta } = await NextApiService(ctx).subscribers.getSubscribers(
+      query,
+      category
+    );
+
+    return {
+      props: {
+        ...localeProps,
+        filter: category,
+        users,
+        usersCount: usersMeta.itemCount,
+        nextUsersPage: usersMeta.hasNextPage,
+        posts: posts,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'errors'])),
+      ...localeProps,
+      posts: [],
     },
   };
-};
+}
 
 export default SubscribersPage;

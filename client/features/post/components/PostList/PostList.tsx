@@ -29,15 +29,20 @@ export const PostList: React.FC<PostListprops> = ({
       display='flex'
       flexDirection='column'
       gap={2}
+      mb={0.5}
       sx={{ width: { xs: '100%', md: 640 }, ...sx }}
     >
-      {!!items?.length ? items.map((post) => <PostCard key={post.id} post={post} />) : <NotFound />}
+      {!!items?.length ? (
+        items.map((post) => <PostCard key={post.id} post={post as PostItem} />)
+      ) : (
+        <NotFound />
+      )}
       {isLoading && (
         <Box display='flex' justifyContent='center' alignItems='center'>
           <CircularProgress color='primary' />
         </Box>
       )}
-      <div ref={observerTarget}></div>
+      <div ref={observerTarget} />
     </Box>
   );
 };

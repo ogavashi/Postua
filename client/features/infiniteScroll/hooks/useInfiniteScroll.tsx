@@ -1,13 +1,14 @@
 import { useToast } from '@/features/toast';
 import { ApiService } from '@/services';
-import { PostItem } from '@/types';
+import { PostItem, User } from '@/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const useInfiniteScroll = (
-  initialData: PostItem[],
+  initialData: PostItem[] | User[],
   nextPage: boolean | undefined,
   filter: string | undefined,
-  api: CallableFunction
+  api: CallableFunction,
+  key: string = 'posts'
 ) => {
   const [items, setItems] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,10 +25,10 @@ export const useInfiniteScroll = (
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const { posts, meta } = await api({ page: pageOptions.page, take: 2, order: 'ASC' }, filter);
+      const data = await api({ page: pageOptions.page, take: 2, order: 'ASC' }, filter);
 
-      setPageOptions((prev) => ({ ...prev, hasNextPage: meta.hasNextPage }));
-      setItems((prev) => [...prev, ...posts]);
+      setPageOptions((prev) => ({ ...prev, hasNextPage: data.meta.hasNextPage }));
+      setItems((prev) => [...prev, ...data[key]]);
     } catch (error) {
       if (error instanceof Error) {
         toastError(error.message, 'error');

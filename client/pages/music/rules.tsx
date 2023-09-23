@@ -8,13 +8,27 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Category } from '@/features/category';
 import { Rules } from '@/features/rules';
 import { constants } from '@/common';
+import { NextApiService } from '@/services';
+import { NextPageContext } from 'next/types';
+import { PostItem } from '@/types';
 
-const RulesPage: NextPageWithLayout = () => {
+interface RulesPageProps {
+  pageProps: {
+    posts: PostItem[];
+    usersCount: number;
+  };
+}
+
+const RulesPage: NextPageWithLayout<RulesPageProps> = ({ pageProps }) => {
+  const { posts, usersCount } = pageProps;
+
   const category = constants.CATEGORIES[1];
+
+  const isSubbed = !!posts[0]?.isSubscribed;
 
   return (
     <Box display='flex' flexDirection='column' gap={2}>
-      <Category category={category} />
+      <Category category={category} isSubbed={isSubbed} subsCount={usersCount} />
       <Box>
         <Rules />
       </Box>
@@ -26,12 +40,45 @@ RulesPage.getLayout = (page: React.ReactNode) => {
   return <AppLayout maxWidth='lg'>{page}</AppLayout>;
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export async function getServerSideProps(ctx: NextPageContext) {
+  const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
+
+  const category = 'music';
+
+  const query = {
+    take: 2,
+    page: 1,
+    order: 'ASC',
+  };
+
+  try {
+    const { posts } = await NextApiService(ctx).post.getByCategory(
+      { take: 1, page: 1, order: 'ASC' },
+      category
+    );
+
+    const { meta: usersMeta } = await NextApiService(ctx).subscribers.getSubscribers(
+      query,
+      category
+    );
+
+    return {
+      props: {
+        ...localeProps,
+        posts,
+        usersCount: usersMeta.itemCount,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'errors'])),
+      ...localeProps,
+      posts: [],
     },
   };
-};
+}
 
 export default RulesPage;
