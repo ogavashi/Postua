@@ -5,42 +5,79 @@ import { AppLayout } from '@/components';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import { Category } from '@/features/category';
-import { Rules } from '@/features/rules';
-import { constants } from '@/common';
-import { SubscriptionsList } from '@/features/subscriptions';
-import { User, UserDto } from '@/features/user';
-import { SubscribersList } from '@/features/subscribers';
+import { UserSubscriptionsList } from '@/features/subscriptions';
+import { User } from '@/features/user';
+import { NextPageContext } from 'next/types';
+import { getUserId } from '@/lib';
+import { NextApiService } from '@/services';
+import { Subscribe, UserData } from '@/types';
 
-const RulesPage: NextPageWithLayout = () => {
-  const user: UserDto = {
-    email: 'user@email.com',
-    fullName: 'Full Name',
-    id: '1337',
-    backgroundUrl: 'https://media.tenor.com/6LyXLgF8ksUAAAAd/anime-gif.gif',
-    avatarUrl: 'https://giffiles.alphacoders.com/350/35097.gif',
+interface SubscriptionsPageProps {
+  pageProps: {
+    subs: Subscribe[];
+    user: UserData;
   };
+}
+
+const SubscriptionsPage: NextPageWithLayout<SubscriptionsPageProps> = ({ pageProps }) => {
+  const { subs, user } = pageProps;
 
   return (
     <Box display='flex' flexDirection='column' gap={2}>
-      <User user={user} />
+      <User user={user} subsCount={subs.length} />
       <Box>
-        <SubscriptionsList />
+        <UserSubscriptionsList subscriptions={subs} />
       </Box>
     </Box>
   );
 };
 
-RulesPage.getLayout = (page: React.ReactNode) => {
+SubscriptionsPage.getLayout = (page: React.ReactNode) => {
   return <AppLayout maxWidth='lg'>{page}</AppLayout>;
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export async function getServerSideProps(ctx: NextPageContext) {
+  const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
+
+  const userId = getUserId(ctx.query?.id);
+
+  if (!userId) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  try {
+    const query = {
+      take: 2,
+      page: 1,
+      order: 'ASC',
+    };
+
+    const user = await NextApiService(ctx).user.getById(userId);
+
+    const subs = await NextApiService(ctx).subscribers.getSubscriptions(userId);
+
+    return {
+      props: {
+        ...localeProps,
+        subs,
+        user,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+
   return {
-    props: {
-      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'errors'])),
+    redirect: {
+      destination: '/404',
+      permanent: false,
     },
   };
-};
+}
 
-export default RulesPage;
+export default SubscriptionsPage;
