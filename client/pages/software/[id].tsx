@@ -6,20 +6,17 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 
 import { Post } from '@/features/post';
-import { NextPageContext } from 'next';
+import { NextPageContext } from 'next/types';
 import { NextApiService } from '@/services';
-import { CategoryPostProps } from '@/types';
+import { CategoryPostProps, PostItem } from '@/types';
 
 const CategoryPost: NextPageWithLayout<CategoryPostProps> = ({ pageProps }) => {
-  const router = useRouter();
   const { post } = pageProps;
 
   return (
-    <>
-      <Box my='12px'>
-        <Post post={post} />
-      </Box>
-    </>
+    <Box my='12px'>
+      <Post post={post} />
+    </Box>
   );
 };
 
@@ -30,13 +27,15 @@ CategoryPost.getLayout = (page: React.ReactNode) => {
 export async function getServerSideProps(ctx: NextPageContext) {
   const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
 
+  const { id } = ctx.query;
+
   try {
-    const data = await NextApiService(ctx).post.getOne(123);
+    const post = await NextApiService(ctx).post.getOne(id as unknown as number);
 
     return {
       props: {
         ...localeProps,
-        post: data,
+        post,
       },
     };
   } catch (error) {
@@ -44,9 +43,9 @@ export async function getServerSideProps(ctx: NextPageContext) {
   }
 
   return {
-    props: {
-      ...localeProps,
-      posts: null,
+    redirect: {
+      destination: '/404',
+      permanent: false,
     },
   };
 }

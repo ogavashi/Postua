@@ -28,17 +28,17 @@ export class Post extends Base {
     await this.apiClient.instance.post('/saved', { postId: id });
   }
 
-  // async post(data) {
-  //   await this.apiClient.instance.post(`/posts`, data);
-  // }
+  async getOne(id: number) {
+    const { data: post } = await this.apiClient.instance.get(`/posts/${id}`);
 
-  // async getAll() {
-  //   const data = shortPosts;
+    return post;
+  }
 
-  //   return data;
-  // }
+  async view(id: number) {
+    await this.apiClient.instance.post('/views', { postId: id });
+  }
 
-  // async getOne(id: number) {
-  //   return post;
-  // }
+  async visit(id: number) {
+    await this.apiClient.instance.post('/visitings', { postId: id });
+  }
 }

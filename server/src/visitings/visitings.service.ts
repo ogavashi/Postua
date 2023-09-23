@@ -31,7 +31,7 @@ export class VisitingsService {
     }
 
     if (post.user.id === userId) {
-      throw new ConflictException('self_visit');
+      return;
     }
 
     const postStats = await this.postStatsService.findOne(post.id);

@@ -31,7 +31,7 @@ export class ViewsService {
     }
 
     if (post.user.id === userId) {
-      throw new ConflictException('self_view');
+      return;
     }
 
     const postStats = await this.postStatsService.findOne(post.id);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Box, Paper } from '@mui/material';
 
@@ -8,19 +8,26 @@ import { PostStats } from './PostStats';
 import { PostText } from './PostText';
 import { PostFooter } from './PostFooter';
 import { PostItem } from '@/types';
+import { useInteraction } from '@/features/post';
 
 interface PostProps {
   post: PostItem;
 }
 
 export const Post: React.FC<PostProps> = ({ post }) => {
+  const { handleVisit } = useInteraction(post);
+
+  useEffect(() => {
+    handleVisit();
+  }, []);
+
   return (
     <Paper>
       <Box>
         <PostHeader post={post} />
         {post?.image && <PostImage imageUrl={post.image} />}
         <Box>
-          <PostStats stats={post.stats} />
+          <PostStats post={post} />
         </Box>
         <PostText body={post.body} />
         <PostFooter post={post} />

@@ -13,27 +13,32 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 
 import { useCallback, useState } from 'react';
 import { Box } from './Box.styled';
 import { Typography } from '@/components';
-import { PostStats as Stats } from '@/types';
-import { formatStats } from '@/features/post';
+import { PostItem, PostStats as Stats } from '@/types';
+import { formatStats, useInteraction } from '@/features/post';
 import { PostStatsModal } from '../PostStatsModal';
 import { PostViewStats } from '../PostViewStats';
 
 interface PostStatsProps {
-  stats: Stats;
+  post: PostItem;
 }
 
-export const PostStats: React.FC<PostStatsProps> = ({ stats }) => {
+export const PostStats: React.FC<PostStatsProps> = ({ post }) => {
   const [showStats, setShowStats] = useState(false);
 
   const theme = useTheme();
 
+  const { stats } = post;
+
   const toggleShowStats = useCallback(() => {
     setShowStats((prev) => !prev);
   }, []);
+
+  const { saved, handleSave } = useInteraction(post);
 
   return (
     <MuiBox
@@ -44,6 +49,7 @@ export const PostStats: React.FC<PostStatsProps> = ({ stats }) => {
     >
       <MuiBox>
         <IconButton
+          onClick={handleSave}
           size='small'
           color='primary'
           sx={{
@@ -53,20 +59,11 @@ export const PostStats: React.FC<PostStatsProps> = ({ stats }) => {
             ml: 0.5,
           }}
         >
-          <InsertCommentIcon sx={{ fontSize: 21, position: 'relative', mr: 0.5 }} />
-          <Typography>152</Typography>
-        </IconButton>
-        <IconButton
-          size='small'
-          color='primary'
-          sx={{
-            position: 'relative',
-            py: 0.1,
-            borderRadius: theme.shape.borderRadius,
-            ml: 0.5,
-          }}
-        >
-          <BookmarkAddIcon sx={{ fontSize: 21, position: 'relative' }} />
+          {saved ? (
+            <BookmarkAddedIcon sx={{ fontSize: 21, position: 'relative' }} />
+          ) : (
+            <BookmarkAddIcon sx={{ fontSize: 21, position: 'relative' }} />
+          )}
         </IconButton>
       </MuiBox>
       <PostViewStats stats={stats} showStats={showStats} toggleShowStats={toggleShowStats} />

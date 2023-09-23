@@ -95,15 +95,32 @@ export const useInteraction = (post: PostItem) => {
     toast('copy_clipboard', 'success');
   }, [post]);
 
+  const handleSharePage = useCallback(() => {
+    const url = `${window.location.toString()}`;
+    navigator.clipboard.writeText(url);
+    toast('copy_clipboard', 'success');
+  }, [post]);
+
+  const handleVisit = useCallback(async () => {
+    await ApiService.post.visit(+post.id);
+  }, [post]);
+
+  const handleView = useCallback(async () => {
+    await ApiService.post.view(+post.id);
+  }, [post]);
+
   return {
     like,
     handleLike,
     subscribed,
     handleSubscribe,
     handleShare,
+    handleSharePage,
     dislike,
     handleDislike,
     saved,
     handleSave,
+    handleVisit,
+    handleView,
   };
 };

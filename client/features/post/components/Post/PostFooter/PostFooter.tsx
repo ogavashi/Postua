@@ -3,14 +3,15 @@ import { Box, IconButton, useTheme, Typography as MuiTypography } from '@mui/mat
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import InsertCommentIcon from '@mui/icons-material/InsertComment';
-import CachedIcon from '@mui/icons-material/Cached';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import IosShareIcon from '@mui/icons-material/IosShare';
+
 import { PostItem } from '@/types';
 import { useCallback, useState } from 'react';
 import { PostViewStats } from '../PostViewStats';
+import { useInteraction } from '@/features/post';
 
 interface PostFooterProps {
   post: PostItem;
@@ -25,28 +26,15 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
     setShowStats((prev) => !prev);
   }, []);
 
-  const [isLiked, setIsLiked] = useState(false);
-
-  const [likeAmount, setLikeAmount] = useState(post.stats.likes);
-
-  //REDO later
-  const handleLike = useCallback(() => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeAmount((prev) => prev - 1);
-
-      return;
-    }
-    setIsLiked(true);
-    setLikeAmount((prev) => prev + 1);
-  }, [isLiked]);
+  const { like, handleLike, handleSharePage, dislike, handleDislike, saved, handleSave } =
+    useInteraction(post);
 
   const LikeIcon = () => {
     const style = {
       sx: { fontSize: 16, position: 'relative', mr: 0.5 },
     };
 
-    return isLiked ? <FavoriteIcon {...style} /> : <FavoriteBorderIcon {...style} />;
+    return like.isLiked ? <FavoriteIcon {...style} /> : <FavoriteBorderIcon {...style} />;
   };
 
   return (
@@ -56,13 +44,8 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
       </Box>
       <Box display='flex' alignItems='center' gap={2}>
         {post.tags?.map((tag) => (
-          <Typography
-            variant='h6'
-            component={NextLinkComposed}
-            to={`/tag/${tag.key}`}
-            key={tag.key}
-          >
-            #{tag.key}
+          <Typography variant='h6' component={NextLinkComposed} to={`/tag/${tag}`} key={tag}>
+            {tag}
           </Typography>
         ))}
       </Box>
@@ -80,9 +63,10 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
             }}
           >
             <LikeIcon />
-            <MuiTypography>{likeAmount}</MuiTypography>
+            <MuiTypography>{like.count}</MuiTypography>
           </IconButton>
           <IconButton
+            onClick={handleSharePage}
             size='small'
             color='primary'
             sx={{
@@ -92,10 +76,10 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
               ml: 0.5,
             }}
           >
-            <InsertCommentIcon sx={{ fontSize: 21, position: 'relative', mr: 0.5 }} />
-            <MuiTypography>{post.stats.comments}</MuiTypography>
+            <IosShareIcon sx={{ fontSize: 21, position: 'relative' }} />
           </IconButton>
           <IconButton
+            onClick={handleSave}
             size='small'
             color='primary'
             sx={{
@@ -105,24 +89,17 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
               ml: 0.5,
             }}
           >
-            <CachedIcon sx={{ fontSize: 21, position: 'relative' }} />
-          </IconButton>
-          <IconButton
-            size='small'
-            color='primary'
-            sx={{
-              position: 'relative',
-              py: 0.1,
-              borderRadius: theme.shape.borderRadius,
-              ml: 0.5,
-            }}
-          >
-            <BookmarkAddIcon sx={{ fontSize: 21, position: 'relative' }} />
+            {saved ? (
+              <BookmarkAddedIcon sx={{ fontSize: 21, position: 'relative' }} />
+            ) : (
+              <BookmarkAddIcon sx={{ fontSize: 21, position: 'relative' }} />
+            )}
           </IconButton>
         </Box>
         <IconButton
+          onClick={handleDislike}
           size='small'
-          color='warning'
+          color={dislike.isDisliked ? 'error' : 'warning'}
           sx={{
             position: 'relative',
             py: 0.1,
