@@ -41,7 +41,11 @@ export class UsersService {
     return this.repository.save({ ...dto, roleId: 1, password });
   }
 
-  async toggleRole(senderId: number, userId: number) {
+  async toggleRole(senderId?: number, userId?: number) {
+    if (!senderId || !userId) {
+      throw new ConflictException('no_data');
+    }
+
     const sender = await this.findById(senderId);
 
     if (!sender) {

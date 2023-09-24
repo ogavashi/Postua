@@ -50,4 +50,8 @@ export class User extends Base {
 
     return data;
   }
+
+  async toggleRole(userId: number) {
+    await this.apiClient.instance.patch(`users/role/toggle?userId=${userId}`);
+  }
 }

@@ -61,6 +61,7 @@ export const LoginTab: React.FC<LoginTabProps> = ({ onToggle, handleClose }) => 
       });
 
       ApiService.setAuthToken(token);
+      router.reload();
       handleClose();
       toast('login_success', 'success');
     } catch (error) {

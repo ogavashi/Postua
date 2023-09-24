@@ -48,7 +48,7 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Patch('/role/toggle')
-  toggleRole(@UserId() id: number, @Query('userId') userId: number) {
+  toggleRole(@UserId() id?: number, @Query('userId') userId?: number) {
     return this.usersService.toggleRole(id, userId);
   }
 
