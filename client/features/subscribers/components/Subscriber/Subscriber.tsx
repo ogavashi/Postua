@@ -10,6 +10,8 @@ interface SubscriberProps {
 }
 
 export const Subscriber: React.FC<SubscriberProps> = ({ user }) => {
+  console.log(user);
+
   return (
     <Box
       my={2}
@@ -24,7 +26,7 @@ export const Subscriber: React.FC<SubscriberProps> = ({ user }) => {
       <Box display='flex' flexDirection='row' alignItems='center' gap={1}>
         {user?.avatarUrl ? <Avatar src={user.avatarUrl} /> : <Avatar>{user.fullName[0]}</Avatar>}
         <Typography fontWeight={800}>{user.fullName}</Typography>
-        {user.role.id > 1 && <StarsIcon color='warning' />}
+        {user?.role.id > 1 && <StarsIcon color='warning' />}
       </Box>
     </Box>
   );

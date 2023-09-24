@@ -38,7 +38,9 @@ export class UsersService {
 
     const password = await hashPassword(dto.password);
 
-    return this.repository.save({ ...dto, roleId: 1, password });
+    const role = await this.rolesService.findOne(1);
+
+    return this.repository.save({ ...dto, role, password });
   }
 
   async toggleRole(senderId?: number, userId?: number) {
