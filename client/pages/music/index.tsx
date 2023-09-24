@@ -73,7 +73,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
   try {
     const query = {
-      take: 2,
+      take: 14,
       page: 1,
       order: 'ASC',
     };

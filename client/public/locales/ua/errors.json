@@ -20,6 +20,7 @@
   },
   "general": {
     "invalid_credentials": "Невірний логін або пароль",
-    "email_registred": "Пошта вже зареєстрована"
+    "email_registred": "Пошта вже зареєстрована",
+    "Internal server error": "Велике навантаження на сервер. Спробуйте пізніше."
   }
 }

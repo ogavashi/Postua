@@ -58,6 +58,10 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
     router.reload();
   }, []);
 
+  const handleProfile = useCallback(() => {
+    router.push({ pathname: `/user/${user.id}` });
+  }, [router]);
+
   return (
     <>
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -91,9 +95,9 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
             <Person2Icon color='primary' />
             Profile
           </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
+          <MenuItem onClick={handleProfile}>
             <HomeIcon color='primary' />
-            My account
+            My Posts
           </MenuItem>
           <MenuItem onClick={handleLogout}>
             <ExitToAppIcon color='error' />

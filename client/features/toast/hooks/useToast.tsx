@@ -9,13 +9,13 @@ export const useToast = () => {
   const toastError = useCallback(
     (message: string, variant: 'error' | 'warning') =>
       enqueueSnackbar(t(`general.${message}`), { variant }),
-    [enqueueSnackbar]
+    [enqueueSnackbar, t]
   );
 
   const toast = useCallback(
     (message: string, variant: 'error' | 'warning' | 'success') =>
       enqueueSnackbar(t(`toast.${message}`), { variant }),
-    [enqueueSnackbar]
+    [enqueueSnackbar, t]
   );
 
   return { toast, toastError };
