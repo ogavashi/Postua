@@ -68,7 +68,6 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
 
   const { search } = ctx.query;
-  console.log(search);
 
   try {
     const data = await NextApiService(ctx).search.search(search as string);

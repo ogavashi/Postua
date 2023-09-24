@@ -15,7 +15,7 @@ interface SearchPreviewProps {
 
 export const SearchPreview: React.FC<SearchPreviewProps> = ({ data, searchValue }) => {
   return (
-    data?.length && (
+    !!data?.length && (
       <Paper
         sx={{
           position: 'absolute',

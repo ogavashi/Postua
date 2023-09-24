@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { NextLinkComposed, Typography } from '@/components';
-import { Category, SearchResult, ShortPostItem, User } from '@/types';
+import { Category, PostItem, SearchResult, User } from '@/types';
 import { Avatar, Box, ListItem } from '@mui/material';
 import { ListItemButton } from '../ListItemButton';
 import { useRouter } from 'next/router';
@@ -26,9 +26,9 @@ export const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
   const Preview = () => {
     switch (item.type) {
       case 'post':
-        let post = item as ShortPostItem;
+        let post = item as PostItem;
         return (
-          <ListItemButton onClick={() => handleNavigate(`/${post.category.key}/${post.id}`)}>
+          <ListItemButton onClick={() => handleNavigate(`/${post.category}/${post.id}`)}>
             <Typography>{post.title}</Typography>
           </ListItemButton>
         );

@@ -7,6 +7,7 @@ import { useSnackbar } from 'notistack';
 import { ApiService } from '@/services';
 import { SearchResults } from '@/types';
 import { useDebounce } from '@/hooks';
+import { useToast } from '@/features/toast';
 
 interface SearchOptions {
   sideFunc?: (value: boolean) => void;
@@ -15,13 +16,13 @@ interface SearchOptions {
 export const useSearch = (options: SearchOptions) => {
   const [searchValue, setSearchValue] = useState('');
   const [showPreview, setShowPreview] = useState(false);
-  const [data, setData] = useState<SearchResults | null>(null);
+  const [data, setData] = useState<SearchResults>([]);
 
   const debouncedValue = useDebounce<string>(searchValue, 500);
 
   const wrapperRef = useRef<HTMLHeadingElement>(null);
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { toastError } = useToast();
 
   const router = useRouter();
 
@@ -70,17 +71,17 @@ export const useSearch = (options: SearchOptions) => {
 
   const handleClearSearch = useCallback(() => {
     setSearchValue('');
-    setData(null);
+    setData([]);
   }, []);
 
   const handleSearch = useCallback(async () => {
     try {
-      const data = await ApiService.search.search(searchValue);
+      const data = await ApiService.search.search(debouncedValue);
       setData(data);
     } catch (error) {
-      enqueueSnackbar('Failed to get items', { variant: 'error' });
+      toastError('Failed to get items', 'error');
     }
-  }, []);
+  }, [debouncedValue]);
 
   return {
     data,

@@ -17,7 +17,5 @@ export const normalizeUserData = (userData: UserForm): UpdateUserDtoRequest => {
     })
   );
 
-  console.log(userData, normalized);
-
   return normalized;
 };
