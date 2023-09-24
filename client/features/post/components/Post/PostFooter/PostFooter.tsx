@@ -44,7 +44,12 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
       </Box>
       <Box display='flex' alignItems='center' gap={2}>
         {post.tags?.map((tag) => (
-          <Typography variant='h6' component={NextLinkComposed} to={`/tag/${tag}`} key={tag}>
+          <Typography
+            variant='h6'
+            component={NextLinkComposed}
+            to={`/tag/${tag.slice(1)}`}
+            key={tag}
+          >
             {tag}
           </Typography>
         ))}

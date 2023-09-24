@@ -71,7 +71,7 @@ export class SavedService {
       };
     });
 
-    const count = await this.repository.count({ where: { user: { id } } });
+    const count = await this.repository.count({ where });
 
     return { data: posts, count };
   }

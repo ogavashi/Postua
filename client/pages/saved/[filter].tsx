@@ -4,7 +4,6 @@ import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
-import { Card as NewsCard } from '@/features/news';
 import { SelectFilter } from '@/features/filters';
 import { constants } from '@/common';
 import { PostList } from '@/features/post';

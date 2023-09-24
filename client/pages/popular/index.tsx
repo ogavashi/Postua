@@ -3,7 +3,6 @@ import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { Card as NewsCard } from '@/features/news';
 import { SelectFilter } from '@/features/filters';
 import { constants } from '@/common';
 import { PostList } from '@/features/post';
@@ -32,7 +31,6 @@ const Popular: NextPageWithLayout<PopularPageProps> = ({ pageProps }) => {
         options={constants.FILTERS_TIME}
         defaultValue={constants.FILTERS_TIME.at(-1)}
       />
-      <NewsCard />
       <PostList posts={posts} nextPage={nextPage} filter={filter} apiCall={apiCall} />
     </Box>
   );

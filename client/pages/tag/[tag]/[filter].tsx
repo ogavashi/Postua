@@ -83,6 +83,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
     props: {
       ...localeProps,
       data: [],
+      searchValue: tag,
     },
   };
 }

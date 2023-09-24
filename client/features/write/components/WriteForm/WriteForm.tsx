@@ -107,11 +107,6 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
       value={postData.category}
       onChange={handleSelectCategory}
     >
-      {activeUserRole > 1 && (
-        <MenuItem key='news' value='news' color='primary'>
-          News
-        </MenuItem>
-      )}
       {constants.CATEGORIES.map((category) => (
         <MenuItem key={category.key} value={category.key} color='primary'>
           {t(`layout.categories.${category.key}`)}
