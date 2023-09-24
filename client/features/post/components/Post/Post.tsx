@@ -9,6 +9,7 @@ import { PostText } from './PostText';
 import { PostFooter } from './PostFooter';
 import { PostItem } from '@/types';
 import { useInteraction } from '@/features/post';
+import { DataProp } from 'editorjs-blocks-react-renderer';
 
 interface PostProps {
   post: PostItem;
@@ -29,7 +30,7 @@ export const Post: React.FC<PostProps> = ({ post }) => {
         <Box>
           <PostStats post={post} />
         </Box>
-        <PostText body={post.body} />
+        <PostText body={post.body as DataProp} />
         <PostFooter post={post} />
       </Box>
     </Paper>

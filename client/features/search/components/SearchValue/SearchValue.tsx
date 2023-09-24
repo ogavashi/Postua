@@ -4,7 +4,7 @@ import { Tag } from '@/types';
 
 interface SearchValueProps {
   value: string;
-  amount?: number;
+  amount: number;
 }
 
 export const SearchValue: React.FC<SearchValueProps> = ({ value, amount }) => {
@@ -14,11 +14,9 @@ export const SearchValue: React.FC<SearchValueProps> = ({ value, amount }) => {
         <Typography variant='h4' fontWeight={800}>
           {value}
         </Typography>
-        {amount && (
-          <Typography variant='h6' sx={{ opacity: 0.8 }}>
-            Found {amount} {amount > 1 ? 'items' : 'item'}
-          </Typography>
-        )}
+        <Typography variant='h6' sx={{ opacity: 0.8 }}>
+          Found {amount} {amount > 1 || amount === 0 ? 'items' : 'item'}
+        </Typography>
       </Box>
     </Paper>
   );

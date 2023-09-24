@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { hashPassword } from 'src/utils/hashPassword';
@@ -108,7 +108,7 @@ export class UsersService {
 
   async search(search: string) {
     const users = await this.repository.find({
-      where: { fullName: Like(`%${search}%`) },
+      where: { fullName: ILike(`%${search}%`) },
     });
 
     return users.map(({ password, ...userData }) => ({

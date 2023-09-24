@@ -1,5 +1,4 @@
-import styles from '@/styles/Home.module.css';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { NextPageWithLayout } from './_app';
 import { AppLayout } from '@/components';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -8,7 +7,6 @@ import { useTranslation } from 'next-i18next';
 
 import notFound from '../animations/404.json';
 
-import ErrorIcon from '@mui/icons-material/Error';
 import Lottie from 'lottie-react';
 
 const NotFound: NextPageWithLayout = () => {

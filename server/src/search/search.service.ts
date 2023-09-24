@@ -22,4 +22,11 @@ export class SearchService {
 
     return [...posts, ...users];
   }
+
+  async searchByCategory(search: string, category: string, userId?: number) {
+    if (category === 'users') {
+      return await this.usersService.search(search);
+    }
+    return await this.postsService.searchByCategory(search, category, userId);
+  }
 }

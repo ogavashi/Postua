@@ -8,7 +8,7 @@ import {
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { PostStatsService } from 'src/postStats/postStats.service';
 import { generatePeriodFilter } from 'src/utils/generatePeriodFilter';
@@ -303,19 +303,59 @@ export class PostsService {
     const posts = await this.postStatsService.search([
       {
         post: {
-          title: Like(`%${search}%`),
+          title: ILike(`%${search}%`),
         },
       },
       {
-        post: { user: { fullName: Like(`%${search}%`) } },
+        post: { user: { fullName: ILike(`%${search}%`) } },
       },
       {
-        post: { tags: Like(`%${search}%`) },
+        post: { tags: ILike(`%${search}%`) },
       },
       {
         post: {
-          category: Like(`%${search}%`),
+          category: ILike(`%${search}%`),
         },
+      },
+    ]);
+
+    if (userId) {
+      const result = await Promise.all(
+        posts.map(async (post) => ({
+          ...post,
+          type: 'post',
+          isLiked: await this.likesService.findByUserAndPost(userId, post.id),
+          isDisliked: await this.dislikesService.findByUserAndPost(
+            userId,
+            post.id,
+          ),
+          isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+          isSubscribed: await this.subsService.findByUserAndCategory(
+            userId,
+            post.category,
+          ),
+        })),
+      );
+
+      return result;
+    }
+
+    return posts;
+  }
+
+  async searchByCategory(search: string, category: string, userId?: number) {
+    const posts = await this.postStatsService.search([
+      {
+        post: {
+          title: ILike(`%${search}%`),
+          category,
+        },
+      },
+      {
+        post: { user: { fullName: ILike(`%${search}%`) }, category },
+      },
+      {
+        post: { tags: ILike(`%${search}%`), category },
       },
     ]);
 

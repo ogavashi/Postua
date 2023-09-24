@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress, Paper } from '@mui/material';
 import { NextPageWithLayout } from '../../_app';
 import { GetServerSideProps } from 'next';
 
@@ -6,48 +6,86 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { AppLayout } from '@/components';
 import { constants } from '@/common';
-import { Category, SideCards } from '@/features/category';
-import { PostList } from '@/features/post';
+import { PostCard } from '@/features/post';
 import { SearchValue } from '@/features/search';
 import { NextPageContext } from 'next/types';
 import { NextApiService } from '@/services';
-import { ShortPostItem, Tag } from '@/types';
+import { PostItem, SearchResults, Tag, User, UserData } from '@/types';
 import { SelectFilter } from '@/features/filters';
+import { NotFound } from '@/features/notFound';
+import { Subscriber } from '@/features/subscribers';
 
-interface FilteredSearchPageProps {
+interface SearchPageProps {
   pageProps: {
-    posts: ShortPostItem[] | null;
+    data: SearchResults;
     searchValue: string;
   };
 }
 
-const FilteredSearchPage: NextPageWithLayout<FilteredSearchPageProps> = ({ pageProps }) => {
-  const { searchValue, posts } = pageProps;
+const SearchPage: NextPageWithLayout<SearchPageProps> = ({ pageProps }) => {
+  const { searchValue, data } = pageProps;
+
+  const users = data.filter(({ type }) => type === 'user') as User[];
+
+  const posts = data.filter(({ type }) => type === 'post') as PostItem[];
 
   return (
     <Box my='12px' display='flex' flexDirection='column' gap={2}>
-      <SearchValue value={searchValue} amount={posts?.length} />
+      <SearchValue value={searchValue} amount={users.length + posts.length} />
       <SelectFilter pageKey='search' queryKey='search' options={constants.FILTERS_SEARCH} />
-      <PostList posts={posts} />
+      <Box
+        display='flex'
+        flexDirection='column'
+        gap={2}
+        mb={0.5}
+        sx={{ width: { xs: '100%', md: 640 } }}
+      >
+        {!!posts.length || !!users.length ? (
+          <>
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post as PostItem} />
+            ))}
+            {users.map((user) => (
+              <Paper sx={{ px: 2 }} key={user.id}>
+                <Subscriber user={user as User} />
+              </Paper>
+            ))}
+          </>
+        ) : (
+          <NotFound />
+        )}
+      </Box>
     </Box>
   );
 };
 
-FilteredSearchPage.getLayout = (page: React.ReactNode) => {
+SearchPage.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
 export async function getServerSideProps(ctx: NextPageContext) {
   const localeProps = await serverSideTranslations(ctx.locale as string, ['common', 'errors']);
 
-  const { search } = ctx.query;
+  const { search, filter } = ctx.query;
+
+  const category = constants.FILTERS_SEARCH.find(({ key }) => key === (filter as string))?.key;
+
+  if (!category) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
+
   try {
-    const data = await NextApiService(ctx).post.getAll();
+    const data = await NextApiService(ctx).search.searchByCategory(search as string, category);
 
     return {
       props: {
         ...localeProps,
-        posts: data,
+        data,
         searchValue: search,
       },
     };
@@ -58,9 +96,9 @@ export async function getServerSideProps(ctx: NextPageContext) {
   return {
     props: {
       ...localeProps,
-      posts: null,
+      data: [],
     },
   };
 }
 
-export default FilteredSearchPage;
+export default SearchPage;
