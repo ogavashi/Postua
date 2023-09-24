@@ -108,6 +108,12 @@ export async function getServerSideProps(ctx: NextPageContext) {
       };
     }
   }
+  return {
+    props: {
+      ...localeProps,
+      posts: [],
+    },
+  };
 }
 
 export default CategoryPage;
