@@ -107,6 +107,13 @@ export async function getServerSideProps(ctx: NextPageContext) {
       };
     }
   }
+  return {
+    props: {
+      ...localeProps,
+      posts: [],
+      filter: category,
+    },
+  };
 }
 
 export default SubscribersPage;

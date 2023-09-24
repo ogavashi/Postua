@@ -81,13 +81,23 @@ export async function getServerSideProps(ctx: NextPageContext) {
       },
     };
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      return {
+        props: {
+          ...localeProps,
+          posts: [],
+          filter: category,
+          error: error.message,
+        },
+      };
+    }
   }
 
   return {
     props: {
       ...localeProps,
       posts: [],
+      filter: category,
     },
   };
 }
