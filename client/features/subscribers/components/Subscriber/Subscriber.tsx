@@ -10,8 +10,6 @@ interface SubscriberProps {
 }
 
 export const Subscriber: React.FC<SubscriberProps> = ({ user }) => {
-  console.log(user);
-
   return (
     <Box
       my={2}
