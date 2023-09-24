@@ -3,12 +3,11 @@ import { NextPageWithLayout } from '../_app';
 import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useRouter } from 'next/router';
 
 import { Post } from '@/features/post';
 import { NextPageContext } from 'next/types';
 import { NextApiService } from '@/services';
-import { CategoryPostProps, PostItem } from '@/types';
+import { CategoryPostProps } from '@/types';
 
 const CategoryPost: NextPageWithLayout<CategoryPostProps> = ({ pageProps }) => {
   const { post } = pageProps;

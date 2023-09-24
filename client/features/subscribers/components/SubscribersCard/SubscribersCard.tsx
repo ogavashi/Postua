@@ -36,7 +36,7 @@ export const SubscribersCard: React.FC<SubscribersCardProps> = ({ categoryKey, s
         <Typography variant='h6' gutterBottom>
           Subscribers
         </Typography>
-        {!!subscribers.length ? (
+        {!!subscribers?.length ? (
           <>
             <Box display='flex' flexWrap='wrap' gap={2} pb={2}>
               {subscribers.slice(0, 14).map((user) => (

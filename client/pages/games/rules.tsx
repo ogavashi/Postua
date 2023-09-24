@@ -77,6 +77,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
     props: {
       ...localeProps,
       posts: [],
+      category,
     },
   };
 }

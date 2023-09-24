@@ -79,7 +79,7 @@ export const useSearch = (options: SearchOptions) => {
       const data = await ApiService.search.search(debouncedValue);
       setData(data);
     } catch (error) {
-      toastError('Failed to get items', 'error');
+      toastError('failed_fetch', 'error');
     }
   }, [debouncedValue]);
 

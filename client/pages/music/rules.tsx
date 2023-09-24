@@ -11,16 +11,27 @@ import { constants } from '@/common';
 import { NextApiService } from '@/services';
 import { NextPageContext } from 'next/types';
 import { PostItem } from '@/types';
+import { useToast } from '@/features/toast';
+import { useEffect } from 'react';
 
 interface RulesPageProps {
   pageProps: {
     posts: PostItem[];
     usersCount: number;
+    error?: string;
   };
 }
 
 const RulesPage: NextPageWithLayout<RulesPageProps> = ({ pageProps }) => {
-  const { posts, usersCount } = pageProps;
+  const { posts, usersCount, error } = pageProps;
+
+  const { toastError } = useToast();
+
+  useEffect(() => {
+    if (error) {
+      toastError(error, 'error');
+    }
+  }, []);
 
   const category = constants.CATEGORIES[1];
 
@@ -70,15 +81,17 @@ export async function getServerSideProps(ctx: NextPageContext) {
       },
     };
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      return {
+        props: {
+          ...localeProps,
+          posts: [],
+          filter: category,
+          error: error.message,
+        },
+      };
+    }
   }
-
-  return {
-    props: {
-      ...localeProps,
-      posts: [],
-    },
-  };
 }
 
 export default RulesPage;

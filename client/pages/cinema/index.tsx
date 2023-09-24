@@ -12,6 +12,8 @@ import { constants } from '@/common';
 import { NextPageContext } from 'next/types';
 import { ApiService, NextApiService } from '@/services';
 import { PageOptionsDto, PostItem, User } from '@/types';
+import { useToast } from '@/features/toast';
+import { useEffect } from 'react';
 
 interface CategoryPageProps {
   pageProps: {
@@ -21,11 +23,20 @@ interface CategoryPageProps {
     nextUsersPage?: boolean;
     usersCount: number;
     filter?: string;
+    error?: string;
   };
 }
 
 const CategoryPage: NextPageWithLayout<CategoryPageProps> = ({ pageProps }) => {
-  const { posts, nextPage, filter, usersCount, users } = pageProps;
+  const { posts, nextPage, filter, usersCount, users, error } = pageProps;
+
+  const { toastError } = useToast();
+
+  useEffect(() => {
+    if (error) {
+      toastError(error, 'error');
+    }
+  }, []);
 
   const category = constants.CATEGORIES.find(({ key }) => key === filter)!;
 
@@ -86,15 +97,17 @@ export async function getServerSideProps(ctx: NextPageContext) {
       },
     };
   } catch (error) {
-    console.log(error);
+    if (error instanceof Error) {
+      return {
+        props: {
+          ...localeProps,
+          posts: [],
+          filter: category,
+          error: error.message,
+        },
+      };
+    }
   }
-
-  return {
-    props: {
-      ...localeProps,
-      posts: [],
-    },
-  };
 }
 
 export default CategoryPage;

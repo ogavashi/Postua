@@ -41,9 +41,11 @@ export const Subscription: React.FC<SubscriptionProps> = ({ category, isSubbed =
 
       router.reload();
     } catch (error) {
-      showAuthModal();
       if (error instanceof Error) {
         toastError(error.message, 'error');
+        if (error.message !== 'server_problem') {
+          showAuthModal();
+        }
       }
       setSubscribed(subscribed);
     }

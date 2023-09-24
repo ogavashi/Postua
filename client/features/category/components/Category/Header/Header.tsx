@@ -68,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({ category, subsCount, isSubbed })
       <Box display='flex' flexDirection='column' gap={2}>
         <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography>
         <Typography fontWeight={300} sx={{ opacity: 0.6 }}>
-          {subsCount} subscribers
+          {subsCount || '?'} subscribers
         </Typography>
       </Box>
       <Tabs value={activeTab} onChange={navigateTabs}>
