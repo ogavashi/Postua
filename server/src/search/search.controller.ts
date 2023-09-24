@@ -27,4 +27,15 @@ export class SearchController {
   ) {
     return this.searchService.searchByCategory(search, category, id);
   }
+
+  @ApiBearerAuth()
+  @UseGuards(CustomJwtAuthGuard)
+  @Get('/category/tag')
+  byTag(
+    @UserId() id: number,
+    @Query('tag') tag: string,
+    @Query('filter') filter: string,
+  ) {
+    return this.searchService.searchByTag(tag, filter, id);
+  }
 }

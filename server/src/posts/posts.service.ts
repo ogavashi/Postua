@@ -27,6 +27,8 @@ const periodFilters = ['today', 'week', 'month', 'year', 'allTime'];
 
 const ratingFilters = ['from-10', 'from5', 'from10', 'all'];
 
+const tagFilters = ['best', 'fresh', 'old'];
+
 const CATEGORIES = ['games', 'music', 'tech', 'anime', 'cinema', 'software'];
 
 @Injectable()
@@ -358,6 +360,63 @@ export class PostsService {
         post: { tags: ILike(`%${search}%`), category },
       },
     ]);
+
+    if (userId) {
+      const result = await Promise.all(
+        posts.map(async (post) => ({
+          ...post,
+          type: 'post',
+          isLiked: await this.likesService.findByUserAndPost(userId, post.id),
+          isDisliked: await this.dislikesService.findByUserAndPost(
+            userId,
+            post.id,
+          ),
+          isSaved: await this.savedService.findByUserAndPost(userId, post.id),
+          isSubscribed: await this.subsService.findByUserAndCategory(
+            userId,
+            post.category,
+          ),
+        })),
+      );
+
+      return result;
+    }
+
+    return posts;
+  }
+
+  async searchByTag(tag: string, filter: string, userId?: number) {
+    if (!tagFilters.includes) {
+      throw new NotFoundException('uknown_filter');
+    }
+
+    const data = await this.postStatsService.search([
+      {
+        post: { tags: ILike(`%${tag}%`) },
+      },
+    ]);
+
+    let posts = data;
+
+    if (filter === 'best') {
+      posts = data.sort((a, b) => b.stats.likes - a.stats.likes);
+    }
+
+    if (filter === 'old') {
+      posts = data.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateA.getTime() - dateB.getTime();
+      });
+    }
+
+    if (filter === 'fresh') {
+      posts = data.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateB.getTime() - dateA.getTime();
+      });
+    }
 
     if (userId) {
       const result = await Promise.all(

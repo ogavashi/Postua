@@ -29,4 +29,8 @@ export class SearchService {
     }
     return await this.postsService.searchByCategory(search, category, userId);
   }
+
+  async searchByTag(tag: string, filter: string, userId?: number) {
+    return await this.postsService.searchByTag(tag, filter, userId);
+  }
 }

@@ -13,4 +13,11 @@ export class Search extends Base {
     });
     return data;
   }
+
+  async searchByTag(searchValue: string, filter: string) {
+    const { data } = await this.apiClient.instance.get('/search/category/tag', {
+      params: { tag: searchValue, filter },
+    });
+    return data;
+  }
 }
