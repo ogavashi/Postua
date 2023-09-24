@@ -25,6 +25,9 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { UserData, UserResponse } from '@/types';
 import { ApiService } from '@/services';
 import { useSnackbar } from 'notistack';
+import { useAppDispatch } from '@/store';
+import { userActions } from '@/features/user';
+import { useToast } from '@/features/toast';
 
 type ProfileCard = {
   user: UserData;
@@ -64,6 +67,10 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
+  const dispatch = useAppDispatch();
+
+  const { toast, toastError } = useToast();
+
   const onSubmit = useCallback(
     async (data: any) => {
       const updatedUser = normalizeUserData({
@@ -72,13 +79,17 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
         backgroundUrl: userData.backgroundUrl,
       });
 
+      const updated = { ...user, ...updatedUser };
+
       try {
         setIsLoading(true);
-
         await ApiService.user.update(updatedUser);
-        enqueueSnackbar('Successfully updated profile', { variant: 'success' });
+        toast('update_success', 'success');
+        dispatch(userActions.setUser(updated));
       } catch (error) {
-        enqueueSnackbar('Failed to update profile', { variant: 'error' });
+        if (error instanceof Error) {
+          toastError(error.message, 'error');
+        }
       } finally {
         toggleEditable();
         setIsLoading(false);
@@ -89,8 +100,9 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
 
   const handleCancel = useCallback(() => {
     methods.reset();
+    setUserData(user);
     setDisabled(true);
-  }, []);
+  }, [user]);
 
   return (
     <Paper sx={{ p: 2 }}>
@@ -123,7 +135,7 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
 
                   <TextField
                     disabled={disabled}
-                    value={userData?.avatarUrl}
+                    value={userData?.avatarUrl || ''}
                     onChange={(e) => handleChange('avatarUrl', e.target.value)}
                     label='Avatar url'
                     size='small'
@@ -139,13 +151,16 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
                 >
                   <Box
                     component='img'
-                    src={userData?.backgroundUrl}
+                    src={
+                      userData?.backgroundUrl ||
+                      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png'
+                    }
                     alt='Background image'
                     sx={{ width: 90 }}
                   />
                   <TextField
                     disabled={disabled}
-                    value={userData?.backgroundUrl}
+                    value={userData?.backgroundUrl || ''}
                     onChange={(e) => handleChange('backgroundUrl', e.target.value)}
                     label='Background url'
                     size='small'
