@@ -1,6 +1,5 @@
 import { OutputData } from '@editorjs/editorjs';
 import { DataProp } from 'editorjs-blocks-react-renderer';
-import { type } from 'os';
 
 export type Theme = 'light' | 'dark' | 'auto';
 
@@ -82,7 +81,7 @@ export type Category = {
 export type PostItem = {
   id: string;
   title: string;
-  body: DataProp;
+  body: OutputData;
   user: User;
   stats: PostStats;
   tags: string[];
@@ -93,6 +92,23 @@ export type PostItem = {
   isSaved?: boolean;
   isSubscribed?: boolean;
   createdAt: string;
+};
+
+export type PostDto = {
+  title: string;
+  body: OutputData;
+  image: string;
+  category: string;
+  tags: string;
+};
+
+export type PostUpdateDto = {
+  id: string;
+  title: string;
+  body: OutputData;
+  image: string;
+  category: string;
+  tags: string;
 };
 
 export type CategoryPostProps = {

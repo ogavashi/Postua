@@ -1,10 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export interface OutputBlockData {
-  id?: string;
-  type: any;
-  data: any;
+  category: string;
+  image?: string;
+  tags?: string;
+  title: string;
+  body: any;
 }
 
 export class CreatePostDto {
@@ -13,8 +15,7 @@ export class CreatePostDto {
   title: string;
 
   @ApiProperty()
-  @IsArray()
-  body: OutputBlockData[];
+  body: OutputBlockData;
 
   @ApiPropertyOptional()
   @IsOptional()

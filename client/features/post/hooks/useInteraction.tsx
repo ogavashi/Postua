@@ -32,8 +32,10 @@ export const useInteraction = (post: PostItem) => {
     try {
       await ApiService.post.like(+post.id);
     } catch (error) {
-      showAuthModal();
       if (error instanceof Error) {
+        if (error.message === 'Unauthorized') {
+          showAuthModal();
+        }
         toastError(error.message, 'error');
       }
       setLike(like);
@@ -48,8 +50,10 @@ export const useInteraction = (post: PostItem) => {
     try {
       await ApiService.post.dislike(+post.id);
     } catch (error) {
-      showAuthModal();
       if (error instanceof Error) {
+        if (error.message === 'Unauthorized') {
+          showAuthModal();
+        }
         toastError(error.message, 'error');
       }
       setDislike(dislike);
@@ -61,8 +65,10 @@ export const useInteraction = (post: PostItem) => {
     try {
       await ApiService.post.save(+post.id);
     } catch (error) {
-      showAuthModal();
       if (error instanceof Error) {
+        if (error.message === 'Unauthorized') {
+          showAuthModal();
+        }
         toastError(error.message, 'error');
       }
       setSaved(saved);
@@ -81,8 +87,10 @@ export const useInteraction = (post: PostItem) => {
       }
       router.reload();
     } catch (error) {
-      showAuthModal();
       if (error instanceof Error) {
+        if (error.message === 'Unauthorized') {
+          showAuthModal();
+        }
         toastError(error.message, 'error');
       }
       setSubscribed(subscribed);

@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { WriteForm } from '@/features/write';
 
-const UserPage: NextPageWithLayout = () => {
+const WritePage: NextPageWithLayout = () => {
   return (
     <Box display='flex' flexDirection='column' gap={2} my='12px'>
       <WriteForm />
@@ -14,7 +14,7 @@ const UserPage: NextPageWithLayout = () => {
   );
 };
 
-UserPage.getLayout = (page: React.ReactNode) => {
+WritePage.getLayout = (page: React.ReactNode) => {
   return <AppLayout>{page}</AppLayout>;
 };
 
@@ -26,4 +26,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   };
 }
 
-export default UserPage;
+export default WritePage;

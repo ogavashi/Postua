@@ -18,7 +18,7 @@ export class Post {
   title: string;
 
   @Column({ type: 'jsonb' })
-  body: OutputBlockData[];
+  body: OutputBlockData;
 
   @ManyToOne(() => User, { eager: true })
   user: User;

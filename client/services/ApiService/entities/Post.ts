@@ -1,4 +1,4 @@
-import { PageOptionsDto } from '@/types';
+import { PageOptionsDto, PostDto, PostItem, PostUpdateDto } from '@/types';
 import { Base } from '.';
 
 export class Post extends Base {
@@ -79,5 +79,19 @@ export class Post extends Base {
 
   async visit(id: number) {
     await this.apiClient.instance.post('/visitings', { postId: id });
+  }
+
+  async post(post: PostDto) {
+    const { data } = await this.apiClient.instance.post('/posts', post);
+    return data;
+  }
+
+  async update(post: PostUpdateDto) {
+    await this.apiClient.instance.patch(`/posts/${post.id}`, post);
+    return post.id;
+  }
+
+  async delete(id: string) {
+    await this.apiClient.instance.delete(`/posts/${id}`);
   }
 }

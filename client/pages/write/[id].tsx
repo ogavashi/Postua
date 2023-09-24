@@ -4,23 +4,29 @@ import { AppLayout } from '@/components';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import { Post } from '@/features/post';
-import { NextPageContext } from 'next/types';
+import { WriteForm } from '@/features/write';
 import { NextApiService } from '@/services';
-import { CategoryPostProps } from '@/types';
+import { NextPageContext } from 'next/types';
+import { PostItem } from '@/types';
 
-const CategoryPost: NextPageWithLayout<CategoryPostProps> = ({ pageProps }) => {
-  const { post } = pageProps;
+interface EditPageProps {
+  pageProps: {
+    data: PostItem;
+  };
+}
+
+const EditPage: NextPageWithLayout<EditPageProps> = ({ pageProps }) => {
+  const { data } = pageProps;
 
   return (
-    <Box my='12px'>
-      <Post post={post} />
+    <Box display='flex' flexDirection='column' gap={2} my='12px'>
+      <WriteForm data={data} />
     </Box>
   );
 };
 
-CategoryPost.getLayout = (page: React.ReactNode) => {
-  return <AppLayout maxWidth='lg'>{page}</AppLayout>;
+EditPage.getLayout = (page: React.ReactNode) => {
+  return <AppLayout>{page}</AppLayout>;
 };
 
 export async function getServerSideProps(ctx: NextPageContext) {
@@ -31,10 +37,19 @@ export async function getServerSideProps(ctx: NextPageContext) {
   try {
     const post = await NextApiService(ctx).post.getOne(id as unknown as number);
 
+    if (!post) {
+      return {
+        redirect: {
+          destination: '/404',
+          permanent: false,
+        },
+      };
+    }
+
     return {
       props: {
         ...localeProps,
-        post,
+        data: post,
       },
     };
   } catch (error) {
@@ -43,10 +58,10 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
   return {
     redirect: {
-      destination: '/404',
+      destination: '/',
       permanent: false,
     },
   };
 }
 
-export default CategoryPost;
+export default EditPage;

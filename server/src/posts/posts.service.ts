@@ -52,7 +52,9 @@ export class PostsService {
       user: { id: userId },
     });
 
-    this.postStatsService.create(id);
+    await this.postStatsService.create(id);
+
+    return id;
   }
 
   async findAll(pageOptions: PageOptionsDto, userId?: number) {
@@ -275,7 +277,10 @@ export class PostsService {
       throw new ForbiddenException('no_access');
     }
 
-    return this.repository.update(id, updatePostDto);
+    return this.repository.update(id, {
+      ...updatePostDto,
+      tags: formatTags(updatePostDto?.tags),
+    });
   }
 
   async remove(id: number, userId: number) {
