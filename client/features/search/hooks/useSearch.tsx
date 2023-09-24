@@ -83,6 +83,21 @@ export const useSearch = (options: SearchOptions) => {
     }
   }, [debouncedValue]);
 
+  useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && debouncedValue) {
+        event.preventDefault();
+        router.push(`/search/${debouncedValue}`);
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, [debouncedValue]);
+
   return {
     data,
     searchValue,
@@ -91,5 +106,6 @@ export const useSearch = (options: SearchOptions) => {
     showPreview,
     setShowPreview,
     wrapperRef,
+    debouncedValue,
   };
 };

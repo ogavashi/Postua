@@ -11,11 +11,12 @@ import SubdirectoryArrowLeftIcon from '@mui/icons-material/SubdirectoryArrowLeft
 interface SearchPreviewProps {
   data: SearchResults | null;
   searchValue: string;
+  showPreview: boolean;
 }
 
-export const SearchPreview: React.FC<SearchPreviewProps> = ({ data, searchValue }) => {
+export const SearchPreview: React.FC<SearchPreviewProps> = ({ data, searchValue, showPreview }) => {
   return (
-    !!data?.length && (
+    showPreview && (
       <Paper
         sx={{
           position: 'absolute',

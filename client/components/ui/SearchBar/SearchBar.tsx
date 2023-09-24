@@ -36,6 +36,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ sx = [], setMobileOpen }) 
     showPreview,
     wrapperRef,
     setShowPreview,
+    debouncedValue,
   } = useSearch({ sideFunc: setMobileOpen });
 
   return (
@@ -58,7 +59,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ sx = [], setMobileOpen }) 
       </Search>
       {showPreview && (
         <div ref={wrapperRef}>
-          <SearchPreview data={data} searchValue={searchValue} />
+          <SearchPreview data={data} searchValue={searchValue} showPreview={!!debouncedValue} />
         </div>
       )}
     </Box>
