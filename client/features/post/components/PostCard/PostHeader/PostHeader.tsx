@@ -81,12 +81,12 @@ export const PostHeader: React.FC<PostHeaderdProps> = ({ post }) => {
         >
           {subscribed ? (
             <>
-              <MuiTypography sx={{ mr: 1 }}>{'Unsubscribe'}</MuiTypography>
+              <MuiTypography sx={{ mr: 1 }}>{t('layout.ui.unsubscribe')}</MuiTypography>
               <RemoveCircleIcon />
             </>
           ) : (
             <>
-              <MuiTypography sx={{ mr: 1 }}>{'Subscribe'}</MuiTypography>
+              <MuiTypography sx={{ mr: 1 }}>{t('layout.ui.subscribe')}</MuiTypography>
               <AddCircleIcon />
             </>
           )}

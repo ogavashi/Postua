@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 
 import { destroyCookie } from 'nookies';
 
+import { useTranslation } from 'next-i18next';
+
 import { Avatar, Badge, Box, IconButton } from '@mui/material';
 
 import { AccountCircle } from '@mui/icons-material';
@@ -28,6 +30,8 @@ interface ProfileBarProps {
 export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+
+  const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
 
@@ -60,6 +64,7 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
 
   const handleProfile = useCallback(() => {
     router.push({ pathname: `/user/${user.id}` });
+    handleMenuClose();
   }, [router]);
 
   return (
@@ -83,25 +88,25 @@ export const ProfileBar: React.FC<ProfileBarProps> = ({ user }) => {
         >
           <MenuItem>
             <EditNoteIcon color='primary' />
-            Post
+            {t('layout.ui.post')}
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
             <AccountCircle color='primary' />
-            Profile
+            {t('layout.ui.profile')}
           </MenuItem>
         </Menu>
         <Menu anchorEl={anchorEl} keepMounted open={!!anchorEl} onClose={handleMenuClose}>
           <MenuItem onClick={() => navigateCategory('profile')}>
             <Person2Icon color='primary' />
-            Profile
+            {t('layout.ui.profile')}
           </MenuItem>
           <MenuItem onClick={handleProfile}>
             <HomeIcon color='primary' />
-            My Posts
+            {t('layout.ui.posts')}
           </MenuItem>
           <MenuItem onClick={handleLogout}>
             <ExitToAppIcon color='error' />
-            Logout
+            {t('layout.ui.logout')}
           </MenuItem>
         </Menu>
       </Box>

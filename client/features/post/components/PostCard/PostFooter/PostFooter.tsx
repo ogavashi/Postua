@@ -7,6 +7,8 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import IosShareIcon from '@mui/icons-material/IosShare';
 
+import { useTranslation } from 'next-i18next';
+
 import { PostItem } from '@/types';
 import { formatStats, useInteraction } from '@/features/post';
 
@@ -18,6 +20,8 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
   const theme = useTheme();
 
   const { stats } = post;
+
+  const { t } = useTranslation();
 
   const { like, handleLike, handleShare, dislike, handleDislike, saved, handleSave } =
     useInteraction(post);
@@ -34,10 +38,10 @@ export const PostFooter: React.FC<PostFooterProps> = ({ post }) => {
     <Box width='100%' display='flex' flexDirection='column' gap={1} mt={2} px={2} pb={2}>
       <Box display='flex' gap={4}>
         <Typography fontWeight={300} sx={{ opacity: 0.8 }}>
-          {formatStats(stats.views)} Views
+          {formatStats(stats.views)} {t('layout.ui.views')}
         </Typography>
         <Typography fontWeight={300} sx={{ opacity: 0.8 }}>
-          {formatStats(stats.visitings)} Visitings
+          {formatStats(stats.visitings)} {t('layout.ui.visitings')}
         </Typography>
       </Box>
       <Box display='flex' justifyContent='space-between'>

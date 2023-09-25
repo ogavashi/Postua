@@ -62,19 +62,19 @@ export const Header: React.FC<HeaderProps> = ({ category, subsCount, isSubbed })
           endIcon={subscribed ? <RemoveCircleIcon /> : <AddCircleIcon />}
           variant={subscribed ? 'outlined' : 'contained'}
         >
-          {subscribed ? 'Unsubscribe' : 'Subscribe'}
+          {subscribed ? t('layout.ui.unsubscribe') : t('layout.ui.subscribe')}
         </Button>
       </Box>
       <Box display='flex' flexDirection='column' gap={2}>
         <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography>
         <Typography fontWeight={300} sx={{ opacity: 0.6 }}>
-          {subsCount || '?'} subscribers
+          {subsCount || '?'} {t('layout.ui.subscribersCount')}
         </Typography>
       </Box>
       <Tabs value={activeTab} onChange={navigateTabs}>
-        <Tab label='Posts' key='posts' />
-        <Tab label='Subscribers' key='subscribers' />
-        <Tab label='Rules' key='rules' />
+        <Tab label={t('layout.ui.categoryPosts')} key='posts' />
+        <Tab label={t('layout.ui.subscribers')} key='subscribers' />
+        <Tab label={t('layout.ui.rules')} key='rules' />
       </Tabs>
     </Box>
   );

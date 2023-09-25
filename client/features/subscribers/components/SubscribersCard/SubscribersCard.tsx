@@ -34,7 +34,7 @@ export const SubscribersCard: React.FC<SubscribersCardProps> = ({ categoryKey, s
     >
       <Box>
         <Typography variant='h6' gutterBottom>
-          Subscribers
+          {t('layout.ui.subscribers')}
         </Typography>
         {!!subscribers?.length ? (
           <>
@@ -43,7 +43,7 @@ export const SubscribersCard: React.FC<SubscribersCardProps> = ({ categoryKey, s
                 <Subscriber user={user} key={user.id} />
               ))}
             </Box>
-            <Button onClick={handleNavigate}>Show all</Button>
+            <Button onClick={handleNavigate}>{t('layout.ui.showAll')}</Button>
           </>
         ) : (
           <Lottie animationData={notFound} loop={true} />

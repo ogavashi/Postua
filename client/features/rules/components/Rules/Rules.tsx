@@ -1,6 +1,10 @@
 import { Box, Paper, Typography } from '@mui/material';
 
+import { useTranslation } from 'next-i18next';
+
 export const Rules = () => {
+  const { t } = useTranslation();
+
   return (
     <Paper
       sx={{
@@ -9,7 +13,7 @@ export const Rules = () => {
     >
       <Box>
         <Typography variant='h6' gutterBottom>
-          Rules
+          {t('layout.ui.rules')}
         </Typography>
         <Typography textAlign='justify' gutterBottom>
           1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

@@ -8,7 +8,7 @@ export const useToast = () => {
 
   const toastError = useCallback(
     (message: string, variant: 'error' | 'warning') =>
-      enqueueSnackbar(t(`general.${message}`), { variant }),
+      enqueueSnackbar(t(`errors:general.${message}`), { variant }),
     [enqueueSnackbar, t]
   );
 

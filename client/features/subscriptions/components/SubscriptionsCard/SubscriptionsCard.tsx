@@ -32,14 +32,14 @@ export const SubscriptionsCard: React.FC<SubscriptionCardProps> = ({ subs, userI
     >
       <Box>
         <Typography variant='h6' gutterBottom>
-          Subscriptions
+          {t('layout.ui.subscriptions')}
         </Typography>
         <Box display='flex' flexDirection='column' gap={2} pb={2}>
           {subs.slice(0, 3).map((sub) => (
             <Subscription key={sub.id} category={sub.category} isSubscribed={sub?.isSubscribed} />
           ))}
         </Box>
-        <Button onClick={handleNavigate}>Show all</Button>
+        <Button onClick={handleNavigate}> {t('layout.ui.showAll')}</Button>
       </Box>
     </Paper>
   );

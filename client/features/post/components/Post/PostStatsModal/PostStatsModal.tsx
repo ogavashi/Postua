@@ -10,6 +10,8 @@ import {
 import { Box } from '../PostStats/Box.styled';
 import { PostStats } from '@/types';
 
+import { useTranslation } from 'next-i18next';
+
 import CloseIcon from '@mui/icons-material/Close';
 
 interface PostStatsModalProps {
@@ -23,6 +25,8 @@ export const PostStatsModal: React.FC<PostStatsModalProps> = ({
   toggleShowStats,
   stats,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Modal
       open={showStats}
@@ -38,7 +42,7 @@ export const PostStatsModal: React.FC<PostStatsModalProps> = ({
       <Fade in={showStats}>
         <Box>
           <MuiBox display='flex' justifyContent='space-between' alignContent='center' width='100%'>
-            <Typography variant='h4'>Stats</Typography>
+            <Typography variant='h4'>{t('layout.ui.stats')}</Typography>
             <IconButton color='primary' onClick={toggleShowStats}>
               <CloseIcon />
             </IconButton>
@@ -49,13 +53,13 @@ export const PostStatsModal: React.FC<PostStatsModalProps> = ({
               <Typography variant='h5' fontWeight={700}>
                 {stats.views}
               </Typography>
-              <Typography>views in feed</Typography>
+              <Typography>{t('layout.ui.viewsInFeed')}</Typography>
             </MuiBox>
             <MuiBox>
               <Typography variant='h5' fontWeight={700}>
                 {stats.visitings}
               </Typography>
-              <Typography>visitings of page</Typography>
+              <Typography>{t('layout.ui.visitingsPage')}</Typography>
             </MuiBox>
           </MuiBox>
         </Box>

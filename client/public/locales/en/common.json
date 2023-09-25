@@ -15,6 +15,7 @@
       "software": "Software"
     },
     "ui": {
+      "posts": "My posts",
       "post": "Post",
       "search": "Search",
       "showMore": "Show More",
@@ -30,7 +31,37 @@
       "haveAccount": "Already have an account?",
       "register": "Register",
       "fullName": "Full name",
-      "confirmPassword": "Confirm password"
+      "confirmPassword": "Confirm password",
+      "profile": "Profile",
+      "posts:": "My posts",
+      "logout": "logout",
+      "subscribersCount": "subscribers",
+      "categoryPosts": "Posts",
+      "subscribers": "Subscrubers",
+      "rules": "Rules",
+      "subscribe": "Subscribe",
+      "unsubscribe": "Unsubscribe",
+      "showAll": "Show all",
+      "no_memebrs": "It's not busy here",
+      "notFound": "Why is it empty?",
+      "views": "views",
+      "visitings": "visitings",
+      "stats": "Stats",
+      "viewsInFeed": "views in feed",
+      "visitingsPage": "page visitings",
+      "yourSubs": "Your subscriptions",
+      "consider": "What about these?",
+      "subscriptions": "Subscriptions",
+      "subscriptionsCount": "subscriptions",
+      "onPlatformSince": "On platform since",
+      "showResults": "Show results",
+      "found": "Found",
+      "results": "results",
+      "result": "result",
+      "cancel": "Cancel",
+      "save": "Save",
+      "avatarUrl": "Avatar URL",
+      "backgroundUrl": "Background URL"
     },
     "filters": {
       "today": "Today",
@@ -68,5 +99,9 @@
     "months": "months",
     "year": "year",
     "years": "years"
+  },
+  "toast": {
+    "copy_clipboard": "saved to clipboard",
+    "update_success": "Successfully updated"
   }
 }

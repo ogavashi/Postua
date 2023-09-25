@@ -7,6 +7,7 @@ import { ListItemButton } from '../ListItemButton';
 import { NextLinkComposed, Typography } from '@/components';
 
 import SubdirectoryArrowLeftIcon from '@mui/icons-material/SubdirectoryArrowLeft';
+import { useTranslation } from 'next-i18next';
 
 interface SearchPreviewProps {
   data: SearchResults | null;
@@ -15,6 +16,8 @@ interface SearchPreviewProps {
 }
 
 export const SearchPreview: React.FC<SearchPreviewProps> = ({ data, searchValue, showPreview }) => {
+  const { t } = useTranslation();
+
   return (
     showPreview && (
       <Paper
@@ -33,7 +36,7 @@ export const SearchPreview: React.FC<SearchPreviewProps> = ({ data, searchValue,
             <ListItemButton>
               <SubdirectoryArrowLeftIcon color='primary' sx={{ mr: 0.5 }} />
               <Typography component={NextLinkComposed} to={{ pathname: `/search/${searchValue}` }}>
-                Show results
+               {t('layout.ui.showResults')}
               </Typography>
             </ListItemButton>
           </ListItem>

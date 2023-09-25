@@ -36,7 +36,7 @@ export const SubscribersList: React.FC<SubscribersListProps> = ({
     <Paper sx={{ p: 2 }}>
       <Box>
         <Box display='flex' alignItems='center' gap={3}>
-          <Typography variant='h6'>Subscribers</Typography>
+          <Typography variant='h6'>{t('layout.ui.subscribers')}</Typography>
           <Typography sx={{ opacity: 0.6 }}>{usersCount}</Typography>
         </Box>
         {!!items?.length ? (
@@ -49,7 +49,7 @@ export const SubscribersList: React.FC<SubscribersListProps> = ({
         ) : (
           <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
             <Lottie animationData={notFound} loop={true} style={{ height: 200 }} />
-            <Typography variant='h4'>{t('no_memebrs')}</Typography>
+            <Typography variant='h4'>{t('layout.ui.no_memebrs')}</Typography>
           </Box>
         )}
         {isLoading && (

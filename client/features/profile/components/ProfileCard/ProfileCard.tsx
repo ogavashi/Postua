@@ -65,8 +65,6 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
 
   const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
 
-  const { enqueueSnackbar } = useSnackbar();
-
   const dispatch = useAppDispatch();
 
   const { toast, toastError } = useToast();
@@ -108,7 +106,7 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
     <Paper sx={{ p: 2 }}>
       <Box>
         <Box display='flex' justifyContent='space-between' alignItems='center' mb={1}>
-          <Typography variant='h4'>Profile</Typography>
+          <Typography variant='h4'>{t('layout.ui.profile')}</Typography>
           {disabled && (
             <IconButton color='primary' onClick={toggleEditable}>
               <EditIcon />
@@ -137,7 +135,7 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
                     disabled={disabled}
                     value={userData?.avatarUrl || ''}
                     onChange={(e) => handleChange('avatarUrl', e.target.value)}
-                    label='Avatar url'
+                    label={t(`layout.ui.avatarUrl`)}
                     size='small'
                     sx={{ width: { xs: '100%', lg: 250 } }}
                   />
@@ -162,7 +160,7 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
                     disabled={disabled}
                     value={userData?.backgroundUrl || ''}
                     onChange={(e) => handleChange('backgroundUrl', e.target.value)}
-                    label='Background url'
+                    label={t(`layout.ui.backgroundUrl`)}
                     size='small'
                     sx={{ width: { xs: '100%', lg: 250 } }}
                   />
@@ -239,10 +237,10 @@ export const ProfileCard: React.FC<ProfileCard> = ({ user }) => {
                   disabled={disabled || isLoading}
                   onClick={handleCancel}
                 >
-                  Cancel
+                  {t('layout.ui.cancel')}
                 </Button>
                 <Button variant='contained' disabled={disabled || isLoading} type='submit'>
-                  Save
+                  {t('layout.ui.save')}
                 </Button>
               </Box>
             </fieldset>

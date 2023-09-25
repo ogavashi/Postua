@@ -18,7 +18,7 @@ export const UserSubscriptionsList: React.FC<UserSubscriptionsListProps> = ({ su
   return (
     <Box>
       <Box display='flex' alignItems='center' gap={3}>
-        <Typography variant='h6'>Subscriptions</Typography>
+        <Typography variant='h6'>{t('layout.ui.subscriptions')}</Typography>
         <Typography sx={{ opacity: 0.6 }}>{subscriptions.length}</Typography>
       </Box>
       {!!subscriptions?.length ? (

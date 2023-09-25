@@ -15,6 +15,7 @@
       "software": "Софт"
     },
     "ui": {
+      "posts": "Мої пости",
       "post": "Пост",
       "search": "Пошук",
       "showMore": "Більше",
@@ -30,7 +31,37 @@
       "haveAccount": "Вже зареєстрований?",
       "register": "Реєстрація",
       "fullName": "Повне ім'я",
-      "confirmPassword": "Підтвердити пароль"
+      "confirmPassword": "Підтвердити пароль",
+      "profile": "Профіль",
+      "posts:": "Мої пости",
+      "logout": "Вихід",
+      "subscribersCount": "підписників",
+      "categoryPosts": "Пости",
+      "subscribers": "Підписники",
+      "rules": "Правила",
+      "subscribe": "Підписатись",
+      "unsubscribe": "Відписатись",
+      "showAll": "Показати все",
+      "no_memebrs": "Тут нелюдно",
+      "notFound": "Щось тут порожньо",
+      "views": "переглядів",
+      "visitings": "відвідувань",
+      "stats": "Статистика",
+      "viewsInFeed": "переглядів у стрічці",
+      "visitingsPage": "відвідувань сторінки",
+      "yourSubs": "Ваші підписки",
+      "consider": "Як щодо цих?",
+      "subscriptions": "Підписки",
+      "subscriptionsCount": "підписок",
+      "onPlatformSince": "На платформі з",
+      "showResults": "Показати результати",
+      "found": "Знайдено",
+      "results": "результатів",
+      "result": "результат",
+      "cancel": "Скасувати",
+      "save": "Зберегти",
+      "avatarUrl": "Аватар URL",
+      "backgroundUrl": "Тло URL"
     },
     "filters": {
       "today": "Сьогодні",
@@ -68,5 +99,9 @@
     "months": "місяців",
     "year": "рік",
     "years": "років"
+  },
+  "toast": {
+    "copy_clipboard": "збережено до буферу",
+    "update_success": "Успішно оновлено"
   }
 }

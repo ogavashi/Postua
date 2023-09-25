@@ -89,14 +89,16 @@ export const Header: React.FC<HeaderProps> = ({ user, subsCount }) => {
         <Typography sx={{ display: { xs: 'flex', md: 'none' }, opacity: 0.5 }}>
           {user.email}
         </Typography>
-        <Typography>On platform since {user.memberFrom}</Typography>
+        <Typography>
+          {t('layout.ui.onPlatformSince')} {user.memberFrom}
+        </Typography>
         <Typography fontWeight={300} sx={{ opacity: 0.6 }}>
-          {subsCount} subscriptions
+          {subsCount} {t('layout.ui.subscriptionsCount')}
         </Typography>
       </Box>
       <Tabs value={activeTab} onChange={navigateTabs}>
-        <Tab label='Posts' key='posts' />\
-        <Tab label='Subscriptions' key='subscriptions' />
+        <Tab label={t('layout.ui.posts')} key='posts' />\
+        <Tab label={t('layout.ui.subscriptions')} key='subscriptions' />
       </Tabs>
     </Box>
   );
