@@ -25,6 +25,7 @@
     "check_connection": "Check your connection",
     "server_problem": "Problems with server, please try again later",
     "self_like": "Self like. Really?",
-    "self_dislike": "Self dislike. Hm..."
+    "self_dislike": "Self dislike. Hm...",
+    "Unauthorized": "Please, authenticate yourself"
   }
 }
