@@ -21,7 +21,7 @@
   "general": {
     "invalid_credentials": "Invalid credentials",
     "email_registred": "Email is already taken",
-    "Internal server error": "High demand on server. Please try again later.",
+    "Internal server error": "High demand on server. Please try again later",
     "check_connection": "Check your connection",
     "server_problem": "Problems with server, please try again later",
     "self_like": "Self like. Really?",
