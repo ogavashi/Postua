@@ -63,11 +63,8 @@ Backend:
 
 Ready to embark on your Postua journey? Here's how to get started:
 
-Clone the repository to your local machine:
+Clone the repository to your local machine.
 
-bash
-Copy code
-git clone https://github.com/yourusername/postua.git
 Install the required dependencies for the frontend and backend:
 
 ```bash
