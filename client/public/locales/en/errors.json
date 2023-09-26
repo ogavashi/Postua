@@ -26,6 +26,10 @@
     "server_problem": "Problems with server, please try again later",
     "self_like": "Self like. Really?",
     "self_dislike": "Self dislike. Hm...",
-    "Unauthorized": "Please, authenticate yourself"
+    "Unauthorized": "Please, authenticate yourself",
+    "empty_filed": "Title can't be empty",
+    "short_title": "Title is too short",
+    "no_post": "Empty post is bad idea",
+    "short_post": "Post is too short"
   }
 }

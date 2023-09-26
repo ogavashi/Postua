@@ -121,7 +121,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
         <Box px={2}>
           <TextField
             fullWidth
-            label='Post title'
+            label={t(`layout.ui.postTitle`)}
             error={!!erros?.title}
             helperText={erros?.title}
             value={postData.title}
@@ -131,7 +131,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
         <Box px={2}>
           <TextField
             fullWidth
-            label='Main image URL'
+            label={t(`layout.ui.mainImageURL`)}
             error={!!erros?.image}
             helperText={erros?.image}
             value={postData.image}
@@ -149,7 +149,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
         <Box px={2}>
           <TextField
             fullWidth
-            label='Tags'
+            label={t(`layout.ui.tags`)}
             size='small'
             value={postData.tags}
             onChange={(e) => handleChangePost(e, 'tags')}
@@ -160,7 +160,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
           <Box display='flex' gap={1}>
             <TextField
               fullWidth
-              label='Tags'
+              label={t(`layout.ui.tags`)}
               size='small'
               value={postData.tags}
               onChange={(e) => handleChangePost(e, 'tags')}
@@ -169,7 +169,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
             <CategorySelect />
           </Box>
           <Button variant='contained' onClick={handlePost}>
-            Save
+            {t(`layout.ui.save`)}
           </Button>
         </Box>
       </Box>

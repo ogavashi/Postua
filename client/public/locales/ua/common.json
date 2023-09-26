@@ -61,7 +61,10 @@
       "cancel": "Скасувати",
       "save": "Зберегти",
       "avatarUrl": "Аватар URL",
-      "backgroundUrl": "Тло URL"
+      "backgroundUrl": "Тло URL",
+      "postTitle": "Заголовок",
+      "mainImageURL": "Головне зображення URL",
+      "tags": "Теги"
     },
     "filters": {
       "today": "Сьогодні",

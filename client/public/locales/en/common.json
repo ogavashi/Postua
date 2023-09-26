@@ -61,7 +61,10 @@
       "cancel": "Cancel",
       "save": "Save",
       "avatarUrl": "Avatar URL",
-      "backgroundUrl": "Background URL"
+      "backgroundUrl": "Background URL",
+      "postTitle": "Title",
+      "mainImageURL": "Main image URL",
+      "tags": "Tags"
     },
     "filters": {
       "today": "Today",
